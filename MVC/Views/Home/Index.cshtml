@@ -1,8 +1,101 @@
 ﻿@{
     ViewData["Title"] = "Home Page";
 }
+<div>
+    <style>
+        .carousel-item {
+            height: 500px;
+            background-size: cover;
+            background-position: center;
+        }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+        .carousel-content {
+            position: absolute;
+            top: 50%;
+            left: 10%;
+            transform: translateY(-50%);
+            color: #000;
+            max-width: 35%;
+        }
+    </style>
+
+    <div id="coffeeCarousel" class="carousel slide" data-bs-ride="carousel">
+        <!-- Carousel Indicators -->
+        <div class="carousel-indicators">
+            <button type="button" data-bs-target="#coffeeCarousel" data-bs-slide-to="0" class="active"
+                aria-current="true" aria-label="Slide 1"></button>
+            <button type="button" data-bs-target="#coffeeCarousel" data-bs-slide-to="1" aria-label="Slide 2"></button>
+        </div>
+
+        <!-- Carousel Items -->
+        <div class="carousel-inner">
+            <div class="carousel-item active" style="background-image: url('/images/Carousel1.jpg');">
+                <div class="carousel-content">
+                    <h1 class="display-5 fw-bold">Your Smoothest Cold Brew Ever</h1>
+                    <p class="mb-4">With coffees crafted for cold brew, enjoying iced perfection at home has never been
+                        easier. Subscribe to a Big Bag for a FREE gift.</p>
+                    <a href="/Product" class="btn btn-danger">Try Cold Brew</a>
+                </div>
+            </div>
+
+            <div class="carousel-item" style="background-image: url('/images/Carousel2.jpg');">
+                <div class="carousel-content">
+                    <h1 class="display-5 fw-bold">Discover Your Perfect Coffee</h1>
+                    <p class="mb-4">We recommend coffees for you from America’s favorite roasters—delivered fresh to
+                        your
+                        doorstep.</p>
+                    <a href="/Product" class="btn btn-danger">Discover Now</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Carousel Controls -->
+        <button class="carousel-control-prev" type="button" data-bs-target="#coffeeCarousel" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#coffeeCarousel" data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
+        </button>
+    </div>
+
+    <div class="container marketing" style="margin-top: 4rem;">
+        <div class="row featurette align-items-center">
+            <div class="col-md-7 d-flex flex-column justify-content-center text-center">
+                <h2 class="featurette-heading fw-normal lh-1">Better Coffee is Waiting for You</h2>
+                <p class="lead">Finding the best small roasters and bringing their exceptional coffees to your doorstep</p>
+                <h4>You’ll Love Your First Coffee</h4>
+                <p>Or one of our baristas will find you a better bag—and replace it for free, of course</p>
+            </div>
+
+            <div class="col-md-5">
+                <img src="~/images/Marketing1.jpg"
+                     class="bd-placeholder-img bd-placeholder-img-lg featurette-image img-fluid mx-auto" alt="Coffee Bags">
+            </div>
+        </div>
+
+        <hr class="featurette-divider">
+
+        <div class="row featurette align-items-center">
+            <div class="col-md-7 order-md-2 d-flex flex-column justify-content-center text-center">
+                <h2 class="featurette-heading fw-normal lh-1">By Coffee People, For Coffee People</h2>
+                <p class="lead">
+                    We don’t roast your coffee, we’re here to introduce you to the people who do it best
+                </p>
+            </div>
+            <div class="col-md-5 order-md-1">
+                <img src="https://cdn.shopify.com/s/files/1/0794/7128/0447/files/roaster-gif-updated.gif?v=1729120190&width=2048"
+                     class="bd-placeholder-img bd-placeholder-img-lg featurette-image img-fluid mx-auto" alt="Roaster">
+            </div>
+        </div>
+    </div>
+
+    <div class="my-5">
+        <div class="p-5 text-center bg-light border" style="background-color: #f8f1e9 !important; border-color: #e6d8c3 !important;">
+            <h5 class="text-uppercase mb-3">Our Promise to You</h5>
+            <h1 class="display-4 mb-3" style="font-family: 'Georgia', serif;">You’ll Love Your First Coffee</h1>
+            <p class="lead">Or one of our baristas will find you a better bag—and replace it for free, of course.</p>
+        </div>
+    </div>
 </div>
