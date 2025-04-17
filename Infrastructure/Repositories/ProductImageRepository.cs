@@ -23,7 +23,7 @@ namespace Infrastructure.Repositories
             await _context.SaveChangesAsync();
         }
 
-        public async Task DeleteProductImageAsync(int id)
+        public async Task DeleteProductImageAsync(string id)
         {
             var productImage = _context.ProductImages.Find(id);
             if(productImage != null)

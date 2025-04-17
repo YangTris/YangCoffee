@@ -11,6 +11,6 @@ namespace Application.IRepositories
     {
         Task<IEnumerable<ProductImage>> GetAllProductImagesAsync(string producVarianttId);
         Task AddProductImageAsync(ProductImage productImage);
-        Task DeleteProductImageAsync(int id);
+        Task DeleteProductImageAsync(string id);
     }
 }
