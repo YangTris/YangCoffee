@@ -18,11 +18,10 @@ namespace Infrastructure.Repositories
             _context = context;
         }
 
-        public async Task<Category> AddAsync(Category category)
+        public async Task AddAsync(Category category)
         {
             _context.Categories.Add(category);
             await _context.SaveChangesAsync();
-            return category;
         }
 
         public async Task DeleteAsync(string id)
