@@ -10,6 +10,7 @@ namespace Application.IRepositories
     public interface IProductVariantRepository
     {
         Task<IEnumerable<ProductVariant>> GetAllVariantByProductIdAsync(string productId);
+        Task<ProductVariant> GetVariantByIdAsync(string id);
         Task AddProductVariantAsync(ProductVariant productVariant);
         Task UpdateProductVariantAsync(ProductVariant productVariant);
         Task DeleteProductVariantAsync(string id);
