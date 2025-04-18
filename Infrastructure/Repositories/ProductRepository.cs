@@ -39,11 +39,9 @@ namespace Infrastructure.Repositories
                 .ToListAsync();
         }
 
-        public Task<Product> GetProductByIdAsync(string id)
+        public async Task<Product> GetProductByIdAsync(string id)
         {
-            return _context.Products
-                .Include(p => p.ProductVariants)
-                .FirstOrDefaultAsync(p => p.ProductId == id);
+            return await _context.Products.FindAsync(id);
         }
 
         public async Task UpdateProductAsync(Product product)
