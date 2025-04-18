@@ -45,7 +45,7 @@ namespace WebAPI.Controllers
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<ActionResult<CategoryDTO>> Add([FromBody] CategoryDTO categoryDTO)
+        public async Task<IActionResult> Add([FromBody] CategoryDTO categoryDTO)
         {
             if (!ModelState.IsValid)
             {

@@ -81,7 +81,7 @@ public class CategoriesControllerTest
         var result = await _controller.Add(category);
 
         // Assert
-        var createdAtActionResult = Assert.IsType<CreatedAtActionResult>(result.Result);
+        var createdAtActionResult = Assert.IsType<CreatedAtActionResult>(result);
         var returnValue = Assert.IsType<CategoryDTO>(createdAtActionResult.Value);
         Assert.Equal("1", returnValue.CategoryId);
     }
