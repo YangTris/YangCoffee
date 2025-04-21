@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Application.DTOs;
+using Shared.DTOs;
 using Application.IRepositories;
 using Application.IServices;
 using Domain;
@@ -130,19 +130,18 @@ namespace Application.Services
             {
                 throw new Exception("Product not found");
             }
-            var productVariants = await _productVariantRepository.GetAllVariantByProductIdAsync(id);
-            if (productVariants != null)
-            {
-                foreach (var productVariant in productVariants)
-                {
-                    await _productVariantRepository.DeleteProductVariantAsync(productVariant.ProductVariantId);
-                }
-            }
-            if(product.ProductImages != null)
+            if (product.ProductImages != null)
             {
                 foreach (var productImage in product.ProductImages)
                 {
                     await _productImageRepository.DeleteProductImageAsync(productImage.ProductImageId);
+                }
+            }
+            if(product.ProductVariants != null)
+            {
+                foreach (var productVariant in product.ProductVariants)
+                {
+                    await _productVariantRepository.DeleteProductVariantAsync(productVariant.ProductVariantId);
                 }
             }
             await _productRepository.DeleteProductAsync(id);

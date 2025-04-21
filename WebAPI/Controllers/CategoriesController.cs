@@ -1,4 +1,4 @@
-﻿using Application.DTOs;
+﻿using Shared.DTOs;
 using Application.IServices;
 using Domain;
 using Microsoft.AspNetCore.Http;

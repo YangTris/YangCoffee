@@ -1,4 +1,4 @@
-﻿using Application.DTOs;
+﻿using Shared.DTOs;
 using Application.IServices;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
