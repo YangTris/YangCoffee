@@ -145,5 +145,23 @@ namespace WebAPI.Controllers
             await _productService.UpdateProductVariantAsync(id, productVariantDTO);
             return NoContent();
         }
+
+        [HttpDelete("variant/{id}")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<IActionResult> DeleteProductVariant(string id)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+            var productVariant = await _productService.GetProductVariantByIdAsync(id);
+            if (productVariant == null)
+            {
+                return NotFound();
+            }
+            await _productService.DeleteProductVariantAsync(id);
+            return NoContent();
+        }
     }
 }

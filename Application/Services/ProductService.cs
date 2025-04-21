@@ -7,7 +7,7 @@ using Application.DTOs;
 using Application.IRepositories;
 using Application.IServices;
 using Domain;
-using static System.Net.Mime.MediaTypeNames;
+using Domain.Enum;
 
 namespace Application.Services
 {
@@ -16,182 +16,152 @@ namespace Application.Services
         private readonly IProductRepository _productRepository;
         private readonly IProductVariantRepository _productVariantRepository;
         private readonly IProductImageRepository _productImageRepository;
-        public ProductService(IProductRepository productRepository,
-            IProductVariantRepository productVariantRepository,
+        public ProductService(IProductRepository productRepository, 
+            IProductVariantRepository productVariantRepository, 
             IProductImageRepository productImageRepository)
         {
             _productRepository = productRepository;
             _productVariantRepository = productVariantRepository;
             _productImageRepository = productImageRepository;
         }
+
         private static ProductDTO MapToDTO(Product product)
         {
             if (product == null) return null;
-
             return new ProductDTO
             {
                 ProductId = product.ProductId,
                 Name = product.Name,
-                Description = product.Description,
+                Description = product.Description,            
                 BasePrice = product.BasePrice,
-                CategoryId = product.CategoryId,
-                BaseImageUrl = product.BaseImageUrl,
                 CreatedDate = product.CreatedDate,
                 UpdatedDate = product.UpdatedDate,
-                ProductVariants = product.ProductVariants.Select(MapToVariantDTO).ToList()
+                CategoryId = product.CategoryId,
+                ProductImages = product.ProductImages?.Select(pi => new ProductImageDTO
+                {
+                    ProductImageId = pi.ProductImageId,
+                    ImageUrl = pi.ImageUrl,
+                    ProductId = product.ProductId
+                }).ToList(),
+                ProductVariants = product.ProductVariants?.Select(pv => new ProductVariantDTO
+                {
+                    ProductVariantId = pv.ProductVariantId,
+                    ProductId = product.ProductId,
+                    Region = pv.Region,
+                    RoastType = pv.RoastType,
+                    Size = pv.Size,
+                    Taste = pv.Taste,
+                    Price = pv.Price
+                }).ToList()
             };
         }
         private static ProductVariantDTO MapToVariantDTO(ProductVariant productVariant)
         {
             if (productVariant == null) return null;
-
             return new ProductVariantDTO
             {
                 ProductVariantId = productVariant.ProductVariantId,
                 ProductId = productVariant.ProductId,
                 Region = productVariant.Region,
-                Price = productVariant.Price,
                 RoastType = productVariant.RoastType,
                 Size = productVariant.Size,
                 Taste = productVariant.Taste,
-                ImageUrl = productVariant.ImageUrl?.Select(MapToImageDTO).ToList()
+                Price = productVariant.Price
             };
         }
-
-        private static ProductImageDTO MapToImageDTO(ProductImage productImage)
+        public async Task<ProductDTO> AddProductAsync(ProductDTO productDTO)
         {
-            if (productImage == null) return null;
-
-            return new ProductImageDTO
+            var product = new Product
             {
-                ImageUrl = productImage.ImageUrl,
-                ProductVariantId = productImage.ProductVariantId
+                ProductId = Guid.NewGuid().ToString(),
+                Name = productDTO.Name,
+                Description = productDTO.Description,
+                BasePrice = productDTO.BasePrice,
+                CreatedDate = DateTimeOffset.Now,
+                UpdatedDate = productDTO.UpdatedDate,
+                CategoryId = productDTO.CategoryId,
+                ProductImages = productDTO.ProductImages?.Select(pi => new ProductImage
+                {
+                    ProductImageId = Guid.NewGuid().ToString(),
+                    ImageUrl = pi.ImageUrl,
+                    ProductId = productDTO.ProductId
+                }).ToList(),
+                ProductVariants = productDTO.ProductVariants?.Select(pv => new ProductVariant
+                {
+                    ProductVariantId = Guid.NewGuid().ToString(),
+                    ProductId = productDTO.ProductId,
+                    Region = pv.Region,
+                    RoastType = pv.RoastType,
+                    Size = pv.Size,
+                    Taste = pv.Taste,
+                    Price = pv.Price
+                }).ToList()
             };
+
+            await _productRepository.AddProductAsync(product);
+            return MapToDTO(product);
         }
 
-        //public async Task<ProductDTO> AddProductAsync(ProductDTO productDTO)
-        //{
-        //    var product = new Product
-        //    {
-        //        ProductId = Guid.NewGuid().ToString(),
-        //        Name = productDTO.Name,
-        //        Description = productDTO.Description,
-        //        BasePrice = productDTO.BasePrice,
-        //        CategoryId = productDTO.CategoryId,
-        //        BaseImageUrl = productDTO.BaseImageUrl,
-        //        CreatedDate = DateTime.Now,
-        //        UpdatedDate = DateTime.Now,
-        //        ProductVariants = productDTO.ProductVariants.Select(pv => new ProductVariant
-        //        {
-        //            ProductVariantId = Guid.NewGuid().ToString(),
-        //            Region = pv.Region,
-        //            Price = pv.Price,
-        //            RoastType = pv.RoastType,
-        //            Size = pv.Size,
-        //            Taste = pv.Taste,
-        //            ImageUrl = pv.ImageUrl.Select(i => new ProductImage
-        //            {
-        //                ProductImageId = Guid.NewGuid().ToString(),
-        //                ImageUrl = i.ImageUrl,
-        //            }).ToList()
-        //        }).ToList()
-        //    };
-        //    await _productRepository.AddProductAsync(product);
-
-        //    if(product.ProductVariants != null)
-        //    {
-        //        foreach (var variant in product.ProductVariants)
-        //        {
-        //            variant.ProductId = product.ProductId;
-
-        //            await _productVariantRepository.AddProductVariantAsync(variant);
-        //            if(variant.ImageUrl!= null)
-        //            {
-        //                foreach (var image in variant.ImageUrl)
-        //                {
-        //                    image.ProductVariantId = variant.ProductVariantId;
-
-        //                    await _productImageRepository.AddProductImageAsync(image);
-        //                }
-        //            }
-        //        }
-        //    }
-            
-        //    return MapToDTO(product);
-        //}
-
-        //public async Task<ProductVariantDTO> AddProductVariantAsync(string productId, ProductVariantDTO productVariantDTO)
-        //{
-        //    var product = await _productRepository.GetProductByIdAsync(productId);
-        //    if (product == null)
-        //    {
-        //        return null;
-        //    }
-
-        //    var productVariant = new ProductVariant
-        //    {
-        //        ProductVariantId = Guid.NewGuid().ToString(),
-        //        ProductId = productId,
-        //        Region = productVariantDTO.Region,
-        //        Price = productVariantDTO.Price,
-        //        RoastType = productVariantDTO.RoastType,
-        //        Size = productVariantDTO.Size,
-        //        Taste = productVariantDTO.Taste,
-        //        ImageUrl = productVariantDTO.ImageUrl?.Select(i => new ProductImage
-        //        {
-        //            ProductImageId = Guid.NewGuid().ToString(),
-        //            ImageUrl = i.ImageUrl,
-        //            ProductVariantId = null
-        //        }).ToList()
-        //    };
-
-        //    await _productVariantRepository.AddProductVariantAsync(productVariant);
-
-        //    if (productVariant.ImageUrl != null)
-        //    {
-        //        foreach (var image in productVariant.ImageUrl)
-        //        {
-        //            image.ProductVariantId = productVariant.ProductVariantId;
-        //            await _productImageRepository.AddProductImageAsync(image);
-        //        }
-        //    }
-
-        //    return MapToVariantDTO(productVariant);
-        //}
+        public async Task<ProductVariantDTO> AddProductVariantAsync(string productId, ProductVariantDTO productVariantDTO)
+        {
+            var product = await _productRepository.GetProductByIdAsync(productId);
+            if (product == null)
+            {
+                throw new Exception("Product not found");
+            }
+            var productVariant = new ProductVariant
+            {
+                ProductVariantId = Guid.NewGuid().ToString(),
+                ProductId = productId,
+                Region = productVariantDTO.Region,
+                RoastType = productVariantDTO.RoastType,
+                Size = productVariantDTO.Size,
+                Taste = productVariantDTO.Taste,
+                Price = productVariantDTO.Price
+            };
+            await _productVariantRepository.AddProductVariantAsync(productVariant);
+            return MapToVariantDTO(productVariant);
+        }
 
         public async Task DeleteProductAsync(string id)
         {
             var product = await _productRepository.GetProductByIdAsync(id);
-            if (product != null)
+            if (product == null)
             {
-                foreach(var variant in product.ProductVariants)
-                {
-                    await DeleteProductVariantAsync(variant.ProductVariantId);
-                }
-                await _productRepository.DeleteProductAsync(id);
+                throw new Exception("Product not found");
             }
+            var productVariants = await _productVariantRepository.GetAllVariantByProductIdAsync(id);
+            if (productVariants != null)
+            {
+                foreach (var productVariant in productVariants)
+                {
+                    await _productVariantRepository.DeleteProductVariantAsync(productVariant.ProductVariantId);
+                }
+            }
+            if(product.ProductImages != null)
+            {
+                foreach (var productImage in product.ProductImages)
+                {
+                    await _productImageRepository.DeleteProductImageAsync(productImage.ProductImageId);
+                }
+            }
+            await _productRepository.DeleteProductAsync(id);
         }
 
         public async Task DeleteProductVariantAsync(string id)
         {
             var productVariant = await _productVariantRepository.GetVariantByIdAsync(id);
-            if (productVariant != null)
+            if (productVariant == null)
             {
-                if(productVariant.ImageUrl != null)
-                {
-                    foreach (var image in productVariant.ImageUrl)
-                    {
-                        await _productImageRepository.DeleteProductImageAsync(image.ImageUrl);
-                    }
-                }
-                await _productVariantRepository.DeleteProductVariantAsync(id);
+                throw new Exception("Product variant not found");
             }
+            await _productVariantRepository.DeleteProductVariantAsync(id);
         }
 
         public async Task<IEnumerable<ProductDTO>> GetAllProductsAsync()
         {
-            var product = await _productRepository.GetAllProductsAsync();
-            return product.Select(MapToDTO);
+            var products = await _productRepository.GetAllProductsAsync();
+            return products.Select(MapToDTO);
         }
 
         public async Task<ProductDTO> GetProductByIdAsync(string id)
@@ -209,87 +179,32 @@ namespace Application.Services
         public async Task UpdateProductAsync(string id, UpdateProductDTO updateProductDTO)
         {
             var product = await _productRepository.GetProductByIdAsync(id);
-            if (product != null)
+            if (product == null)
             {
-                product.Name = updateProductDTO.Name;
-                product.Description = updateProductDTO.Description;
-                product.BasePrice = updateProductDTO.BasePrice;
-                product.BaseImageUrl = updateProductDTO.BaseImageUrl;
-                product.CreatedDate = updateProductDTO.CreatedDate;
-                product.UpdatedDate = DateTime.UtcNow;
-
-                await _productRepository.UpdateProductAsync(product);
+                throw new Exception("Product not found");
             }
+            product.Name = updateProductDTO.Name;
+            product.Description = updateProductDTO.Description;
+            product.BasePrice = updateProductDTO.BasePrice;
+            product.UpdatedDate = DateTimeOffset.Now;
+
+            await _productRepository.UpdateProductAsync(product);
         }
 
-        public async Task UpdateProductVariantAsync(string id,ProductVariantDTO productVariantDTO)
+        public async Task UpdateProductVariantAsync(string id, ProductVariantDTO productVariantDTO)
         {
             var productVariant = await _productVariantRepository.GetVariantByIdAsync(id);
-            if (productVariant != null)
+            if (productVariant == null)
             {
-                productVariant.Region = productVariantDTO.Region;
-                productVariant.Price = productVariantDTO.Price;
-                productVariant.RoastType = productVariantDTO.RoastType;
-                productVariant.Size = productVariantDTO.Size;
-                productVariant.Taste = productVariantDTO.Taste;
-                productVariant.ImageUrl = productVariantDTO.ImageUrl.Select(i => new ProductImage
-                {
-                    ImageUrl = i.ImageUrl,
-                    ProductVariantId = id
-                }).ToList();
-
-                await _productVariantRepository.UpdateProductVariantAsync(productVariant);
+                throw new Exception("Product variant not found");
             }
-        }
+            productVariant.Region = productVariantDTO.Region;
+            productVariant.RoastType = productVariantDTO.RoastType;
+            productVariant.Size = productVariantDTO.Size;
+            productVariant.Taste = productVariantDTO.Taste;
+            productVariant.Price = productVariantDTO.Price;
 
-        public async Task<ProductDTO> AddProductAsync(ProductDTO productDTO)
-        {
-            var product = new Product
-            {
-                ProductId = Guid.NewGuid().ToString(),
-                Name = productDTO.Name,
-                Description = productDTO.Description,
-                BasePrice = productDTO.BasePrice,
-                CategoryId = productDTO.CategoryId,
-                BaseImageUrl = productDTO.BaseImageUrl,
-                CreatedDate = DateTime.Now,
-                UpdatedDate = DateTime.Now,
-                ProductVariants = productDTO.ProductVariants.Select(pv => new ProductVariant
-                {
-                    ProductVariantId = Guid.NewGuid().ToString(),
-                    Region = pv.Region,
-                    Price = pv.Price,
-                    RoastType = pv.RoastType,
-                    Size = pv.Size,
-                    Taste = pv.Taste,
-                    ProductId = productDTO.ProductId
-                }).ToList()
-            };
-            await _productRepository.AddProductAsync(product);
-            if (product.ProductVariants != null)
-            {
-                foreach (var variant in product.ProductVariants)
-                {
-                    //variant.ProductId = product.ProductId;
-                    await _productVariantRepository.AddProductVariantAsync(variant);
-                    if (variant.ImageUrl != null)
-                    {
-                        foreach (var image in variant.ImageUrl)
-                        {
-                            image.ProductVariantId = variant.ProductVariantId;
-                            await _productImageRepository.AddProductImageAsync(image);
-                            MapToImageDTO(image);
-                        }
-                    }
-                    MapToVariantDTO(variant);
-                }
-            }
-            return MapToDTO(product);
-        }
-
-        public Task<ProductVariantDTO> AddProductVariantAsync(string productId, ProductVariantDTO productVariantDTO)
-        {
-            throw new NotImplementedException();
+            await _productVariantRepository.UpdateProductVariantAsync(productVariant);
         }
     }
 }
