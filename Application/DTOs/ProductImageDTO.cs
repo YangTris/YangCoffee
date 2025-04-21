@@ -11,7 +11,7 @@ namespace Application.DTOs
     public class ProductImageDTO
     {
         public string ProductImageId { get; set; }
+        public string ProductId { get; set; }
         public string ImageUrl { get; set; }
-        public string ProductVariantId { get; set; }
     }
 }

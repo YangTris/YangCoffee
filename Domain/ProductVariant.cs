@@ -16,6 +16,5 @@ namespace Domain
         [ForeignKey("Product")]
         public string ProductId { get; set; }
         public virtual Product Product { get; set; }
-        public List<ProductImage> ImageUrl { get; set; }
     }
 }

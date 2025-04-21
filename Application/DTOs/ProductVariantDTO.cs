@@ -18,6 +18,5 @@ namespace Application.DTOs
         public string Taste { get; set; }
         public decimal Price { get; set; }
         public string ProductId { get; set; }
-        public List<ProductImageDTO> ImageUrl { get; set; }
     }
 }

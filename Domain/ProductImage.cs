@@ -8,8 +8,8 @@ namespace Domain
         [Key]
         public string ProductImageId { get; set; }
         public string ImageUrl { get; set; }
-        [ForeignKey("ProductVariant")]
-        public string ProductVariantId { get; set; }
-        public virtual ProductVariant ProductVariant { get; set; }
+        [ForeignKey("Product")]
+        public string ProductId { get; set; }
+        public virtual Product Product { get; set; }
     }
 }
