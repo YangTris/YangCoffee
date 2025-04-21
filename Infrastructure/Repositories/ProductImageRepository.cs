@@ -33,10 +33,10 @@ namespace Infrastructure.Repositories
             }
         }
 
-        public async Task<IEnumerable<ProductImage>> GetAllProductImagesAsync(string producVarianttId)
+        public async Task<IEnumerable<ProductImage>> GetAllProductImagesAsync(string productId)
         {
             return await _context.ProductImages
-                .Where(pi => pi.ProductVariantId == producVarianttId)
+                .Where(pi => pi.ProductId == productId)
                 .ToListAsync();
         }
     }

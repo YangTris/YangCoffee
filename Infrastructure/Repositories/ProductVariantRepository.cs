@@ -40,6 +40,12 @@ namespace Infrastructure.Repositories
                 .ToListAsync();
         }
 
+        public async Task<ProductVariant> GetVariantByIdAsync(string id)
+        {
+            return await _context.ProductVariants
+                .FirstOrDefaultAsync(p => p.ProductVariantId == id);
+        }
+
         public Task UpdateProductVariantAsync(ProductVariant productVariant)
         {
             _context.ProductVariants.Update(productVariant);
