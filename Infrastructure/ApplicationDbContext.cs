@@ -67,7 +67,7 @@ namespace Infrastructure
                 },
                 new IdentityUser
                 {
-                    Id = Guid.NewGuid().ToString(),
+                    Id = userId,
                     UserName = "user@gmail.com",
                     NormalizedUserName = "USER@GMAIL.COM",
                     Email = "user@gmail.com",
@@ -122,47 +122,44 @@ namespace Infrastructure
 
             // Seed data for Products
             modelBuilder.Entity<Product>().HasData(
-        new Product
-        {
-            ProductId = Guid.NewGuid().ToString(),
-            Name = "House Espresso",
-            Description = "Rich and aromatic Ethiopian coffee beans.",
-            BaseImageUrl = "images/House Espresso.jpg",
-            BasePrice = 15.99m,
-            CreatedDate = DateTimeOffset.UtcNow,
-            UpdatedDate = DateTimeOffset.UtcNow,
-            CategoryId = "1"
-        },
-        new Product
-        {
-            ProductId = "2",
-            Name = "Space Cadet",
-            Description = "Refreshing and healthy green tea.",
-            BaseImageUrl = "images/Space Cadet.jpg",
-            BasePrice = 9.99m,
-            CreatedDate = DateTimeOffset.UtcNow,
-            UpdatedDate = DateTimeOffset.UtcNow,
-            CategoryId = "2"
-        },
-        new Product
-        {
-            ProductId = "3",
-            Name = "Space Cowboy",
-            Description = "High-quality French press for coffee brewing.",
-            BaseImageUrl = "images/Space Cowboy.jpg",
-            BasePrice = 25.99m,
-            CreatedDate = DateTimeOffset.UtcNow,
-            UpdatedDate = DateTimeOffset.UtcNow,
-            CategoryId = "3"
-        }
-    );
+                new Product
+                {
+                    ProductId = "780905a8-1505-4635-a3ed-2872625bd071",
+                    Name = "House Espresso",
+                    Description = "Rich and aromatic Ethiopian coffee beans.",
+                    BasePrice = 15.99m,
+                    CreatedDate = DateTimeOffset.UtcNow,
+                    UpdatedDate = DateTimeOffset.UtcNow,
+                    CategoryId = "1"
+                },
+                new Product
+                {
+                    ProductId = "1ec624d5-25d0-4a5c-9d47-925be2439e70",
+                    Name = "Space Cadet",
+                    Description = "Refreshing and healthy green tea.",
+                    BasePrice = 9.99m,
+                    CreatedDate = DateTimeOffset.UtcNow,
+                    UpdatedDate = DateTimeOffset.UtcNow,
+                    CategoryId = "2"
+                },
+                new Product
+                {
+                    ProductId = "1e38e0e9-e76b-462a-9141-13637859449c",
+                    Name = "Space Cowboy",
+                    Description = "High-quality French press for coffee brewing.",
+                    BasePrice = 25.99m,
+                    CreatedDate = DateTimeOffset.UtcNow,
+                    UpdatedDate = DateTimeOffset.UtcNow,
+                    CategoryId = "3"
+                }
+            );
 
             // Seed ProductVariants
             modelBuilder.Entity<ProductVariant>().HasData(
                 new ProductVariant
                 {
                     ProductVariantId = Guid.NewGuid().ToString(),
-                    ProductId = "<ProductId of House Espresso>",
+                    ProductId = "780905a8-1505-4635-a3ed-2872625bd071",
                     Size = Size.Standard,
                     Region = Region.Africa,
                     RoastType = RoastType.Light,
@@ -172,7 +169,7 @@ namespace Infrastructure
                 new ProductVariant
                 {
                     ProductVariantId = Guid.NewGuid().ToString(),
-                    ProductId = "2",
+                    ProductId = "1ec624d5-25d0-4a5c-9d47-925be2439e70",
                     Size = Size.Small,
                     Region = Region.SouthAmerica,
                     RoastType = RoastType.Light,
@@ -182,7 +179,7 @@ namespace Infrastructure
                 new ProductVariant
                 {
                     ProductVariantId = Guid.NewGuid().ToString(),
-                    ProductId = "3",
+                    ProductId = "1e38e0e9-e76b-462a-9141-13637859449c",
                     Size = Size.Bulk,
                     Region = Region.CentralAmerica,
                     RoastType = RoastType.Dark,
@@ -196,31 +193,31 @@ namespace Infrastructure
                 new ProductImage
                 {
                     ProductImageId = Guid.NewGuid().ToString(),
-                    ProductVariantId = "<ProductVariantId of House Espresso Variant>", 
+                    ProductId = "780905a8-1505-4635-a3ed-2872625bd071",
                     ImageUrl = "images/House Espresso1.jpg"
                 },
                 new ProductImage
                 {
                     ProductImageId = Guid.NewGuid().ToString(),
-                    ProductVariantId = "<ProductVariantId of House Espresso Variant>",
+                    ProductId = "780905a8-1505-4635-a3ed-2872625bd071",
                     ImageUrl = "images/House Espresso2.jpg"
                 },
                 new ProductImage
                 {
                     ProductImageId = Guid.NewGuid().ToString(),
-                    ProductVariantId = "<ProductVariantId of Space Cadet Variant>", 
+                    ProductId = "1ec624d5-25d0-4a5c-9d47-925be2439e70",
                     ImageUrl = "images/Space Cadet_1.jpg"
                 },
                 new ProductImage
                 {
                     ProductImageId = Guid.NewGuid().ToString(),
-                    ProductVariantId = "<ProductVariantId of Space Cadet Variant>",
+                    ProductId = "1ec624d5-25d0-4a5c-9d47-925be2439e70",
                     ImageUrl = "images/Space Cadet_2.jpg"
                 },
                 new ProductImage
                 {
                     ProductImageId = Guid.NewGuid().ToString(),
-                    ProductVariantId = "<ProductVariantId of Space Cowboy Variant>", 
+                    ProductId = "1e38e0e9-e76b-462a-9141-13637859449c",
                     ImageUrl = "images/Space Cowboy1.jpg"
                 }
             );

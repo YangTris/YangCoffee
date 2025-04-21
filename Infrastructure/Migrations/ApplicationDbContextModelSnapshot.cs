@@ -170,10 +170,6 @@ namespace Infrastructure.Migrations
                     b.Property<string>("ProductId")
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<string>("BaseImageUrl")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<decimal>("BasePrice")
                         .HasColumnType("decimal(18,2)");
 
@@ -204,36 +200,33 @@ namespace Infrastructure.Migrations
                     b.HasData(
                         new
                         {
-                            ProductId = "42161f36-47fd-4990-978a-a9139a5c5051",
-                            BaseImageUrl = "images/House Espresso.jpg",
+                            ProductId = "780905a8-1505-4635-a3ed-2872625bd071",
                             BasePrice = 15.99m,
                             CategoryId = "1",
-                            CreatedDate = new DateTimeOffset(new DateTime(2025, 4, 20, 14, 14, 19, 816, DateTimeKind.Unspecified).AddTicks(4313), new TimeSpan(0, 0, 0, 0, 0)),
+                            CreatedDate = new DateTimeOffset(new DateTime(2025, 4, 21, 2, 43, 56, 401, DateTimeKind.Unspecified).AddTicks(7612), new TimeSpan(0, 0, 0, 0, 0)),
                             Description = "Rich and aromatic Ethiopian coffee beans.",
                             Name = "House Espresso",
-                            UpdatedDate = new DateTimeOffset(new DateTime(2025, 4, 20, 14, 14, 19, 816, DateTimeKind.Unspecified).AddTicks(4320), new TimeSpan(0, 0, 0, 0, 0))
+                            UpdatedDate = new DateTimeOffset(new DateTime(2025, 4, 21, 2, 43, 56, 401, DateTimeKind.Unspecified).AddTicks(7618), new TimeSpan(0, 0, 0, 0, 0))
                         },
                         new
                         {
-                            ProductId = "2",
-                            BaseImageUrl = "images/Space Cadet.jpg",
+                            ProductId = "1ec624d5-25d0-4a5c-9d47-925be2439e70",
                             BasePrice = 9.99m,
                             CategoryId = "2",
-                            CreatedDate = new DateTimeOffset(new DateTime(2025, 4, 20, 14, 14, 19, 816, DateTimeKind.Unspecified).AddTicks(4323), new TimeSpan(0, 0, 0, 0, 0)),
+                            CreatedDate = new DateTimeOffset(new DateTime(2025, 4, 21, 2, 43, 56, 401, DateTimeKind.Unspecified).AddTicks(7621), new TimeSpan(0, 0, 0, 0, 0)),
                             Description = "Refreshing and healthy green tea.",
                             Name = "Space Cadet",
-                            UpdatedDate = new DateTimeOffset(new DateTime(2025, 4, 20, 14, 14, 19, 816, DateTimeKind.Unspecified).AddTicks(4324), new TimeSpan(0, 0, 0, 0, 0))
+                            UpdatedDate = new DateTimeOffset(new DateTime(2025, 4, 21, 2, 43, 56, 401, DateTimeKind.Unspecified).AddTicks(7622), new TimeSpan(0, 0, 0, 0, 0))
                         },
                         new
                         {
-                            ProductId = "3",
-                            BaseImageUrl = "images/Space Cowboy.jpg",
+                            ProductId = "1e38e0e9-e76b-462a-9141-13637859449c",
                             BasePrice = 25.99m,
                             CategoryId = "3",
-                            CreatedDate = new DateTimeOffset(new DateTime(2025, 4, 20, 14, 14, 19, 816, DateTimeKind.Unspecified).AddTicks(4326), new TimeSpan(0, 0, 0, 0, 0)),
+                            CreatedDate = new DateTimeOffset(new DateTime(2025, 4, 21, 2, 43, 56, 401, DateTimeKind.Unspecified).AddTicks(7623), new TimeSpan(0, 0, 0, 0, 0)),
                             Description = "High-quality French press for coffee brewing.",
                             Name = "Space Cowboy",
-                            UpdatedDate = new DateTimeOffset(new DateTime(2025, 4, 20, 14, 14, 19, 816, DateTimeKind.Unspecified).AddTicks(4327), new TimeSpan(0, 0, 0, 0, 0))
+                            UpdatedDate = new DateTimeOffset(new DateTime(2025, 4, 21, 2, 43, 56, 401, DateTimeKind.Unspecified).AddTicks(7624), new TimeSpan(0, 0, 0, 0, 0))
                         });
                 });
 
@@ -246,46 +239,46 @@ namespace Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("ProductVariantId")
+                    b.Property<string>("ProductId")
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
                     b.HasKey("ProductImageId");
 
-                    b.HasIndex("ProductVariantId");
+                    b.HasIndex("ProductId");
 
                     b.ToTable("ProductImages");
 
                     b.HasData(
                         new
                         {
-                            ProductImageId = "4f71b661-bf93-4a5c-a193-cea0c42da2b0",
+                            ProductImageId = "1a0e7d05-6b27-4b31-a64d-21acf674f117",
                             ImageUrl = "images/House Espresso1.jpg",
-                            ProductVariantId = "<ProductVariantId of House Espresso Variant>"
+                            ProductId = "780905a8-1505-4635-a3ed-2872625bd071"
                         },
                         new
                         {
-                            ProductImageId = "b6b38775-33cd-4d9d-ac28-440eee18cf98",
+                            ProductImageId = "2c647d5f-e724-4d73-b7b4-03175c4a4d23",
                             ImageUrl = "images/House Espresso2.jpg",
-                            ProductVariantId = "<ProductVariantId of House Espresso Variant>"
+                            ProductId = "780905a8-1505-4635-a3ed-2872625bd071"
                         },
                         new
                         {
-                            ProductImageId = "d71da609-8afc-43f9-84be-299894801727",
+                            ProductImageId = "209121d9-5925-4d0d-a1b4-f19910ad8400",
                             ImageUrl = "images/Space Cadet_1.jpg",
-                            ProductVariantId = "<ProductVariantId of Space Cadet Variant>"
+                            ProductId = "1ec624d5-25d0-4a5c-9d47-925be2439e70"
                         },
                         new
                         {
-                            ProductImageId = "4523c1b9-f58a-44ef-aebf-f758ab5c4ed9",
+                            ProductImageId = "24fa386d-31c3-4af1-8419-9c75c4ca684b",
                             ImageUrl = "images/Space Cadet_2.jpg",
-                            ProductVariantId = "<ProductVariantId of Space Cadet Variant>"
+                            ProductId = "1ec624d5-25d0-4a5c-9d47-925be2439e70"
                         },
                         new
                         {
-                            ProductImageId = "a31fb0d1-4169-49d2-a978-34e8c1bfa16e",
+                            ProductImageId = "88b4662a-abd8-4f17-9c71-2ae409293b61",
                             ImageUrl = "images/Space Cowboy1.jpg",
-                            ProductVariantId = "<ProductVariantId of Space Cowboy Variant>"
+                            ProductId = "1e38e0e9-e76b-462a-9141-13637859449c"
                         });
                 });
 
@@ -323,9 +316,9 @@ namespace Infrastructure.Migrations
                     b.HasData(
                         new
                         {
-                            ProductVariantId = "9f890562-a4f0-4e71-a06a-9bb2d15e3efe",
+                            ProductVariantId = "edaefb73-0674-4013-af6a-e4a528ddab35",
                             Price = 15.99m,
-                            ProductId = "<ProductId of House Espresso>",
+                            ProductId = "780905a8-1505-4635-a3ed-2872625bd071",
                             Region = 0,
                             RoastType = 0,
                             Size = 1,
@@ -333,9 +326,9 @@ namespace Infrastructure.Migrations
                         },
                         new
                         {
-                            ProductVariantId = "702ef471-b890-4b9c-8319-0819ccb3073a",
+                            ProductVariantId = "18977b5e-b2c6-46b8-be67-26920a2802f1",
                             Price = 15.99m,
-                            ProductId = "2",
+                            ProductId = "1ec624d5-25d0-4a5c-9d47-925be2439e70",
                             Region = 4,
                             RoastType = 0,
                             Size = 0,
@@ -343,9 +336,9 @@ namespace Infrastructure.Migrations
                         },
                         new
                         {
-                            ProductVariantId = "8565d9e6-4e63-4ef3-98f2-bd9e766f6948",
+                            ProductVariantId = "c0203709-dd05-41e7-8e28-767a7a594102",
                             Price = 15.99m,
-                            ProductId = "3",
+                            ProductId = "1e38e0e9-e76b-462a-9141-13637859449c",
                             Region = 2,
                             RoastType = 2,
                             Size = 3,
@@ -382,13 +375,13 @@ namespace Infrastructure.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "f7c497f1-ae7d-4d10-b67a-e6944292611b",
+                            Id = "6df63964-00cc-4a71-992d-05bfd29d7bec",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
-                            Id = "f9b5c2d9-ca5a-46a0-8f9c-14716a52cc51",
+                            Id = "f3744b36-59bb-4b17-804f-3549e61828f4",
                             Name = "User",
                             NormalizedName = "USER"
                         });
@@ -495,15 +488,15 @@ namespace Infrastructure.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "b7314aaa-730e-41a8-93f3-928ee44a7fbf",
+                            Id = "0d970ea5-100d-4f4c-9de9-d05defdce6f8",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "9aff8f93-b6d4-4d58-a951-4ccf6b114111",
+                            ConcurrencyStamp = "5a6e9f06-8e73-4c25-bd3f-f3401ba79f06",
                             Email = "admin@gmail.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                             NormalizedEmail = "ADMIN@GMAIL.COM",
                             NormalizedUserName = "ADMIN@GMAIL.COM",
-                            PasswordHash = "AQAAAAIAAYagAAAAEM2OiVRgo1SPcfNWcv2DUhByEFCIhbQs5cL8AKaS5+DX31oyOpSOIt+kf+KyaunnKA==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEPjkMAhQSl1iilGSh7zinEbahIr1wLwtN2ynWO0wM0BAWWfV3wSiGikkbMjfMTqQjw==",
                             PhoneNumberConfirmed = false,
                             SecurityStamp = "",
                             TwoFactorEnabled = false,
@@ -511,15 +504,15 @@ namespace Infrastructure.Migrations
                         },
                         new
                         {
-                            Id = "126cd1d9-1b88-4419-9b44-a818e309f57e",
+                            Id = "03108024-09e9-429c-92f8-dc2ebb6cfbdd",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "a4bb0c7e-8c11-4b54-9ad3-0ab30441395a",
+                            ConcurrencyStamp = "e8a94504-950b-4ea0-b43a-30a5fefedd49",
                             Email = "user@gmail.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                             NormalizedEmail = "USER@GMAIL.COM",
                             NormalizedUserName = "USER@GMAIL.COM",
-                            PasswordHash = "AQAAAAIAAYagAAAAEP6BLflQH7MHaT3sa9n+ahLNHViMnzyeZIe0Xb/FmALr665n5n6Vghorw2OmB4NPjw==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEF2SRKaP7eko50LbIZi0Oy1em7Bfc9tWMcM7VfbI6Yr5cBzGq4Tgvg8A7rHEDwOugQ==",
                             PhoneNumberConfirmed = false,
                             SecurityStamp = "",
                             TwoFactorEnabled = false,
@@ -591,13 +584,13 @@ namespace Infrastructure.Migrations
                     b.HasData(
                         new
                         {
-                            UserId = "b7314aaa-730e-41a8-93f3-928ee44a7fbf",
-                            RoleId = "f7c497f1-ae7d-4d10-b67a-e6944292611b"
+                            UserId = "0d970ea5-100d-4f4c-9de9-d05defdce6f8",
+                            RoleId = "6df63964-00cc-4a71-992d-05bfd29d7bec"
                         },
                         new
                         {
-                            UserId = "0a44d0b3-a1a2-4931-82a1-f227a86a228f",
-                            RoleId = "f9b5c2d9-ca5a-46a0-8f9c-14716a52cc51"
+                            UserId = "03108024-09e9-429c-92f8-dc2ebb6cfbdd",
+                            RoleId = "f3744b36-59bb-4b17-804f-3549e61828f4"
                         });
                 });
 
@@ -689,13 +682,13 @@ namespace Infrastructure.Migrations
 
             modelBuilder.Entity("Domain.ProductImage", b =>
                 {
-                    b.HasOne("Domain.ProductVariant", "ProductVariant")
-                        .WithMany("ImageUrl")
-                        .HasForeignKey("ProductVariantId")
+                    b.HasOne("Domain.Product", "Product")
+                        .WithMany("ProductImages")
+                        .HasForeignKey("ProductId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("ProductVariant");
+                    b.Navigation("Product");
                 });
 
             modelBuilder.Entity("Domain.ProductVariant", b =>
@@ -772,12 +765,9 @@ namespace Infrastructure.Migrations
 
             modelBuilder.Entity("Domain.Product", b =>
                 {
-                    b.Navigation("ProductVariants");
-                });
+                    b.Navigation("ProductImages");
 
-            modelBuilder.Entity("Domain.ProductVariant", b =>
-                {
-                    b.Navigation("ImageUrl");
+                    b.Navigation("ProductVariants");
                 });
 #pragma warning restore 612, 618
         }
