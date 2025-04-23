@@ -4,6 +4,7 @@ using Infrastructure;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250422075501_Update_Cart_and_CartItem")]
+    partial class Update_Cart_and_CartItem
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -37,10 +40,6 @@ namespace Infrastructure.Migrations
                     b.Property<string>("CartItemId")
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<string>("CartId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
-
                     b.Property<decimal>("Price")
                         .HasColumnType("decimal(18,2)");
 
@@ -51,11 +50,15 @@ namespace Infrastructure.Migrations
                     b.Property<int>("Quantity")
                         .HasColumnType("int");
 
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
                     b.HasKey("CartItemId");
 
-                    b.HasIndex("CartId");
-
                     b.HasIndex("ProductVariantId");
+
+                    b.HasIndex("UserId");
 
                     b.ToTable("CartItems");
                 });
@@ -100,7 +103,7 @@ namespace Infrastructure.Migrations
                         {
                             CategoryId = "4",
                             Description = "Coffee and tea accessories.",
-                            Name = "Decaf"
+                            Name = "Cold Brew"
                         });
                 });
 
@@ -197,40 +200,30 @@ namespace Infrastructure.Migrations
                             ProductId = "780905a8-1505-4635-a3ed-2872625bd071",
                             BasePrice = 15.99m,
                             CategoryId = "1",
-                            CreatedDate = new DateTimeOffset(new DateTime(2025, 4, 23, 3, 53, 45, 299, DateTimeKind.Unspecified).AddTicks(7618), new TimeSpan(0, 0, 0, 0, 0)),
-                            Description = "No competition here: This much-awarded espresso blend puts its game face on in the form of semi-sweet, zesty, full-body flavored. Plays well with milk.",
+                            CreatedDate = new DateTimeOffset(new DateTime(2025, 4, 22, 7, 55, 1, 28, DateTimeKind.Unspecified).AddTicks(8396), new TimeSpan(0, 0, 0, 0, 0)),
+                            Description = "Rich and aromatic Ethiopian coffee beans.",
                             Name = "House Espresso",
-                            UpdatedDate = new DateTimeOffset(new DateTime(2025, 4, 23, 3, 53, 45, 299, DateTimeKind.Unspecified).AddTicks(7622), new TimeSpan(0, 0, 0, 0, 0))
+                            UpdatedDate = new DateTimeOffset(new DateTime(2025, 4, 22, 7, 55, 1, 28, DateTimeKind.Unspecified).AddTicks(8401), new TimeSpan(0, 0, 0, 0, 0))
                         },
                         new
                         {
                             ProductId = "1ec624d5-25d0-4a5c-9d47-925be2439e70",
                             BasePrice = 9.99m,
                             CategoryId = "2",
-                            CreatedDate = new DateTimeOffset(new DateTime(2025, 4, 23, 3, 53, 45, 299, DateTimeKind.Unspecified).AddTicks(7626), new TimeSpan(0, 0, 0, 0, 0)),
-                            Description = "Extra smooth, extra chocolaty-sweet, and dare we say...extraterrestrial? A splash of ripe cherry juiciness makes this crowd-pleasing cup every bit as delicious hot as it is cold.",
+                            CreatedDate = new DateTimeOffset(new DateTime(2025, 4, 22, 7, 55, 1, 28, DateTimeKind.Unspecified).AddTicks(8405), new TimeSpan(0, 0, 0, 0, 0)),
+                            Description = "Refreshing and healthy green tea.",
                             Name = "Space Cadet",
-                            UpdatedDate = new DateTimeOffset(new DateTime(2025, 4, 23, 3, 53, 45, 299, DateTimeKind.Unspecified).AddTicks(7626), new TimeSpan(0, 0, 0, 0, 0))
+                            UpdatedDate = new DateTimeOffset(new DateTime(2025, 4, 22, 7, 55, 1, 28, DateTimeKind.Unspecified).AddTicks(8406), new TimeSpan(0, 0, 0, 0, 0))
                         },
                         new
                         {
                             ProductId = "1e38e0e9-e76b-462a-9141-13637859449c",
                             BasePrice = 25.99m,
                             CategoryId = "3",
-                            CreatedDate = new DateTimeOffset(new DateTime(2025, 4, 23, 3, 53, 45, 299, DateTimeKind.Unspecified).AddTicks(7628), new TimeSpan(0, 0, 0, 0, 0)),
-                            Description = "Blast off with this delightfully soft and fruity coffee sourced from Mrs. Tigest Wako's small farm in the famous Yirgacheffe region of Ethiopia.",
+                            CreatedDate = new DateTimeOffset(new DateTime(2025, 4, 22, 7, 55, 1, 28, DateTimeKind.Unspecified).AddTicks(8408), new TimeSpan(0, 0, 0, 0, 0)),
+                            Description = "High-quality French press for coffee brewing.",
                             Name = "Space Cowboy",
-                            UpdatedDate = new DateTimeOffset(new DateTime(2025, 4, 23, 3, 53, 45, 299, DateTimeKind.Unspecified).AddTicks(7628), new TimeSpan(0, 0, 0, 0, 0))
-                        },
-                        new
-                        {
-                            ProductId = "ee38e0e9-e76b-462a-9141-13637859449c",
-                            BasePrice = 25.99m,
-                            CategoryId = "4",
-                            CreatedDate = new DateTimeOffset(new DateTime(2025, 4, 23, 3, 53, 45, 299, DateTimeKind.Unspecified).AddTicks(7631), new TimeSpan(0, 0, 0, 0, 0)),
-                            Description = "This decaf is heavy on chocolate flavor with a little fruity complexity in there as well; you won't feel like a fool drinking it.",
-                            Name = "Decaf Fool's Gold",
-                            UpdatedDate = new DateTimeOffset(new DateTime(2025, 4, 23, 3, 53, 45, 299, DateTimeKind.Unspecified).AddTicks(7631), new TimeSpan(0, 0, 0, 0, 0))
+                            UpdatedDate = new DateTimeOffset(new DateTime(2025, 4, 22, 7, 55, 1, 28, DateTimeKind.Unspecified).AddTicks(8409), new TimeSpan(0, 0, 0, 0, 0))
                         });
                 });
 
@@ -256,39 +249,33 @@ namespace Infrastructure.Migrations
                     b.HasData(
                         new
                         {
-                            ProductImageId = "ffe22b83-2eab-468d-ba22-64a75b12b09c",
+                            ProductImageId = "b3de0b75-a1db-4516-8b9b-da544a13ca65",
                             ImageUrl = "images/House Espresso1.jpg",
                             ProductId = "780905a8-1505-4635-a3ed-2872625bd071"
                         },
                         new
                         {
-                            ProductImageId = "d8a6dc3c-49e0-40b7-9d68-853a6d396989",
+                            ProductImageId = "a15d6ba4-688d-469e-a16d-dbb0bec00b75",
                             ImageUrl = "images/House Espresso2.jpg",
                             ProductId = "780905a8-1505-4635-a3ed-2872625bd071"
                         },
                         new
                         {
-                            ProductImageId = "f9d3fd50-6d19-4158-8c74-102738110f1b",
+                            ProductImageId = "a0a939e2-7fa9-49ee-afa4-bf99c0c0ea38",
                             ImageUrl = "images/Space Cadet_1.jpg",
                             ProductId = "1ec624d5-25d0-4a5c-9d47-925be2439e70"
                         },
                         new
                         {
-                            ProductImageId = "0d333044-12a7-429c-b15f-9e2203b497a6",
+                            ProductImageId = "de7b45ea-bb1b-49a8-9f41-b67b594bc716",
                             ImageUrl = "images/Space Cadet_2.jpg",
                             ProductId = "1ec624d5-25d0-4a5c-9d47-925be2439e70"
                         },
                         new
                         {
-                            ProductImageId = "b41f46ef-2db8-420e-a02f-02c267c55761",
+                            ProductImageId = "5ff3a598-29ea-4672-a1c5-f74f7b19dff3",
                             ImageUrl = "images/Space Cowboy1.jpg",
                             ProductId = "1e38e0e9-e76b-462a-9141-13637859449c"
-                        },
-                        new
-                        {
-                            ProductImageId = "61c033c7-a9a9-43a8-8e85-1b4dcc56ccc8",
-                            ImageUrl = "images/Decaf Fool's Gold.jpg",
-                            ProductId = "ee38e0e9-e76b-462a-9141-13637859449c"
                         });
                 });
 
@@ -326,8 +313,8 @@ namespace Infrastructure.Migrations
                     b.HasData(
                         new
                         {
-                            ProductVariantId = "eb1cefbf-fa69-4d1c-997c-e2dd40d61b2b",
-                            Price = 20.99m,
+                            ProductVariantId = "0350cfd2-2ad8-4d78-af2e-1a74dea5ec38",
+                            Price = 15.99m,
                             ProductId = "780905a8-1505-4635-a3ed-2872625bd071",
                             Region = 0,
                             RoastType = 0,
@@ -336,63 +323,23 @@ namespace Infrastructure.Migrations
                         },
                         new
                         {
-                            ProductVariantId = "75bfd1c0-6a43-4972-8a58-fc69cebfa72e",
-                            Price = 25.99m,
-                            ProductId = "780905a8-1505-4635-a3ed-2872625bd071",
-                            Region = 0,
-                            RoastType = 0,
-                            Size = 2,
-                            Taste = "Syrupy & Smooth"
-                        },
-                        new
-                        {
-                            ProductVariantId = "c0f7e45c-3747-4577-b0c4-910a9787c440",
-                            Price = 15.99m,
-                            ProductId = "780905a8-1505-4635-a3ed-2872625bd071",
-                            Region = 0,
-                            RoastType = 0,
-                            Size = 0,
-                            Taste = "Syrupy & Smooth"
-                        },
-                        new
-                        {
-                            ProductVariantId = "f08b20a0-197c-49b6-90fb-470b551fd9a5",
+                            ProductVariantId = "4e392981-17ac-4c7c-8295-d0a593da4ce6",
                             Price = 15.99m,
                             ProductId = "1ec624d5-25d0-4a5c-9d47-925be2439e70",
                             Region = 4,
-                            RoastType = 1,
+                            RoastType = 0,
                             Size = 0,
                             Taste = "Sweet & Smooth"
                         },
                         new
                         {
-                            ProductVariantId = "ba72334c-ba2c-4b9b-bcdc-c8e5c899f4a6",
-                            Price = 20.99m,
-                            ProductId = "1ec624d5-25d0-4a5c-9d47-925be2439e70",
-                            Region = 4,
-                            RoastType = 1,
-                            Size = 1,
-                            Taste = "Sweet & Smooth"
-                        },
-                        new
-                        {
-                            ProductVariantId = "887dd94e-0f4c-49f0-86bd-120e41ac76db",
-                            Price = 35.99m,
+                            ProductVariantId = "7ab5b713-2d74-4416-8e35-f705fe7f200e",
+                            Price = 15.99m,
                             ProductId = "1e38e0e9-e76b-462a-9141-13637859449c",
                             Region = 2,
                             RoastType = 2,
                             Size = 3,
                             Taste = "Funky & Fruity"
-                        },
-                        new
-                        {
-                            ProductVariantId = "bc77cde7-9240-41b6-8584-88eaee05ad35",
-                            Price = 15.99m,
-                            ProductId = "ee38e0e9-e76b-462a-9141-13637859449c",
-                            Region = 2,
-                            RoastType = 2,
-                            Size = 1,
-                            Taste = "Comforting & Rich"
                         });
                 });
 
@@ -425,13 +372,13 @@ namespace Infrastructure.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "a3f8cdb8-4db5-406c-928b-4c2a0e4f59e8",
+                            Id = "cea37379-127e-4717-87d7-83d5d0d8bf5a",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
-                            Id = "c20e8a9b-c473-4a5a-a6da-7e431fb93e47",
+                            Id = "69fd56b6-4332-4c85-9232-56df06d20b78",
                             Name = "User",
                             NormalizedName = "USER"
                         });
@@ -538,15 +485,15 @@ namespace Infrastructure.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "37d0535e-1faa-4c34-94a7-c49b238ff949",
+                            Id = "e3041fc7-b72a-46e4-8afc-2c180ace64bb",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "6714ff92-dd53-44ee-b128-ed5c91687a77",
+                            ConcurrencyStamp = "5df03fab-543a-42e8-ac67-679094d48ef6",
                             Email = "admin@gmail.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                             NormalizedEmail = "ADMIN@GMAIL.COM",
                             NormalizedUserName = "ADMIN@GMAIL.COM",
-                            PasswordHash = "AQAAAAIAAYagAAAAEMl6V+bAFRDwYEgRdF9L+8/sMt14e9DuWwpuT5xDQVDzyxwC0DOB+nJRmh5IL9uL6Q==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEKZquVbU08eIhIK6/QFfhs0flVkTvaxAdYvlQDwpeOGB57a8qqFKjlQUZveQBXxlVQ==",
                             PhoneNumberConfirmed = false,
                             SecurityStamp = "",
                             TwoFactorEnabled = false,
@@ -554,15 +501,15 @@ namespace Infrastructure.Migrations
                         },
                         new
                         {
-                            Id = "fdc25666-c716-4110-a1ab-5b6ba804622b",
+                            Id = "d5c1e357-382b-4d70-9153-96f825a8cc2b",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "ef2db00f-0063-4b91-99c7-c7dace94da89",
+                            ConcurrencyStamp = "29ce23bd-3f66-46bc-b098-a09f52afc252",
                             Email = "user@gmail.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                             NormalizedEmail = "USER@GMAIL.COM",
                             NormalizedUserName = "USER@GMAIL.COM",
-                            PasswordHash = "AQAAAAIAAYagAAAAEIUtgzhdn8FLWErRxMFvOP8XJPU8QOw8pm268LjTAgX/9RlKGifRtXkkL2t4UOAQEQ==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEAnIVBLDQugc2nHDVyrxRjvXvIWBTgoMchfwe3fZ2ytWsDzsHS7ZtGdnp6lYL6tkvg==",
                             PhoneNumberConfirmed = false,
                             SecurityStamp = "",
                             TwoFactorEnabled = false,
@@ -634,13 +581,13 @@ namespace Infrastructure.Migrations
                     b.HasData(
                         new
                         {
-                            UserId = "37d0535e-1faa-4c34-94a7-c49b238ff949",
-                            RoleId = "a3f8cdb8-4db5-406c-928b-4c2a0e4f59e8"
+                            UserId = "e3041fc7-b72a-46e4-8afc-2c180ace64bb",
+                            RoleId = "cea37379-127e-4717-87d7-83d5d0d8bf5a"
                         },
                         new
                         {
-                            UserId = "fdc25666-c716-4110-a1ab-5b6ba804622b",
-                            RoleId = "c20e8a9b-c473-4a5a-a6da-7e431fb93e47"
+                            UserId = "d5c1e357-382b-4d70-9153-96f825a8cc2b",
+                            RoleId = "69fd56b6-4332-4c85-9232-56df06d20b78"
                         });
                 });
 
@@ -683,15 +630,15 @@ namespace Infrastructure.Migrations
 
             modelBuilder.Entity("Domain.CartItem", b =>
                 {
-                    b.HasOne("Domain.Cart", "Cart")
-                        .WithMany("CartItems")
-                        .HasForeignKey("CartId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("Domain.ProductVariant", "ProductVariant")
                         .WithMany()
                         .HasForeignKey("ProductVariantId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Domain.Cart", "Cart")
+                        .WithMany("CartItems")
+                        .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 

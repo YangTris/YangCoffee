@@ -115,7 +115,7 @@ namespace Infrastructure
                 new Category
                 {
                     CategoryId = "4",
-                    Name = "Cold Brew",
+                    Name = "Decaf",
                     Description = "Coffee and tea accessories."
                 }
             );
@@ -126,7 +126,8 @@ namespace Infrastructure
                 {
                     ProductId = "780905a8-1505-4635-a3ed-2872625bd071",
                     Name = "House Espresso",
-                    Description = "Rich and aromatic Ethiopian coffee beans.",
+                    Description = "No competition here: This much-awarded espresso blend puts its " +
+                    "game face on in the form of semi-sweet, zesty, full-body flavored. Plays well with milk.",
                     BasePrice = 15.99m,
                     CreatedDate = DateTimeOffset.UtcNow,
                     UpdatedDate = DateTimeOffset.UtcNow,
@@ -136,7 +137,8 @@ namespace Infrastructure
                 {
                     ProductId = "1ec624d5-25d0-4a5c-9d47-925be2439e70",
                     Name = "Space Cadet",
-                    Description = "Refreshing and healthy green tea.",
+                    Description = "Extra smooth, extra chocolaty-sweet, and dare we say...extraterrestrial? " +
+                    "A splash of ripe cherry juiciness makes this crowd-pleasing cup every bit as delicious hot as it is cold.",
                     BasePrice = 9.99m,
                     CreatedDate = DateTimeOffset.UtcNow,
                     UpdatedDate = DateTimeOffset.UtcNow,
@@ -146,11 +148,23 @@ namespace Infrastructure
                 {
                     ProductId = "1e38e0e9-e76b-462a-9141-13637859449c",
                     Name = "Space Cowboy",
-                    Description = "High-quality French press for coffee brewing.",
+                    Description = "Blast off with this delightfully soft and fruity coffee sourced from Mrs. " +
+                    "Tigest Wako's small farm in the famous Yirgacheffe region of Ethiopia.",
                     BasePrice = 25.99m,
                     CreatedDate = DateTimeOffset.UtcNow,
                     UpdatedDate = DateTimeOffset.UtcNow,
                     CategoryId = "3"
+                },
+                new Product
+                {
+                    ProductId = "ee38e0e9-e76b-462a-9141-13637859449c",
+                    Name = "Decaf Fool's Gold",
+                    Description = "This decaf is heavy on chocolate flavor with a " +
+                    "little fruity complexity in there as well; you won't feel like a fool drinking it.",
+                    BasePrice = 25.99m,
+                    CreatedDate = DateTimeOffset.UtcNow,
+                    UpdatedDate = DateTimeOffset.UtcNow,
+                    CategoryId = "4"
                 }
             );
 
@@ -164,6 +178,26 @@ namespace Infrastructure
                     Region = Region.Africa,
                     RoastType = RoastType.Light,
                     Taste = "Syrupy & Smooth",
+                    Price = 20.99m
+                },
+                new ProductVariant
+                {
+                    ProductVariantId = Guid.NewGuid().ToString(),
+                    ProductId = "780905a8-1505-4635-a3ed-2872625bd071",
+                    Size = Size.Big,
+                    Region = Region.Africa,
+                    RoastType = RoastType.Light,
+                    Taste = "Syrupy & Smooth",
+                    Price = 25.99m
+                },
+                new ProductVariant
+                {
+                    ProductVariantId = Guid.NewGuid().ToString(),
+                    ProductId = "780905a8-1505-4635-a3ed-2872625bd071",
+                    Size = Size.Small,
+                    Region = Region.Africa,
+                    RoastType = RoastType.Light,
+                    Taste = "Syrupy & Smooth",
                     Price = 15.99m
                 },
                 new ProductVariant
@@ -172,9 +206,19 @@ namespace Infrastructure
                     ProductId = "1ec624d5-25d0-4a5c-9d47-925be2439e70",
                     Size = Size.Small,
                     Region = Region.SouthAmerica,
-                    RoastType = RoastType.Light,
+                    RoastType = RoastType.Medium,
                     Taste = "Sweet & Smooth",
                     Price = 15.99m
+                },
+                new ProductVariant
+                {
+                    ProductVariantId = Guid.NewGuid().ToString(),
+                    ProductId = "1ec624d5-25d0-4a5c-9d47-925be2439e70",
+                    Size = Size.Standard,
+                    Region = Region.SouthAmerica,
+                    RoastType = RoastType.Medium,
+                    Taste = "Sweet & Smooth",
+                    Price = 20.99m
                 },
                 new ProductVariant
                 {
@@ -184,6 +228,16 @@ namespace Infrastructure
                     Region = Region.CentralAmerica,
                     RoastType = RoastType.Dark,
                     Taste = "Funky & Fruity",
+                    Price = 35.99m
+                },
+                new ProductVariant
+                {
+                    ProductVariantId = Guid.NewGuid().ToString(),
+                    ProductId = "ee38e0e9-e76b-462a-9141-13637859449c",
+                    Size = Size.Standard,
+                    Region = Region.CentralAmerica,
+                    RoastType = RoastType.Dark,
+                    Taste = "Comforting & Rich",
                     Price = 15.99m
                 }
             );
@@ -219,6 +273,12 @@ namespace Infrastructure
                     ProductImageId = Guid.NewGuid().ToString(),
                     ProductId = "1e38e0e9-e76b-462a-9141-13637859449c",
                     ImageUrl = "images/Space Cowboy1.jpg"
+                },
+                new ProductImage
+                {
+                    ProductImageId = Guid.NewGuid().ToString(),
+                    ProductId = "ee38e0e9-e76b-462a-9141-13637859449c",
+                    ImageUrl = "images/Decaf Fool's Gold.jpg"
                 }
             );
         }
