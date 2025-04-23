@@ -11,7 +11,6 @@ namespace Domain
     public class Cart
     {
         [Key]
-        public string CartId { get; set; }
         [ForeignKey("User")]
         public string UserId { get; set; }
         public virtual User User { get; set; }
