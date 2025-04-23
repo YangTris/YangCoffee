@@ -1,25 +1,88 @@
-﻿<div class="container mt-5">
+﻿@using Shared.DTOs
+@model ProductDTO
+
+<div class="container mt-5">
     <div class="row">
         <div class="col">
             <img src="~/images/Space Cadet.jpg" style="background-color: rgb(246, 246, 246);" class="card-img-top"
                 alt="...">
         </div>
         <div class="col">
-            <h1>Product Name</h1>
-            <h3>Price per bag</h3>
-            <h4>Taste</h4>
-            <p>Extra smooth, extra chocolaty-sweet, and dare we say...extraterrestrial? A splash of ripe cherry
-                juiciness makes this crowd-pleasing cup every bit as delicious hot as it is cold.</p>
+            <h1>@Html.DisplayFor(model => model.Name)</h1>
+            <h3>@Html.DisplayFor(model => model.ProductVariants.FirstOrDefault().Price)</h3>
+            <h4>@Html.DisplayFor(model => model.ProductVariants.FirstOrDefault().Taste)</h4>
+            <p>@Html.DisplayFor(model => model.Description)</p>
             <label for="inputPassword5" class="form-label">Size</label>
             <select class="form-select form-select-lg mb-3" aria-label="Large select example">
                 <option selected>Standard: 10.93 oz (About 20 Cups)</option>
                 <option value="1">Big Bag: 32 oz (About 60 cups)</option>
             </select>
-            <label for="inputPassword5" class="form-label">Quantity</label>
+            <div class="mb-3">
+                <label for="inputPassword5" class="form-label">Quantity</label>
+                <div class="input-group" style="width: 120px;">
+                    <button class="btn btn-outline-secondary" type="button" id="decrementBtn">-</button>
+                    <input type="text" class="form-control text-center" value="1">
+                    <button class="btn btn-outline-secondary" type="button" id="incrementBtn">+</button>
+                </div>
+            </div>
+            <div class="d-grid">
+                <button class="btn btn-danger btn-lg mt-3" type="button">Add to Cart</button>
+            </div>
 
+            <hr class="featurette-divider mt-5 mb-4">
+            <h1>Flavor Profile</h1>
+            <h4>Roast Level</h4>
+            <i class="bi bi-fire">@Html.DisplayFor(model => model.ProductVariants.FirstOrDefault().RoastType)</i>
+            <h4>Orgin</h4>
+            <i class="bi bi-globe-americas">@Html.DisplayFor(model => model.ProductVariants.FirstOrDefault().Region)</i>
 
-            <button></button>
+            <div class="accordion" id="accordionPanelsStayOpenExample">
+
+                <h1 class="accordion-header">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#panelsStayOpen-collapseTwo" aria-expanded="false"
+                        aria-controls="panelsStayOpen-collapseTwo">
+                        Why Yang's Coffee?
+                    </button>
+                </h1>
+
+                <div id="panelsStayOpen-collapseTwo" class="accordion-collapse collapse">
+                    <div class="accordion-body">
+                        <div>
+                            <p>We are a small family business that has been roasting coffee for over 20 years. We take
+                                pride
+                                in our craft and are committed to providing the best quality coffee to our customers.
+                            </p>
+                            <p>Our coffee is sourced from the best farms around the world and roasted to perfection in
+                                small
+                                batches. We believe that great coffee should be accessible to everyone, and we strive to
+                                make our products affordable without compromising on quality.</p>
+                            <p>Thank you for supporting our small business. We hope you enjoy our coffee as much as we
+                                do!
+                            </p>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
 
         </div>
     </div>
 </div>
+
+<script>
+    document.getElementById('incrementBtn').addEventListener('click', function () {
+        let input = document.querySelector('.input-group input');
+        let value = parseInt(input.value);
+        input.value = value + 1;
+    });
+
+    document.getElementById('decrementBtn').addEventListener('click', function () {
+        let input = document.querySelector('.input-group input');
+        let value = parseInt(input.value);
+        if (value > 1) {
+            input.value = value - 1;
+        }
+    });
+</script>
