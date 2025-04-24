@@ -174,14 +174,14 @@
                 @foreach (var item in Model)
                 {
                     <div class="col">
-                        <a href="/Product/ProductDetail/@item.ProductId" class="text-decoration-none text-dark">
+                        <a class="text-decoration-none text-dark">
                             <div class="card border-0" style="width: 18rem;">
                                 <!-- Product Image -->
                                 <img src="@item.ProductImages" style="background-color: rgb(246, 246, 246);"
                                     class="card-img-top" alt="...">
 
                                 <!-- Card Body -->
-                                <div class="card-body text-center p-0 mt-3">
+                                <div class="card-body p-0 mt-3">
                                     <div class="d-flex align-items-center justify-content-between">
                                         <h5 class="card-title mb-1 fw-bold">@item.Name</h5>
                                         <h5 class="card-text fw-bold">@item.BasePrice</h5>
