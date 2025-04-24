@@ -155,26 +155,11 @@
             </div>
 
             <div class="row row-cols-1 row-cols-md-3 g-4">
-                @* @foreach (var item in Model)
-                {
-                    <div class="col">
-                        <a href="/Product/ProductDetail/@item.ProductId" class="text-decoration-none text-dark">
-                            <div class="card h-100">
-                                <img src="@item.ProductImages" style="background-color: rgb(246, 246, 246);"
-                                    class="card-img-top" alt="...">
-                                <div class="card-body">
-                                    <h6 class="card-text">@item.BasePrice</h6>
-                                    <h3 class="card-title">@item.Name</h3>
-                                    <p class="card-text">@item.ProductVariants.FirstOrDefault().Taste</p>
-                                </div>
-                            </div>
-                        </a>
-                    </div>
-                } *@
                 @foreach (var item in Model)
                 {
                     <div class="col">
-                        <a class="text-decoration-none text-dark">
+                        <a asp-action="ProductDetail" asp-controller="Product" asp-route-id="@item.ProductId"
+                            class="text-decoration-none text-dark">
                             <div class="card border-0" style="width: 18rem;">
                                 <!-- Product Image -->
                                 <img src="@item.ProductImages" style="background-color: rgb(246, 246, 246);"
