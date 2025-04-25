@@ -17,10 +17,10 @@ namespace Infrastructure.Repositories
             _context = context;
         }
 
-        public Task AddProductVariantAsync(ProductVariant productVariant)
+        public async Task AddProductVariantAsync(ProductVariant productVariant)
         {
             _context.ProductVariants.Add(productVariant);
-            return _context.SaveChangesAsync();
+            await _context.SaveChangesAsync();
         }
 
         public async Task DeleteProductVariantAsync(string id)

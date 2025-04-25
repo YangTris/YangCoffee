@@ -9,7 +9,7 @@ namespace Application.IRepositories
 {
     public interface IProductImageRepository
     {
-        Task<IEnumerable<ProductImage>> GetAllProductImagesAsync(string producVarianttId);
+        Task<IEnumerable<ProductImage>> GetAllProductImagesAsync(string producId);
         Task AddProductImageAsync(ProductImage productImage);
         Task DeleteProductImageAsync(string id);
     }

@@ -17,10 +17,10 @@ namespace Infrastructure.Repositories
         {
             _context = context;
         }
-        public Task AddProductAsync(Product product)
+        public async Task AddProductAsync(Product product)
         {
             _context.Products.Add(product);
-            return _context.SaveChangesAsync();
+            await _context.SaveChangesAsync();
         }
 
         public async Task DeleteProductAsync(string id)
