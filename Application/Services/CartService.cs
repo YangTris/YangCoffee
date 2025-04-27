@@ -41,6 +41,7 @@ namespace Application.Services
                     Size = ci.ProductVariant.Size.ToString(),
                     Quantity = ci.Quantity,
                     ImageUrl = ci.ProductVariant.Product.ProductImages?.FirstOrDefault().ImageUrl,
+                    ProductVariantId = ci.ProductVariantId
                 }).ToList()
             };
         }
@@ -55,7 +56,8 @@ namespace Application.Services
                 Price = cartItem.Price,
                 ProductName = cartItem.ProductVariant.Product.Name,
                 ImageUrl = cartItem.ProductVariant.Product.ProductImages.FirstOrDefault().ImageUrl,
-                Size = cartItem.ProductVariant.Size.ToString()
+                Size = cartItem.ProductVariant.Size.ToString(),
+                ProductVariantId = cartItem.ProductVariantId
             };
         }
         public async Task<CartDTO> CreateCartAsync(string userId)
@@ -114,7 +116,6 @@ namespace Application.Services
                     if (item.ProductVariantId == productVariantId)
                     {
                         item.Quantity += quantity;
-                        item.Price = item.ProductVariant.Price * item.Quantity;
                         await _cartItemRepository.UpdateAsync(item);
                         return;
                     }
@@ -127,7 +128,7 @@ namespace Application.Services
                 CartItemId = Guid.NewGuid().ToString(),
                 ProductVariantId = productVariantId,
                 Quantity = quantity,
-                Price = productVariant.Price * quantity,
+                Price = productVariant.Price,
                 CartId = userId,
             };
             await _cartItemRepository.AddItemAsync(cartItem);
