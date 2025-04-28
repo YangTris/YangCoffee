@@ -1,201 +1,231 @@
-﻿@model IEnumerable<Shared.DTOs.ProductDTO>
+﻿@using MVC.Controllers
+@model PaginatedResult<Shared.DTOs.ProductDTO>
 @{
     ViewData["Title"] = "AllProducts";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 <div class="container mt-5">
-    <h1 style="font-size: 76px; font-weight: 700px;">All Specialty Coffee</h1>
-    <p style="font-size: 20px; font-weight: 24px">Choose from a wide variety of coffee from the top roasters in the US.
-        All
-        our specialty coffee is roasted to
-        order and shipped fresh to your door.</p>
-    <div class="row">
-        <div class="col-3">
-            <div class="accordion" id="accordionPanelsStayOpenExample">
+    <h1 style="font-size: 76px; font-weight: 700;">All Specialty Coffee</h1>
+    <p style="font-size: 20px; font-weight: 24px">
+        Choose from a wide variety of coffee from the top roasters in the US.
+        All our specialty coffee is roasted to order and shipped fresh to your door.
+    </p>
 
-                <div class="d-flex justify-content-between align-items-center mb-3">
-                    <h2><i class="bi bi-filter"></i>Filters</h2>
-                    <input class="btn btn-primary" type="reset" value="Clear" id="resetButton"
-                        style="background-color: #F2F2F2; color: #000000; border: none; font-size: 14px; padding: 5px 10px;">
-                </div>
-
-                <div class="accordion-item">
-                    <h2 class="accordion-header">
-                        <button class="accordion-button" type="button" data-bs-toggle="collapse"
-                            data-bs-target="#panelsStayOpen-collapseOne" aria-expanded="true"
-                            aria-controls="panelsStayOpen-collapseOne">
-                            Price
-                        </button>
-                    </h2>
-                    <div id="panelsStayOpen-collapseOne" class="accordion-collapse collapse show">
-                        <div class="accordion-body">
-                            <div class="form-check">
-                                <input class="form-check-input" type="radio" name="radioDefault" id="radioDefault1"
-                                    checked>
-                                <label class="form-check-label" for="radioDefault1">
-                                    Any
-                                </label>
-                            </div>
-                            <div class="form-check">
-                                <input class="form-check-input" type="radio" name="radioDefault" id="radioDefault2">
-                                <label class="form-check-label" for="radioDefault2">
-                                    $15.75
-                                </label>
-                            </div>
-                            <div class="form-check">
-                                <input class="form-check-input" type="radio" name="radioDefault" id="radioDefault3">
-                                <label class="form-check-label" for="radioDefault3">
-                                    $19.95
-                                </label>
-                            </div>
-                            <div class="form-check">
-                                <input class="form-check-input" type="radio" name="radioDefault" id="radioDefault4">
-                                <label class="form-check-label" for="radioDefault4">
-                                    Over $20
-                                </label>
-                            </div>
-                        </div>
+    <form id="filterForm" asp-action="ProductList" method="get">
+        <div class="row">
+            <div class="col-3">
+                <div class="accordion" id="accordionPanelsStayOpenExample">
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <h2><i class="bi bi-filter"></i>Filters</h2>
+                        <input class="btn btn-primary" type="reset" value="Clear" id="resetButton"
+                            style="background-color: #F2F2F2; color: #000000; border: none; font-size: 14px; padding: 5px 10px;">
                     </div>
-                </div>
-                <div class="accordion-item">
-                    <h2 class="accordion-header">
-                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                            data-bs-target="#panelsStayOpen-collapseTwo" aria-expanded="false"
-                            aria-controls="panelsStayOpen-collapseTwo">
-                            Bag Weight
-                        </button>
-                    </h2>
-                    <div id="panelsStayOpen-collapseTwo" class="accordion-collapse collapse">
-                        <div class="accordion-body">
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox" value="" id="checkDefault">
-                                <label class="form-check-label" for="checkDefault">
-                                    Small Bag (8 oz.)
-                                </label>
-                            </div>
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox" value="" id="checkChecked" checked>
-                                <label class="form-check-label" for="checkChecked">
-                                    Standard Bag (10.93 oz.)
-                                </label>
-                            </div>
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox" value="" id="checkDefault3">
-                                <label class="form-check-label" for="checkDefault3">
-                                    Big Bag (2 lb.)
-                                </label>
-                            </div>
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox" value="" id="checkDefault4">
-                                <label class="form-check-label" for="checkDefault4">
-                                    Bulk (5 lb.)
-                                </label>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="accordion-item">
-                    <h2 class="accordion-header">
-                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                            data-bs-target="#panelsStayOpen-collapseThree" aria-expanded="false"
-                            aria-controls="panelsStayOpen-collapseThree">
-                            Region
-                        </button>
-                    </h2>
-                    <div id="panelsStayOpen-collapseThree" class="accordion-collapse collapse">
-                        <div class="accordion-body">
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox" value="" id="checkDefault5">
-                                <label class="form-check-label" for="checkDefault5">
-                                    Africa
-                                </label>
-                            </div>
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox" value="" id="checkDefault6">
-                                <label class="form-check-label" for="checkDefault6">
-                                    Asia
-                                </label>
-                            </div>
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox" value="" id="checkDefault7">
-                                <label class="form-check-label" for="checkDefault7">
-                                    Central America
-                                </label>
-                            </div>
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox" value="" id="checkDefault8">
-                                <label class="form-check-label" for="checkDefault8">
-                                    North America
-                                </label>
-                            </div>
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox" value="" id="checkDefault9">
-                                <label class="form-check-label" for="checkDefault9">
-                                    South America
-                                </label>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
 
-        <div class="col-9">
-
-            <div class="d-flex justify-content-between align-items-center mb-3">
-                <h2>All Products</h2>
-                <div class="dropdown">
-                    <select class="form-select" aria-label="Default select example">
-                        <option selected>Newest</option>
-                        <option value="1">Price: Low to High</option>
-                        <option value="2">Price: High to Low</option>
-                    </select>
-                </div>
-            </div>
-
-            <div class="row row-cols-1 row-cols-md-3 g-4">
-                @foreach (var item in Model)
-                {
-                    <div class="col">
-                        <a asp-action="ProductDetail" asp-controller="Product" asp-route-id="@item.ProductId"
-                            class="text-decoration-none text-dark">
-                            <div class="card border-0" style="width: 18rem;">
-                                <!-- Product Image -->
-                                <img src="@item.ProductImages" style="background-color: rgb(246, 246, 246);"
-                                    class="card-img-top" alt="...">
-
-                                <!-- Card Body -->
-                                <div class="card-body p-0 mt-3">
-                                    <div class="d-flex align-items-center justify-content-between">
-                                        <h5 class="card-title mb-1 fw-bold">@item.Name</h5>
-                                        <h5 class="card-text fw-bold">@item.BasePrice</h5>
-                                    </div>
-                                    <p class="card-text text-muted mb-2">@item.ProductVariants.FirstOrDefault().Taste</p>
+                    <!-- Price Filter -->
+                    <div class="accordion-item">
+                        <h2 class="accordion-header">
+                            <button class="accordion-button" type="button" data-bs-toggle="collapse"
+                                data-bs-target="#panelsStayOpen-collapseOne" aria-expanded="true"
+                                aria-controls="panelsStayOpen-collapseOne">
+                                Price
+                            </button>
+                        </h2>
+                        <div id="panelsStayOpen-collapseOne" class="accordion-collapse collapse show">
+                            <div class="accordion-body">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="price" id="priceAny" value=""
+                                        checked>
+                                    <label class="form-check-label" for="priceAny">Any</label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="price" id="price15"
+                                        value="15.75">
+                                    <label class="form-check-label" for="price15">$15.75</label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="price" id="price19"
+                                        value="19.95">
+                                    <label class="form-check-label" for="price19">$19.95</label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="price" id="price20" value="20">
+                                    <label class="form-check-label" for="price20">Over $20</label>
                                 </div>
                             </div>
-                        </a>
+                        </div>
                     </div>
-                }
 
+                    <!-- Bag Weight Filter -->
+                    <div class="accordion-item">
+                        <h2 class="accordion-header">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                data-bs-target="#panelsStayOpen-collapseTwo" aria-expanded="false"
+                                aria-controls="panelsStayOpen-collapseTwo">
+                                Bag Weight
+                            </button>
+                        </h2>
+                        <div id="panelsStayOpen-collapseTwo" class="accordion-collapse collapse">
+                            <div class="accordion-body">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" name="bagWeight" id="bag8oz"
+                                        value="8oz">
+                                    <label class="form-check-label" for="bag8oz">Small Bag (8 oz.)</label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" name="bagWeight" id="bag10oz"
+                                        value="10.93oz">
+                                    <label class="form-check-label" for="bag10oz">Standard Bag (10.93 oz.)</label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" name="bagWeight" id="bag2lb"
+                                        value="2lb">
+                                    <label class="form-check-label" for="bag2lb">Big Bag (2 lb.)</label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" name="bagWeight" id="bag5lb"
+                                        value="5lb">
+                                    <label class="form-check-label" for reactionary">Bulk (5 lb.)</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Region Filter -->
+                    <div class="accordion-item">
+                        <h2 class="accordion-header">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                data-bs-target="#panelsStayOpen-collapseThree" aria-expanded="false"
+                                aria-controls="panelsStayOpen-collapseThree">
+                                Region
+                            </button>
+                        </h2>
+                        <div id="panelsStayOpen-collapseThree" class="accordion-collapse collapse">
+                            <div class="accordion-body">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" name="region" id="regionAfrica"
+                                        value="Africa">
+                                    <label class="form-check-label" for="regionAfrica">Africa</label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" name="region" id="regionAsia"
+                                        value="Asia">
+                                    <label class="form-check-label" for="regionAsia">Asia</label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" name="region"
+                                        id="regionCentralAmerica" value="CentralAmerica">
+                                    <label class="form-check-label" for="regionCentralAmerica">Central America</label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" name="region"
+                                        id="regionNorthAmerica" value="NorthAmerica">
+                                    <label class="form-check-label" for="regionNorthAmerica">North America</label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" name="region"
+                                        id="regionSouthAmerica" value="SouthAmerica">
+                                    <label class="form-check-label" for="regionSouthAmerica">South America</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <nav aria-label="Page navigation example" style="margin-top: 20px;">
-                <ul class="pagination" style="justify-content: center;">
-                    <li class="page-item">
-                        <a class="page-link" href="#" aria-label="Previous">
-                            <span aria-hidden="true">&laquo;</span>
-                        </a>
-                    </li>
-                    <li class="page-item"><a class="page-link" href="#">1</a></li>
-                    <li class="page-item"><a class="page-link" href="#">2</a></li>
-                    <li class="page-item"><a class="page-link" href="#">3</a></li>
-                    <li class="page-item">
-                        <a class="page-link" href="#" aria-label="Next">
-                            <span aria-hidden="true">&raquo;</span>
-                        </a>
-                    </li>
-                </ul>
-            </nav>
+
+            <div class="col-9">
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <h2>All Products (@Model.TotalItems items)</h2>
+                    <div class="dropdown">
+                        <form method="get" action="@Url.Action("ProductList")">
+                            <select class="form-select" name="sortBy" onchange="this.form.submit()">
+                                <option value="createddate"
+                                    selected="@(ViewData["sortBy"]?.ToString() == "createddate" ? "selected" : "")">
+                                    Newest</option>
+                                <option value="price"
+                                    selected="@(ViewData["sortBy"]?.ToString() == "price" ? "selected" : "")">Price: Low
+                                    to High</option>
+                                <option value="name"
+                                    selected="@(ViewData["sortBy"]?.ToString() == "name" ? "selected" : "")">Name: A to
+                                    Z</option>
+                            </select>
+                            <input type="hidden" name="isDescending"
+                                value="@(ViewData["isDescending"] == "true" ? "true" : "false")" />
+                        </form>
+                    </div>
+                </div>
+
+                <div class="row row-cols-1 row-cols-md-3 g-4">
+                    @foreach (var item in Model.Items)
+                    {
+                        <div class="col">
+                            <a asp-action="ProductDetail" asp-controller="Product" asp-route-id="@item.ProductId"
+                                class="text-decoration-none text-dark">
+                                <div class="card border-0" style="width: 18rem;">
+                                    <img src="@item.ProductImages" style="background-color: rgb(246, 246, 246);"
+                                        class="card-img-top" alt="...">
+                                    <div class="card-body p-0 mt-3">
+                                        <div class="d-flex align-items-center justify-content-between">
+                                            <h5 class="card-title mb-1 fw-bold">@item.Name</h5>
+                                            <h5 class="card-text fw-bold">@item.BasePrice</h5>
+                                        </div>
+                                        <p class="card-text text-muted mb-2">@item.ProductVariants?.FirstOrDefault()?.Taste
+                                        </p>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                    }
+                </div>
+
+                <!-- Pagination -->
+                <nav aria-label="Page navigation example" style="margin-top: 20px;">
+                    <ul class="pagination" style="justify-content: center;">
+                        <li class="page-item @(Model.PageNumber == 1 ? "disabled" : "")">
+                            <a class="page-link" asp-action="ProductList" asp-route-pageNumber="@(Model.PageNumber - 1)"
+                                asp-route-pageSize="@Model.PageSize" asp-route-sortBy="@ViewData["sortBy"]"
+                                asp-route-isDescending="@ViewData["isDescending"]" aria-label="Previous">
+                                <span aria-hidden="true">«</span>
+                            </a>
+                        </li>
+                        @for (var i = 1; i <= Model.TotalPages; i++)
+                        {
+                            <li class="page-item @(i == Model.PageNumber ? "active" : "")">
+                                <a class="page-link" asp-action="ProductList" asp-route-pageNumber="@i"
+                                    asp-route-pageSize="@Model.PageSize" asp-route-sortBy="@ViewData["sortBy"]"
+                                    asp-route-isDescending="@ViewData["isDescending"]">@i</a>
+                            </li>
+                        }
+                        <li class="page-item @(Model.PageNumber == Model.TotalPages ? "disabled" : "")">
+                            <a class="page-link" asp-action="ProductList" asp-route-pageNumber="@(Model.PageNumber + 1)"
+                                asp-route-pageSize="@Model.PageSize" asp-route-sortBy="@ViewData["sortBy"]"
+                                asp-route-isDescending="@ViewData["isDescending"]" aria-label="Next">
+                                <span aria-hidden="true">»</span>
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
         </div>
-    </div>
+    </form>
 </div>
+
+@section Scripts {
+    <script>
+        // Handle form reset
+        document.getElementById('resetButton').addEventListener('click', function () {
+            document.getElementById('filterForm').reset();
+            document.getElementById('filterForm').submit();
+        });
+
+        // Handle sort change
+        document.querySelector('select[name="sortBy"]').addEventListener('change', function () {
+            var isDescending = this.value === 'price_desc';
+            document.querySelector('input[name="isDescending"]').value = isDescending;
+            if (this.value === 'price_desc') {
+                document.querySelector('input[name="sortBy"]').value = 'price';
+            }
+            document.getElementById('filterForm').submit();
+        });
+    </script>
+}

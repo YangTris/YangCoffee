@@ -23,6 +23,55 @@ namespace WebAPI.Controllers
             return Ok(products);
         }
 
+        [HttpGet("search")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public async Task<ActionResult<IEnumerable<ProductDTO>>> Search(
+            [FromQuery] string? searchName,
+            [FromQuery] string? sortBy,
+            [FromQuery] bool isDescending = false,
+            [FromQuery] int pageNumber = 1,
+            [FromQuery] int pageSize = 2) //10
+        {
+            if (!ModelState.IsValid) return BadRequest(ModelState);
+         
+            var products = await _productService.GetAllProductsAsync();
+
+            // Search
+            if (!string.IsNullOrWhiteSpace(searchName))
+            {
+                products = products.Where(p => p.Name.Contains(searchName, StringComparison.OrdinalIgnoreCase));
+            }
+
+            // Sort
+            products = sortBy?.ToLower() switch
+            {
+                "name" => isDescending ? products.OrderByDescending(p => p.Name) : products.OrderBy(p => p.Name),
+                "price" => isDescending ? products.OrderByDescending(p => p.BasePrice) : products.OrderBy(p => p.BasePrice),
+                "createddate" => isDescending ? products.OrderByDescending(p => p.CreatedDate) : products.OrderBy(p => p.CreatedDate),
+                _ => products
+            };
+
+            // Paging
+            var totalItems = products.Count();
+            var pagedProducts = products
+                .Skip((pageNumber - 1) * pageSize)
+                .Take(pageSize)
+                .ToList();
+
+            // Result
+            var result = new
+            {
+                TotalItems = totalItems,
+                PageNumber = pageNumber,
+                PageSize = pageSize,
+                TotalPages = (int)Math.Ceiling(totalItems / (double)pageSize),
+                Items = pagedProducts
+            };
+
+            return Ok(result);
+        }
+
         [HttpGet("{id}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -163,5 +212,6 @@ namespace WebAPI.Controllers
             await _productService.DeleteProductVariantAsync(id);
             return NoContent();
         }
+
     }
 }
