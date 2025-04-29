@@ -2,6 +2,8 @@
 using Application.IServices;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System;
+using System.Linq;
 
 namespace WebAPI.Controllers
 {
@@ -26,15 +28,18 @@ namespace WebAPI.Controllers
         [HttpGet("search")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<ActionResult<IEnumerable<ProductDTO>>> Search(
+        public async Task<ActionResult> Search(
             [FromQuery] string? searchName,
             [FromQuery] string? sortBy,
             [FromQuery] bool isDescending = false,
             [FromQuery] int pageNumber = 1,
-            [FromQuery] int pageSize = 2) //10
+            [FromQuery] int pageSize = 2,
+            [FromQuery] decimal? price = null,
+            [FromQuery] string[]? size = null,
+            [FromQuery] string[]? region = null)
         {
             if (!ModelState.IsValid) return BadRequest(ModelState);
-         
+
             var products = await _productService.GetAllProductsAsync();
 
             // Search
@@ -43,13 +48,37 @@ namespace WebAPI.Controllers
                 products = products.Where(p => p.Name.Contains(searchName, StringComparison.OrdinalIgnoreCase));
             }
 
+            // Filter by Price
+            if (price.HasValue)
+            {
+                products = price switch
+                {
+                    <= 15m => products.Where(p => p.BasePrice <= 15m ),
+                    <= 20m => products.Where(p => p.BasePrice > 15m && p.BasePrice <= 20m),
+                    > 20m => products.Where(p => p.BasePrice > 20m),
+                    _ => products
+                };
+            }
+
+            // Filter by Bag Weight
+            if (size != null && size.Any())
+            {
+                products = products.Where(p => p.ProductVariants.Any(v => size.Contains(v.Size.ToString())));
+            }
+
+            // Filter by Region
+            if (region != null && region.Any())
+            {
+                products = products.Where(p => p.ProductVariants.Any(v => region.Contains(v.Region.ToString())));
+            }
+
             // Sort
             products = sortBy?.ToLower() switch
             {
                 "name" => isDescending ? products.OrderByDescending(p => p.Name) : products.OrderBy(p => p.Name),
                 "price" => isDescending ? products.OrderByDescending(p => p.BasePrice) : products.OrderBy(p => p.BasePrice),
                 "createddate" => isDescending ? products.OrderByDescending(p => p.CreatedDate) : products.OrderBy(p => p.CreatedDate),
-                _ => products
+                _ => products.OrderByDescending(p => p.CreatedDate) // Default sort
             };
 
             // Paging
