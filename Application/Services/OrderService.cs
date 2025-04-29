@@ -84,48 +84,11 @@ namespace Application.Services
                     Price = item.Price,
                     SubTotal = item.Quantity * item.Price
                 };
-                order.OrderDetails.Add(orderDetail);
                 await _orderDetailRepository.AddOrderDetailAsync(orderDetail);
             }
             await _cartRepository.DeleteCartAsync(userId);
             return MapToDTO(order);
         }
-
-        //public Task CreateOrderAsync(OrderDTO orderDTO, CartDTO cartDTO)
-        //{
-        //    var order = new Order
-        //    {
-        //        OrderId = Guid.NewGuid().ToString(),
-        //        UserId = cartDTO.UserId,
-        //        TotalAmount = orderDTO.TotalAmount,
-        //        OrderDate = DateTimeOffset.Now,
-        //        OrderStatus = OrderStatus.Processing,
-        //        OrderDetails = orderDTO.OrderDetails.Select(od => new OrderDetail
-        //        {
-        //            ProductVariantId = od.ProductVariantId,
-        //            OrderId = orderDTO.OrderId,
-        //            Quantity = od.Quantity,
-        //            Price = od.Price,
-        //            SubTotal = od.SubTotal
-        //        }).ToList()
-        //    };
-        //    foreach (var item in cartDTO.CartItems)
-        //    {
-        //        var orderDetail = new OrderDetail
-        //        {
-        //            OrderId = order.OrderId,
-        //            ProductVariantId = item.ProductVariantId,
-        //            Quantity = item.Quantity,
-        //            Price = item.Price,
-        //            SubTotal = item.Quantity * item.Price
-        //        };
-        //        order.OrderDetails.Add(orderDetail);
-        //        _orderDetailRepository.AddOrderDetailAsync(orderDetail);
-        //    }
-        //    _cartRepository.DeleteCartAsync(cartDTO.UserId);
-
-        //    return _orderRepository.CreateOrderAsync(order);
-        //}
 
         public async Task<IEnumerable<OrderDTO>> GetAllOrdersAsync()
         {
