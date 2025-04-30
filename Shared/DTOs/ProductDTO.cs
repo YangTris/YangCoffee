@@ -18,6 +18,8 @@ namespace Shared.DTOs
         public DateTimeOffset CreatedDate { get; set; }
         public DateTimeOffset UpdatedDate { get; set; }
         public string CategoryId { get; set; }
+        public string productVariantId { get; set; }
+        public int quantity { get; set; } = 1;
         public List<ProductImageDTO>? ProductImages { get; set; }
         public List<ProductVariantDTO> ? ProductVariants { get; set; }
     }
