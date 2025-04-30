@@ -29,7 +29,7 @@
                         <a class="nav-link active" aria-current="page" href="#">Home</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" asp-controller="Account" asp-action="Login">Login</a>
+                        <a class="nav-link" asp-controller="Cart" asp-action="AddToCart">Cart</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" asp-controller="Product" asp-action="ProductList">Product</a>
@@ -53,10 +53,12 @@
                     <span class="navbar-toggler-icon"></span>
                 </button>
             </div>
+            <partial name="_LoginPartial" />
+
         </div>
     </nav>
 
-    <nav class="p-3 text-bg-dark" style="background-color: #2b80ff !important;">
+    @* <nav class="p-3 text-bg-dark" style="background-color: #2b80ff !important;">
         <div id="userHomePage" class="container">
             <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
                 <h3 class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
@@ -64,8 +66,12 @@
 
                 <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
                     <li><a asp-controller="User" asp-action="Home" class="nav-link px-2 text-white">Home</a></li>
-                    <li><a href="#carouselExampleInterval" class="nav-link px-2 text-white">Introduce</a></li>
-                    <li><a href="#about" class="nav-link px-2 text-white">About</a></li>
+                    <li class="nav-item">
+                        <a class="nav-link text-white" asp-controller="Cart" asp-action="AddToCart">AddToCart</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-white" asp-controller="Product" asp-action="ProductList">Product</a>
+                    </li>
                     <li><a asp-controller="Product" asp-action="Search" class="nav-link px-2 text-white">Product</a>
                     </li>
                 </ul>
@@ -85,58 +91,11 @@
                     </button>
                 </form>
 
-                <div class="text-end">
-                    @*----------------------------------------------------Don't delete this--------------------------------------------*@
-                    <button class="btn btn-primary" style="background:fixed; border:none;" type="button"
-                        data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight">
-                        <i class="fa-solid fa-cart-shopping fa-2xl" style="color: #000000;"></i>
-                    </button>
-
-                    <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRight"
-                        aria-labelledby="offcanvasRightLabel">
-                        <div class="offcanvas-header">
-                            <h5 class="offcanvas-title" id="offcanvasRightLabel">Shopping Cart</h5>
-                            <button type="button" class="btn-close" data-bs-dismiss="offcanvas"
-                                aria-label="Close"></button>
-                        </div>
-                        <div class="offcanvas-body">
-                            <ul class="list-group mb-3">
-                                <li class="list-group-item d-flex justify-content-between lh-sm"
-                                    style="text-align: justify;">
-                                    <div>
-                                        <h6 class="my-0">Nike T-shirt</h6>
-                                        <small class="text-body-secondary">Quantity: 2</small>
-                                    </div>
-                                    <span class="text-body-secondary">$12</span>
-                                </li>
-                                <li class="list-group-item d-flex justify-content-between lh-sm"
-                                    style="text-align: justify;">
-                                    <div>
-                                        <h6 class="my-0">Second product</h6>
-                                        <small class="text-body-secondary">Brief description</small>
-                                    </div>
-                                    <span class="text-body-secondary">$8</span>
-                                </li>
-                                <li class="list-group-item d-flex justify-content-between lh-sm"
-                                    style="text-align: justify;">
-                                    <div>
-                                        <h6 class="my-0">Third item</h6>
-                                        <small class="text-body-secondary">Brief description</small>
-                                    </div>
-                                    <span class="text-body-secondary">$5</span>
-                                </li>
-                                <li class="list-group-item d-flex justify-content-between" style="text-align: justify;">
-                                    <span>Total (USD)</span>
-                                    <strong>$20</strong>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-
+                <partial name="_Offcanvas" />
+                <partial name="_TestPartial" />
             </div>
         </div>
-    </nav>
+    </nav> *@
     <div>
         <main role="main">
             @RenderBody()
