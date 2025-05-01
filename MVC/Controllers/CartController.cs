@@ -17,12 +17,16 @@ namespace MVC.Controllers
         public async Task<IActionResult> AddToCart()
         {
             var userId = HttpContext.Session.GetString("UserId");
+            if (userId == null)
+            {
+                return RedirectToAction("Login", "Account");
+            }
 
             var cartResponse = await _httpClient.GetAsync($"api/Carts?userId={userId}");
 
             if (!cartResponse.IsSuccessStatusCode)
             {
-                return View("Error");
+                var createCartResponse = await _httpClient.PostAsync($"/api/Carts/Create/?userId={userId}", null);
             }
 
             var cart = await cartResponse.Content.ReadFromJsonAsync<CartDTO>();
@@ -34,9 +38,13 @@ namespace MVC.Controllers
         public async Task<IActionResult> AddToCart(string productVariantId, int quantity)
         {
             var userId = HttpContext.Session.GetString("UserId");
-            
+            if (userId == null)
+            {
+                return RedirectToAction("Login", "Account");
+            }
+
             var postUrl = $"/api/Carts?userId={userId}&productVariantId={productVariantId}&quantity={quantity}";
-            
+
             var addItemResponse = await _httpClient.PostAsync(postUrl, null);
 
             if (addItemResponse.IsSuccessStatusCode)
@@ -45,7 +53,6 @@ namespace MVC.Controllers
             }
 
             var getCartResponse = await _httpClient.GetAsync($"/api/Carts/?userId={userId}");
-
             CartDTO cart = new CartDTO();
 
             if (getCartResponse.IsSuccessStatusCode)
