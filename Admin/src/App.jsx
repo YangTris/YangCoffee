@@ -1,10 +1,13 @@
+import React from 'react'
+import Sidebar from './components/Sidebar'
+import Dashboard from './pages/Dashboard'
+
 function App() {
-
-
   return (
-    <>
-      <Home></Home>
-    </>
+    <div className="d-flex">
+    <Sidebar />
+    <Dashboard />
+  </div>
   )
 }
 
