@@ -35,7 +35,7 @@ namespace MVC.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> AddToCart(string productVariantId, int quantity)
+        public async Task<IActionResult> AddToCart(string productId, string productVariantId, int quantity)
         {
             var userId = HttpContext.Session.GetString("UserId");
             if (userId == null)
@@ -52,15 +52,7 @@ namespace MVC.Controllers
                 Console.WriteLine("Item added to cart successfully.");
             }
 
-            var getCartResponse = await _httpClient.GetAsync($"/api/Carts/?userId={userId}");
-            CartDTO cart = new CartDTO();
-
-            if (getCartResponse.IsSuccessStatusCode)
-            {
-                cart = await getCartResponse.Content.ReadFromJsonAsync<CartDTO>();
-            }
-
-            return View(cart);
+            return RedirectToAction("ProductDetail", "Product", new { id = productId });
         }
     }
 }
