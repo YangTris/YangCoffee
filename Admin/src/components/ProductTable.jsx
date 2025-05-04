@@ -1,56 +1,154 @@
-import React from 'react'
-
-const products = [
-    { id: 1, name: 'Premium Headphones', category: 'Electronics', price: 199.99, stock: 45 },
-    { id: 2, name: 'Ergonomic Chair', category: 'Furniture', price: 249.99, stock: 20 },
-    { id: 3, name: 'Smartphone X', category: 'Electronics', price: 899.99, stock: 15 },
-    { id: 4, name: 'Laptop Pro', category: 'Electronics', price: 1299.99, stock: 10 },
-    { id: 5, name: 'Coffee Table', category: 'Furniture', price: 149.99, stock: 25 },
-  ];
-  
+// src/components/ProductTable.jsx
+import React, { useEffect, useState } from "react";
+import { searchProducts, deleteProduct } from "../api/productApi";
 
 function ProductTable() {
+  const [products, setProducts] = useState([]);
+  const [searchName, setSearchName] = useState("");
+  const [sortBy, setSortBy] = useState("createdDate");
+  const [isDescending, setIsDescending] = useState(true);
+  const [pageNumber, setPageNumber] = useState(1);
+  const [pageSize] = useState(3);
+  const [totalPages, setTotalPages] = useState(1);
+  const [loading, setLoading] = useState(false);
+
+  const fetchProducts = async () => {
+    try {
+      setLoading(true);
+      const result = await searchProducts({
+        searchName,
+        sortBy,
+        isDescending,
+        pageNumber,
+        pageSize,
+      });
+      setProducts(result.items);
+      setTotalPages(result.totalPages);
+    } catch (error) {
+      console.error("Error fetching products", error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchProducts();
+  }, [searchName, sortBy, isDescending, pageNumber]);
+
+  const handleDelete = async (id, name) => {
+    if (window.confirm(`Delete product "${name}"?`)) {
+      try {
+        await deleteProduct(id);
+        fetchProducts();
+      } catch (error) {
+        console.error("Failed to delete product", error);
+      }
+    }
+  };
+
   return (
     <div className="p-4">
-    <div className="d-flex justify-content-between align-items-center mb-3">
-      <h5>Products Management</h5>
-      <button className="btn btn-dark">+ Add Product</button>
-    </div>
-    <input className="form-control mb-3" placeholder="Search products..." />
-    <table className="table table-hover">
-      <thead className="table-light">
-        <tr>
-          <th>ID</th>
-          <th>Name</th>
-          <th>Category</th>
-          <th>Price</th>
-          <th>Stock</th>
-          <th>Actions</th>
-        </tr>
-      </thead>
-      <tbody>
-        {products.map(p => (
-          <tr key={p.id}>
-            <td>{p.id}</td>
-            <td>{p.name}</td>
-            <td>{p.category}</td>
-            <td>${p.price.toFixed(2)}</td>
-            <td>{p.stock}</td>
-            <td>⋯</td>
-          </tr>
-        ))}
-      </tbody>
-    </table>
-    <div className="d-flex justify-content-between align-items-center">
-      <span>Showing 5 of 8 products</span>
-      <div>
-        <button className="btn btn-outline-secondary btn-sm me-2" disabled>Previous</button>
-        <span>Page 1 of 2</span>
-        <button className="btn btn-outline-secondary btn-sm ms-2">Next</button>
+      <div className="d-flex justify-content-between align-items-center mb-3">
+        <h5>Products Management</h5>
+        <button className="btn btn-dark">+ Add Product</button>
       </div>
+
+      <div className="input-group mb-3">
+        <input
+          className="form-control"
+          placeholder="Search products..."
+          value={searchName}
+          onChange={(e) => setSearchName(e.target.value)}
+        />
+        <button className="btn btn-outline-secondary" onClick={() => fetchProducts()}>
+          Search
+        </button>
+      </div>
+
+      <div className="mb-3">
+        <label>Sort By:</label>
+        <select
+          className="form-select w-auto d-inline ms-2"
+          value={sortBy}
+          onChange={(e) => setSortBy(e.target.value)}
+        >
+          <option value="createdDate">Created Date</option>
+          <option value="name">Name</option>
+          <option value="price">Base Price</option>
+        </select>
+
+        <button
+          className="btn btn-sm btn-outline-secondary ms-2"
+          onClick={() => setIsDescending(!isDescending)}
+        >
+          {isDescending ? "Descending ↓" : "Ascending ↑"}
+        </button>
+      </div>
+
+      {loading ? (
+        <p>Loading...</p>
+      ) : (
+        <>
+          <table className="table table-hover">
+            <thead className="table-light">
+              <tr>
+                <th>Product ID</th>
+                <th>Name</th>
+                <th>Category ID</th>
+                <th>Base Price</th>
+                <th>Created Date</th>
+                <th>Updated Date</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              {products.map((p) => (
+                <tr key={p.productId}>
+                  <td>{p.productId}</td>
+                  <td>{p.name}</td>
+                  <td>{p.categoryId}</td>
+                  <td>${p.basePrice?.toFixed(2)}</td>
+                  <td>{new Date(p.createdDate).toLocaleDateString()}</td>
+                  <td>{new Date(p.updatedDate).toLocaleDateString()}</td>
+                  <td>
+                    <button className="btn btn-sm btn-primary me-2">Edit</button>
+                    <button
+                      className="btn btn-sm btn-danger"
+                      onClick={() => handleDelete(p.productId, p.name)}
+                    >
+                      Delete
+                    </button>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+
+          <div className="d-flex justify-content-between align-items-center">
+            <span>
+              Page {pageNumber} of {totalPages}
+            </span>
+            <div>
+              <button
+                className="btn btn-outline-secondary btn-sm me-2"
+                disabled={pageNumber === 1}
+                onClick={() => setPageNumber((p) => p - 1)}
+              >
+                Previous
+              </button>
+              <button
+                className="btn btn-outline-secondary btn-sm"
+                disabled={pageNumber === totalPages}
+                onClick={() => setPageNumber((p) => p + 1)}
+              >
+                Next
+              </button>
+            </div>
+          </div>
+        </>
+      )}
     </div>
-  </div>
-  )
+  );
 }
 
-export default ProductTable
+export default ProductTable;
