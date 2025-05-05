@@ -51,8 +51,26 @@ namespace MVC.Controllers
             {
                 Console.WriteLine("Item added to cart successfully.");
             }
-
             return RedirectToAction("ProductDetail", "Product", new { id = productId });
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> RemoveFromCart(string cartItemId)
+        {
+            var userId = HttpContext.Session.GetString("UserId");
+            if (userId == null)
+            {
+                return RedirectToAction("Login", "Account");
+            }
+
+            var removeUrl = $"/api/Carts/{userId}/{cartItemId}";
+            var removeItemResponse = await _httpClient.DeleteAsync(removeUrl);
+
+            if (removeItemResponse.IsSuccessStatusCode)
+            {
+                Console.WriteLine("Item removed from cart successfully.");
+            }
+            return RedirectToAction("AddToCart", "Cart");
         }
     }
 }
