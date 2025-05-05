@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { getAllCustomer } from "../api/customerApi";
+import { getAllCustomer } from "../api/userApi";
 
 function CustomerTable() {
   const [customers, setCustomers] = useState([]);

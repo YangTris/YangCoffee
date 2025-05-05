@@ -1,7 +1,30 @@
 import React, { useState } from 'react';
+import {login} from '../api/userAPI';
+import { useNavigate } from 'react-router-dom';
 
 const Login = () => {
-  const [showPassword, setShowPassword] = useState(false);
+  //Login
+  const [newLogin, setNewLogin] = useState({
+    email: '',
+    password: '',
+  });
+
+  const navigate = useNavigate();
+
+  const handleLogin = async (e) => {
+    e.preventDefault();
+    try {
+      const response = await login(newLogin);
+      console.log('Login successful:', response.data);
+      //Store token in sessionStorage
+      sessionStorage.setItem('token', response.data.accessToken);
+
+      navigate('/dashboard');
+    } catch (error) {
+      console.error('Login failed:', error.response?.data || error.message);
+      alert('Invalid email or password');
+    }
+  };
 
   return (
     <div className="container d-flex justify-content-center align-items-center" style={{ minHeight: '100vh' }}>
@@ -22,6 +45,8 @@ const Login = () => {
                 id="email"
                 className="form-control"
                 placeholder="name@example.com"
+                value={newLogin.email}
+                onChange={(e) => setNewLogin({ ...newLogin, email: e.target.value })}
               />
             </div>
           </div>
@@ -37,23 +62,18 @@ const Login = () => {
                 <i className="bi bi-lock"></i>
               </span>
               <input
-                type={showPassword ? 'text' : 'password'}
+                type='password'
                 id="password"
                 className="form-control"
                 placeholder="Enter your password"
+                value={newLogin.password}
+                onChange={(e) => setNewLogin({ ...newLogin, password: e.target.value })}
               />
-              <span
-                className="input-group-text"
-                onClick={() => setShowPassword(!showPassword)}
-                style={{ cursor: 'pointer' }}
-              >
-                <i className={`bi ${showPassword ? 'bi-eye-slash' : 'bi-eye'}`}></i>
-              </span>
             </div>
           </div>
 
 
-          <button type="submit" className="btn btn-dark w-100 mb-3">Sign in</button>
+          <button onClick={handleLogin} type="submit" className="btn btn-dark w-100 mb-3">Sign in</button>
 
           {/* Divider */}
           <div className="text-center text-muted mb-3 mt-3">

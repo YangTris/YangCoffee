@@ -19,7 +19,8 @@ function Sidebar() {
   ];
 
   const handleLogout = () => {
-    // Clear tokens/sessionStorage/localStorage if needed
+    // Clear session storage and redirect to login page
+    sessionStorage.removeItem("token");
     navigate("/login");
   };
 
