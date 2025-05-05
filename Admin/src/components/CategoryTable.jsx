@@ -81,7 +81,7 @@ function CategoryTable() {
           onClick={() => setShowModal(false)}
           style={{ backgroundColor: "rgba(0,0,0,0.5)" }}
         >
-          <div className="modal-dialog" role="document">
+          <div className="modal-dialog" role="document" onClick={(e) => e.stopPropagation()}>
             <div className="modal-content">
               <div className="modal-header">
                 <h5 className="modal-title">Add New Category</h5>
@@ -160,7 +160,7 @@ function CategoryTable() {
           }}
           style={{ backgroundColor: "rgba(0,0,0,0.5)" }}
         >
-          <div className="modal-dialog" role="document">
+          <div className="modal-dialog" role="document" onClick={(e) => e.stopPropagation()}>
             <div className="modal-content">
               <div className="modal-header">
                 <h5 className="modal-title">Edit Category</h5>
