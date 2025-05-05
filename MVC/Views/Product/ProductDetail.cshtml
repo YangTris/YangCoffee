@@ -12,11 +12,32 @@
         <input type="hidden" name="productVariantId" value="@Model.ProductVariants.FirstOrDefault().ProductVariantId" />
         <div class="row">
             <div class="col">
-                <img src="~/images/Space Cadet.jpg" style="background-color: rgb(246, 246, 246);" class="card-img-top"
-                    alt="...">
+                <div id="productImagesCarousel" class="carousel slide" data-bs-ride="carousel">
+                    <div class="carousel-inner">
+                        @for (int i = 0; i < Model.ProductImages.Count; i++)
+                        {
+                            var image = Model.ProductImages[i];
+                            <div class="carousel-item @(i == 0 ? "active" : "")">
+                                <img src="@image.ImageUrl" class="d-block w-100" alt="Product image"
+                                    style="background-color: rgb(246, 246, 246);">
+                            </div>
+                        }
+                    </div>
+                    <button class="carousel-control-prev" type="button" data-bs-target="#productImagesCarousel"
+                        data-bs-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Previous</span>
+                    </button>
+                    <button class="carousel-control-next" type="button" data-bs-target="#productImagesCarousel"
+                        data-bs-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Next</span>
+                    </button>
+                </div>
+
             </div>
             <div class="col">
-                <h1 id="productName">@Model.Name</h1>
+                <h1 id="productName" class="">@Model.Name</h1>
                 <h3 id="productPrice">$@Model.ProductVariants.FirstOrDefault().Price</h3>
                 <h4 id="productTaste">@Model.ProductVariants.FirstOrDefault().Taste</h4>
                 <p>@Html.DisplayFor(model => model.Description)</p>
@@ -104,93 +125,7 @@
         </div>
     </form>
 
-
-    <div class="container my-5">
-        <!-- Section Heading -->
-        <h2 class="mb-4">Top roast coffee collection</h2>
-
-        <!-- Carousel -->
-        <div id="coffeeCarousel" class="carousel slide" data-bs-ride="carousel">
-            <!-- Carousel Inner -->
-            <div class="carousel-inner">
-                <div class="carousel-item active">
-                    <div class="row">
-                        <!-- Product 1 -->
-                        <div class="col-md-3">
-                            <div class="card border-0" style="width: 100%;">
-                                <img src="/images/Space Cadet.jpg" style="background-color: rgb(246, 246, 246);"
-                                    class="card-img-top" alt="Space Cadet Coffee Bag">
-                                <div class="card-body p-0 mt-3">
-                                    <div class="d-flex align-items-center justify-content-between">
-                                        <h5 class="card-title mb-1 fw-bold">Space Cadet</h5>
-                                        <h5 class="card-text fw-bold">$15.75</h5>
-                                    </div>
-                                    <p class="card-text text-muted mb-2">Sweet & Smooth</p>
-                                </div>
-                                <button class="btn btn-danger btn-lg" type="button">Add to Cart</button>
-                            </div>
-                        </div>
-                        <!-- Product 2 -->
-                        <div class="col-md-3">
-                            <div class="card border-0" style="width: 100%;">
-                                <img src="/images/Space Cadet.jpg" style="background-color: rgb(246, 246, 246);"
-                                    class="card-img-top" alt="Space Cadet Coffee Bag">
-                                <div class="card-body p-0 mt-3">
-                                    <div class="d-flex align-items-center justify-content-between">
-                                        <h5 class="card-title mb-1 fw-bold">Space Cadet</h5>
-                                        <h5 class="card-text fw-bold">$15.75</h5>
-                                    </div>
-                                    <p class="card-text text-muted mb-2">Sweet & Smooth</p>
-                                </div>
-                                <button class="btn btn-danger btn-lg" type="button">Add to Cart</button>
-                            </div>
-                        </div>
-                        <!-- Product 3 -->
-                        <div class="col-md-3">
-                            <div class="card border-0" style="width: 100%;">
-                                <img src="/images/Space Cadet.jpg" style="background-color: rgb(246, 246, 246);"
-                                    class="card-img-top" alt="Space Cadet Coffee Bag">
-                                <div class="card-body p-0 mt-3">
-                                    <div class="d-flex align-items-center justify-content-between">
-                                        <h5 class="card-title mb-1 fw-bold">Space Cadet</h5>
-                                        <h5 class="card-text fw-bold">$15.75</h5>
-                                    </div>
-                                    <p class="card-text text-muted mb-2">Sweet & Smooth</p>
-                                </div>
-                                <button class="btn btn-danger btn-lg" type="button">Add to Cart</button>
-                            </div>
-                        </div>
-                        <!-- Product 4 -->
-                        <div class="col-md-3">
-                            <div class="card border-0" style="width: 100%;">
-                                <img src="/images/Space Cadet.jpg" style="background-color: rgb(246, 246, 246);"
-                                    class="card-img-top" alt="Space Cadet Coffee Bag">
-                                <div class="card-body p-0 mt-3">
-                                    <div class="d-flex align-items-center justify-content-between">
-                                        <h5 class="card-title mb-1 fw-bold">Space Cadet</h5>
-                                        <h5 class="card-text fw-bold">$15.75</h5>
-                                    </div>
-                                    <p class="card-text text-muted mb-2">Sweet & Smooth</p>
-                                </div>
-                                <button class="btn btn-danger btn-lg" type="button">Add to Cart</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <!-- Add more carousel items if needed -->
-            </div>
-
-            <!-- Carousel Controls -->
-            <button class="carousel-control-prev" type="button" data-bs-target="#coffeeCarousel" data-bs-slide="prev">
-                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                <span class="visually-hidden">Previous</span>
-            </button>
-            <button class="carousel-control-next" type="button" data-bs-target="#coffeeCarousel" data-bs-slide="next">
-                <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                <span class="visually-hidden">Next</span>
-            </button>
-        </div>
-    </div>
+      <partial name="Index" />
 
 </div>
 
