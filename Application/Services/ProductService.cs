@@ -132,15 +132,17 @@ namespace Application.Services
             }
             if (product.ProductImages != null)
             {
-                foreach (var productImage in product.ProductImages)
+                for(int i=0; i < product.ProductImages.Count; i++)
                 {
+                    var productImage = product.ProductImages[i];
                     await _productImageRepository.DeleteProductImageAsync(productImage.ProductImageId);
                 }
             }
             if(product.ProductVariants != null)
             {
-                foreach (var productVariant in product.ProductVariants)
+                for(int i = 0; i < product.ProductVariants.Count; i++)
                 {
+                    var productVariant = product.ProductVariants[i];
                     await _productVariantRepository.DeleteProductVariantAsync(productVariant.ProductVariantId);
                 }
             }
