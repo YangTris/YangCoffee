@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { searchProducts, deleteProduct, updateProduct, addProduct } from "../api/productApi";
 import { supabase } from "../api/supabaseClient";
+import { useNavigate } from "react-router-dom";
 
 function ProductTable() {
   const [products, setProducts] = useState([]);
@@ -68,6 +69,8 @@ function ProductTable() {
     }
   };
 
+  const navigate = useNavigate();
+
   //Add new product state
   const [selectedFiles, setSelectedFiles] = useState([]);
   const [showAddModal, setShowAddModal] = useState(false);
@@ -88,25 +91,25 @@ function ProductTable() {
   const handleAddProduct = async () => {
     try {
       const imageUrls = [];
-  
+
       for (const file of selectedFiles) {
         const fileName = `${Date.now()}_${file.name}`;
         const { error } = await supabase.storage
           .from("product-images") // your storage bucket name
           .upload(fileName, file);
-  
+
         if (error) {
           throw error;
         }
-  
+
         const { data: publicUrlData } = supabase
           .storage
           .from("product-images")
           .getPublicUrl(fileName);
-  
+
         imageUrls.push(publicUrlData.publicUrl);
       }
-  
+
       const productToSave = {
         ...newProduct,
         productImages: imageUrls.map((url) => ({
@@ -115,12 +118,12 @@ function ProductTable() {
           imageUrl: url,
         })),
       };
-  
+
       await addProduct(productToSave);
-  
+
       setShowAddModal(false);
       fetchProducts();
-  
+
       // Reset
       setNewProduct({
         productId: "",
@@ -140,14 +143,15 @@ function ProductTable() {
       console.error("Failed to add product", error);
     }
   };
-  
-
 
   return (
     <div className="p-4">
       <div className="d-flex justify-content-between align-items-center mb-3">
         <h5>Products Management</h5>
-        <button className="btn btn-dark" onClick={() => setShowAddModal(true)}>
+        {/* <button className="btn btn-dark" onClick={() => setShowAddModal(true)}>
+          + Add Product
+        </button> */}
+        <button className="btn btn-dark" onClick={() => navigate("/dashboard/products/add")}>
           + Add Product
         </button>
       </div>
@@ -248,7 +252,6 @@ function ProductTable() {
           </div>
         </div>
       )}
-
 
       <div className="input-group mb-3">
         <input

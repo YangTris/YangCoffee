@@ -6,13 +6,14 @@ import CategoryTable from "../components/CategoryTable";
 import CustomerTable from "../components/CustomerTable";
 import OrderTable from "../components/OrderTable";
 import NotFoundPage from "./NotFoundPage";
+import AddProductPage from "./AddProductPage";
 
 function Dashboard() {
   const location = useLocation();
   const navigate = useNavigate();
 
   // Get current tab from path, e.g. /dashboard/products
-  const activeTab = location.pathname.split("/")[2] || "dashboard";
+  const activeTab = location.pathname.replace("/dashboard/", "") || "dashboard";
 
   const renderTab = () => {
     switch (activeTab) {
@@ -20,6 +21,8 @@ function Dashboard() {
         return <h4 className="p-4">Welcome to the Admin Dashboard!</h4>;
       case "products":
         return <ProductTable />;
+      case "products/add":
+        return <AddProductPage />;
       case "categories":
         return <CategoryTable />;
       case "customers":
@@ -32,7 +35,7 @@ function Dashboard() {
         return <NotFoundPage />;
     }
   };
-
+  
   return (
     <div className="flex-grow-1 bg-white">
       <div className="p-4 border-bottom">
