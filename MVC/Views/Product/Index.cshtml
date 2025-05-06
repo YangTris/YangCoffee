@@ -1,72 +1,76 @@
-﻿@model IEnumerable<Shared.DTOs.ProductDTO>
+﻿<div class="container my-5">
+        <!-- Section Heading -->
+        <h2 class="mb-4">Top roast coffee collection</h2>
 
-@{
-    ViewData["Title"] = "Index";
-}
-
-<h1>Index</h1>
-
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.ProductId)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Name)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Description)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.BasePrice)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.CreatedDate)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.UpdatedDate)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.CategoryId)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model)
-        {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.ProductId)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Name)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Description)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.BasePrice)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.CreatedDate)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.UpdatedDate)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.CategoryId)
-                </td>
-                <td>
-                    @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
-                    @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
-                    @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
-                </td>
-            </tr>
-        }
-    </tbody>
-</table>
+        <!-- Carousel -->
+        <div id="coffeeCarousel" class="carousel slide" data-bs-ride="carousel">
+            <!-- Carousel Inner -->
+            <div class="carousel-inner">
+                <div class="carousel-item active">
+                    <div class="row">
+                        <!-- Product 1 -->
+                        <div class="col-md-3">
+                            <div class="card border-0" style="width: 100%;">
+                                <img src="/images/Space Cadet.jpg" style="background-color: rgb(246, 246, 246);"
+                                    class="card-img-top" alt="Space Cadet Coffee Bag">
+                                <div class="card-body p-0 mt-3">
+                                    <div class="d-flex align-items-center justify-content-between">
+                                        <h5 class="card-title mb-1 fw-bold">Space Cadet</h5>
+                                        <h5 class="card-text fw-bold">$15.75</h5>
+                                    </div>
+                                    <p class="card-text text-muted mb-2">Sweet & Smooth</p>
+                                </div>
+                                <button class="btn btn-danger btn-lg" type="button">Add to Cart</button>
+                            </div>
+                        </div>
+                        <!-- Product 2 -->
+                        <div class="col-md-3">
+                            <div class="card border-0" style="width: 100%;">
+                                <img src="/images/Space Cadet.jpg" style="background-color: rgb(246, 246, 246);"
+                                    class="card-img-top" alt="Space Cadet Coffee Bag">
+                                <div class="card-body p-0 mt-3">
+                                    <div class="d-flex align-items-center justify-content-between">
+                                        <h5 class="card-title mb-1 fw-bold">Space Cadet</h5>
+                                        <h5 class="card-text fw-bold">$15.75</h5>
+                                    </div>
+                                    <p class="card-text text-muted mb-2">Sweet & Smooth</p>
+                                </div>
+                                <button class="btn btn-danger btn-lg" type="button">Add to Cart</button>
+                            </div>
+                        </div>
+                        <!-- Product 3 -->
+                        <div class="col-md-3">
+                            <div class="card border-0" style="width: 100%;">
+                                <img src="/images/Space Cadet.jpg" style="background-color: rgb(246, 246, 246);"
+                                    class="card-img-top" alt="Space Cadet Coffee Bag">
+                                <div class="card-body p-0 mt-3">
+                                    <div class="d-flex align-items-center justify-content-between">
+                                        <h5 class="card-title mb-1 fw-bold">Space Cadet</h5>
+                                        <h5 class="card-text fw-bold">$15.75</h5>
+                                    </div>
+                                    <p class="card-text text-muted mb-2">Sweet & Smooth</p>
+                                </div>
+                                <button class="btn btn-danger btn-lg" type="button">Add to Cart</button>
+                            </div>
+                        </div>
+                        <!-- Product 4 -->
+                        <div class="col-md-3">
+                            <div class="card border-0" style="width: 100%;">
+                                <img src="/images/Space Cadet.jpg" style="background-color: rgb(246, 246, 246);"
+                                    class="card-img-top" alt="Space Cadet Coffee Bag">
+                                <div class="card-body p-0 mt-3">
+                                    <div class="d-flex align-items-center justify-content-between">
+                                        <h5 class="card-title mb-1 fw-bold">Space Cadet</h5>
+                                        <h5 class="card-text fw-bold">$15.75</h5>
+                                    </div>
+                                    <p class="card-text text-muted mb-2">Sweet & Smooth</p>
+                                </div>
+                                <button class="btn btn-danger btn-lg" type="button">Add to Cart</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Add more carousel items if needed -->
+            </div>
+        </div>
+    </div>

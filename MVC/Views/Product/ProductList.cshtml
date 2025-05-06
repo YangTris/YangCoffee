@@ -164,7 +164,7 @@
                             <a asp-action="ProductDetail" asp-controller="Product" asp-route-id="@item.ProductId"
                                class="text-decoration-none text-dark">
                                 <div class="card border-0" style="width: 18rem;">
-                                    <img src="@item.ProductImages.FirstOrDefault().ImageUrl" style="background-color: rgb(246, 246, 246);"
+                                    <img src="@item.ProductImages.FirstOrDefault()?.ImageUrl" style="background-color: rgb(246, 246, 246);"
                                          class="card-img-top" alt="...">
                                     <div class="card-body p-0 mt-3">
                                         <div class="d-flex align-items-center justify-content-between">
