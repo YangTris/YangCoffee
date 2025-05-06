@@ -1,6 +1,6 @@
-// src/components/ProductTable.jsx
 import React, { useEffect, useState } from "react";
-import { searchProducts, deleteProduct } from "../api/productApi";
+import { searchProducts, deleteProduct, updateProduct, addProduct } from "../api/productApi";
+import { supabase } from "../api/supabaseClient";
 
 function ProductTable() {
   const [products, setProducts] = useState([]);
@@ -35,6 +35,7 @@ function ProductTable() {
     fetchProducts();
   }, [searchName, sortBy, isDescending, pageNumber]);
 
+  // Handle delete product
   const handleDelete = async (id, name) => {
     if (window.confirm(`Delete product "${name}"?`)) {
       try {
@@ -46,12 +47,208 @@ function ProductTable() {
     }
   };
 
+  //Update product state
+  const [showEditModal, setShowEditModal] = useState(false);
+  const [editProduct, setEditProduct] = useState(null);
+
+  const handleUpdateProduct = async () => {
+    try {
+      await updateProduct(editProduct.productId, {
+        productId: editProduct.productId,
+        name: editProduct.name,
+        basePrice: editProduct.basePrice,
+        description: editProduct.description,
+        updatedDate: new Date().toISOString(),
+      });
+      setShowEditModal(false);
+      setEditProduct(null);
+      fetchProducts(); // Refresh the list
+    } catch (error) {
+      console.error("Failed to update product", error);
+    }
+  };
+
+  //Add new product state
+  const [selectedFiles, setSelectedFiles] = useState([]);
+  const [showAddModal, setShowAddModal] = useState(false);
+  const [newProduct, setNewProduct] = useState({
+    productId: "",
+    name: "",
+    description: "",
+    basePrice: 0,
+    createdDate: new Date().toISOString(),
+    updatedDate: new Date().toISOString(),
+    categoryId: "",
+    productVariantId: "",
+    quantity: 0,
+    productImages: [],
+    productVariants: [],
+  });
+
+  const handleAddProduct = async () => {
+    try {
+      const imageUrls = [];
+  
+      for (const file of selectedFiles) {
+        const fileName = `${Date.now()}_${file.name}`;
+        const { error } = await supabase.storage
+          .from("product-images") // your storage bucket name
+          .upload(fileName, file);
+  
+        if (error) {
+          throw error;
+        }
+  
+        const { data: publicUrlData } = supabase
+          .storage
+          .from("product-images")
+          .getPublicUrl(fileName);
+  
+        imageUrls.push(publicUrlData.publicUrl);
+      }
+  
+      const productToSave = {
+        ...newProduct,
+        productImages: imageUrls.map((url) => ({
+          productImageId: crypto.randomUUID(),
+          productId: "",
+          imageUrl: url,
+        })),
+      };
+  
+      await addProduct(productToSave);
+  
+      setShowAddModal(false);
+      fetchProducts();
+  
+      // Reset
+      setNewProduct({
+        productId: "",
+        name: "",
+        description: "",
+        basePrice: 0,
+        createdDate: new Date().toISOString(),
+        updatedDate: new Date().toISOString(),
+        categoryId: "",
+        productVariantId: "",
+        quantity: 0,
+        productImages: [],
+        productVariants: [],
+      });
+      setSelectedFiles([]);
+    } catch (error) {
+      console.error("Failed to add product", error);
+    }
+  };
+  
+
+
   return (
     <div className="p-4">
       <div className="d-flex justify-content-between align-items-center mb-3">
         <h5>Products Management</h5>
-        <button className="btn btn-dark">+ Add Product</button>
+        <button className="btn btn-dark" onClick={() => setShowAddModal(true)}>
+          + Add Product
+        </button>
       </div>
+      {showAddModal && (
+        <div
+          className="modal fade show d-block"
+          tabIndex="-1"
+          role="dialog"
+          onClick={() => setShowAddModal(false)}
+          style={{ backgroundColor: "rgba(0,0,0,0.5)" }}
+        >
+          <div
+            className="modal-dialog"
+            role="document"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div className="modal-content">
+              <div className="modal-header">
+                <h5 className="modal-title">Add New Product</h5>
+                <button
+                  type="button"
+                  className="btn-close"
+                  onClick={() => setShowAddModal(false)}
+                ></button>
+              </div>
+              <div className="modal-body">
+                <input type="hidden" value={newProduct.productId} />
+                <div className="mb-3">
+                  <label className="form-label">Name</label>
+                  <input
+                    type="text"
+                    className="form-control"
+                    value={newProduct.name}
+                    onChange={(e) =>
+                      setNewProduct({ ...newProduct, name: e.target.value })
+                    }
+                  />
+                </div>
+                <div className="mb-3">
+                  <label className="form-label">Description</label>
+                  <input
+                    type="text"
+                    className="form-control"
+                    value={newProduct.description}
+                    onChange={(e) =>
+                      setNewProduct({ ...newProduct, description: e.target.value })
+                    }
+                  />
+                </div>
+                <div className="mb-3">
+                  <label className="form-label">Base Price</label>
+                  <input
+                    type="number"
+                    className="form-control"
+                    value={newProduct.basePrice}
+                    onChange={(e) =>
+                      setNewProduct({
+                        ...newProduct,
+                        basePrice: parseFloat(e.target.value),
+                      })
+                    }
+                  />
+                </div>
+                <div className="mb-3">
+                  <label className="form-label">Category ID</label>
+                  <input
+                    type="text"
+                    className="form-control"
+                    value={newProduct.categoryId}
+                    onChange={(e) =>
+                      setNewProduct({ ...newProduct, categoryId: e.target.value })
+                    }
+                  />
+                </div>
+                <div class="mb-3">
+                  <label for="formFileMultiple" class="form-label">Images</label>
+                  <input
+                    className="form-control"
+                    type="file"
+                    id="formFileMultiple"
+                    multiple
+                    onChange={(e) => setSelectedFiles(Array.from(e.target.files))}
+                  />
+                </div>
+              </div>
+              <div className="modal-footer">
+                <button className="btn btn-primary" onClick={handleAddProduct}>
+                  Add Product
+                </button>
+                <button
+                  className="btn btn-secondary"
+                  onClick={() => setShowAddModal(false)}
+                >
+                  Cancel
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
 
       <div className="input-group mb-3">
         <input
@@ -111,7 +308,95 @@ function ProductTable() {
                   <td>{new Date(p.createdDate).toLocaleDateString()}</td>
                   <td>{new Date(p.updatedDate).toLocaleDateString()}</td>
                   <td>
-                    <button className="btn btn-sm btn-primary me-2">Edit</button>
+                    {/* Edit Product Modal */}
+                    {showEditModal && editProduct && (
+                      <div
+                        className="modal fade show d-block"
+                        tabIndex="-1"
+                        role="dialog"
+                        onClick={() => {
+                          setShowEditModal(false);
+                          setEditProduct(null);
+                        }}
+                        style={{ backgroundColor: "rgba(0,0,0,0.5)" }}
+                      >
+                        <div
+                          className="modal-dialog"
+                          role="document"
+                          onClick={(e) => e.stopPropagation()}
+                        >
+                          <div className="modal-content">
+                            <div className="modal-header">
+                              <h5 className="modal-title">Edit Product</h5>
+                              <button
+                                type="button"
+                                className="btn-close"
+                                onClick={() => setShowEditModal(false)}
+                              ></button>
+                            </div>
+                            <div className="modal-body">
+                              <input type="hidden" value={editProduct.productId} />
+                              <div className="mb-3">
+                                <label className="form-label">Name</label>
+                                <input
+                                  type="text"
+                                  className="form-control"
+                                  value={editProduct.name}
+                                  onChange={(e) =>
+                                    setEditProduct({ ...editProduct, name: e.target.value })
+                                  }
+                                />
+                              </div>
+                              <div className="mb-3">
+                                <label className="form-label">Base Price</label>
+                                <input
+                                  type="number"
+                                  className="form-control"
+                                  value={editProduct.basePrice}
+                                  onChange={(e) =>
+                                    setEditProduct({
+                                      ...editProduct,
+                                      basePrice: parseFloat(e.target.value),
+                                    })
+                                  }
+                                />
+                              </div>
+                              <div className="mb-3">
+                                <label className="form-label">Description</label>
+                                <input
+                                  type="text"
+                                  className="form-control"
+                                  value={editProduct.description || ""}
+                                  onChange={(e) =>
+                                    setEditProduct({ ...editProduct, description: e.target.value })
+                                  }
+                                />
+                              </div>
+                            </div>
+                            <div className="modal-footer">
+                              <button className="btn btn-primary" onClick={handleUpdateProduct}>
+                                Update
+                              </button>
+                              <button
+                                className="btn btn-secondary"
+                                onClick={() => setShowEditModal(false)}
+                              >
+                                Cancel
+                              </button>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    )}
+                    <button
+                      className="btn btn-sm btn-primary me-2"
+                      onClick={() => {
+                        setEditProduct(p);
+                        setShowEditModal(true);
+                      }}
+                    >
+                      Edit
+                    </button>
                     <button
                       className="btn btn-sm btn-danger"
                       onClick={() => handleDelete(p.productId, p.name)}
