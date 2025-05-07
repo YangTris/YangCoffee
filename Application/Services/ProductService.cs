@@ -63,8 +63,8 @@ namespace Application.Services
                     CreatedDate = r.CreatedDate
                 }).ToList(),
                 AverageRating = product.ProductRatings != null && product.ProductRatings.Any()
-    ? product.ProductRatings.Average(r => r.Rating)
-    : (double?)null
+                    ? product.ProductRatings.Average(r => r.Rating)
+                    : (double?)null
             };
         }
         private static ProductVariantDTO MapToVariantDTO(ProductVariant productVariant)
