@@ -44,6 +44,7 @@ namespace Infrastructure.Repositories
         public async Task<Product> GetProductByIdAsync(string id)
         {
             return await _context.Products
+                .Include(p => p.ProductRatings)
                 .Include(p => p.ProductVariants)
                 .Include(p => p.ProductImages)
                 .FirstOrDefaultAsync(p => p.ProductId == id);

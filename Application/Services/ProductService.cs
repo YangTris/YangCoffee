@@ -52,7 +52,19 @@ namespace Application.Services
                     Size = pv.Size,
                     Taste = pv.Taste,
                     Price = pv.Price
-                }).ToList()
+                }).ToList(),
+                ProductRatings = product.ProductRatings?.Select(r => new ProductRatingDTO
+                {
+                    ProductRatingId = r.ProductRatingId,
+                    Rating = r.Rating,
+                    Comment = r.Comment,
+                    UserId = r.UserId,
+                    ProductId = r.ProductId,
+                    CreatedDate = r.CreatedDate
+                }).ToList(),
+                AverageRating = product.ProductRatings != null && product.ProductRatings.Any()
+    ? product.ProductRatings.Average(r => r.Rating)
+    : (double?)null
             };
         }
         private static ProductVariantDTO MapToVariantDTO(ProductVariant productVariant)

@@ -1,6 +1,9 @@
-﻿using System.Text.Json;
+﻿using System.Net;
+using System.Text;
+using System.Text.Json;
 using Domain;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 using Shared.DTOs;
 
 namespace MVC.Controllers
@@ -91,6 +94,42 @@ namespace MVC.Controllers
             {
                 return View("Error", ex.Message);
             }
+        }
+        [HttpPost]
+        public async Task<IActionResult> RatingProduct(ProductRatingDTO ratingDto)
+        {
+            var userId = HttpContext.Session.GetString("UserId");
+            if (userId == null)
+            {
+                return RedirectToAction("Login", "Account");
+            }
+
+            ratingDto.UserId = userId;
+
+            Console.WriteLine($"UserId: {ratingDto.UserId}");
+            Console.WriteLine($"ProductId: {ratingDto.ProductId}");
+            Console.WriteLine($"Rating: {ratingDto.Rating}");
+            Console.WriteLine($"Comment: {ratingDto.Comment}");
+
+            var json = JsonConvert.SerializeObject(ratingDto);
+            Console.WriteLine($"JSON: {json}");
+            var content = new StringContent(json, Encoding.UTF8, "application/json");
+            var response = await _httpClient.PostAsync("api/ProductRatings", content);
+
+            if (response.IsSuccessStatusCode)
+            {
+                return RedirectToAction("ProductDetail", "Product", new { id = ratingDto.ProductId });
+            }
+            else if (response.StatusCode == HttpStatusCode.Conflict)
+            {
+                TempData["Error"] = "You have already rated this product.";
+            }
+            else
+            {
+                TempData["Error"] = "Failed to submit rating.";
+            }
+
+            return RedirectToAction("ProductDetail", "Product", new { id = ratingDto.ProductId });
         }
     }
 

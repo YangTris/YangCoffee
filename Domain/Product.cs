@@ -18,6 +18,6 @@ namespace Domain
         public virtual Category Category { get; set; }
         public List<ProductImage> ProductImages { get; set; }
         public List<ProductVariant> ProductVariants { get; set; }
-
+        public List<ProductRating> ProductRatings { get; set; }
     }
 }
