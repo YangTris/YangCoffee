@@ -22,5 +22,7 @@ namespace Shared.DTOs
         public int quantity { get; set; } = 1;
         public List<ProductImageDTO>? ProductImages { get; set; }
         public List<ProductVariantDTO> ? ProductVariants { get; set; }
+        public List<ProductRatingDTO> ? ProductRatings { get; set; }
+        public double ? AverageRating { get; set; }
     }
 }
