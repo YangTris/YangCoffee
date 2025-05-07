@@ -80,25 +80,25 @@ namespace Infrastructure.Migrations
                     b.HasData(
                         new
                         {
-                            CategoryId = "1",
+                            CategoryId = "00000000000000000000000001",
                             Description = "Various types of coffee beans.",
                             Name = "Espresso"
                         },
                         new
                         {
-                            CategoryId = "2",
+                            CategoryId = "00000000000000000000000002",
                             Description = "Mixing flavor of many type of coffee",
                             Name = "Blends"
                         },
                         new
                         {
-                            CategoryId = "3",
+                            CategoryId = "00000000000000000000000003",
                             Description = "Different varieties of tea.",
                             Name = "Single Origins"
                         },
                         new
                         {
-                            CategoryId = "4",
+                            CategoryId = "00000000000000000000000004",
                             Description = "Coffee and tea accessories.",
                             Name = "Decaf"
                         });
@@ -203,43 +203,43 @@ namespace Infrastructure.Migrations
                     b.HasData(
                         new
                         {
-                            ProductId = "780905a8-1505-4635-a3ed-2872625bd071",
+                            ProductId = "10000000000000000000000000",
                             BasePrice = 15.99m,
-                            CategoryId = "1",
-                            CreatedDate = new DateTimeOffset(new DateTime(2025, 4, 27, 5, 5, 39, 571, DateTimeKind.Unspecified).AddTicks(1391), new TimeSpan(0, 0, 0, 0, 0)),
+                            CategoryId = "00000000000000000000000001",
+                            CreatedDate = new DateTimeOffset(new DateTime(2025, 5, 6, 10, 29, 43, 540, DateTimeKind.Unspecified).AddTicks(885), new TimeSpan(0, 0, 0, 0, 0)),
                             Description = "No competition here: This much-awarded espresso blend puts its game face on in the form of semi-sweet, zesty, full-body flavored. Plays well with milk.",
                             Name = "House Espresso",
-                            UpdatedDate = new DateTimeOffset(new DateTime(2025, 4, 27, 5, 5, 39, 571, DateTimeKind.Unspecified).AddTicks(1395), new TimeSpan(0, 0, 0, 0, 0))
+                            UpdatedDate = new DateTimeOffset(new DateTime(2025, 5, 6, 10, 29, 43, 540, DateTimeKind.Unspecified).AddTicks(890), new TimeSpan(0, 0, 0, 0, 0))
                         },
                         new
                         {
-                            ProductId = "1ec624d5-25d0-4a5c-9d47-925be2439e70",
+                            ProductId = "20000000000000000000000000",
                             BasePrice = 9.99m,
-                            CategoryId = "2",
-                            CreatedDate = new DateTimeOffset(new DateTime(2025, 4, 27, 5, 5, 39, 571, DateTimeKind.Unspecified).AddTicks(1397), new TimeSpan(0, 0, 0, 0, 0)),
+                            CategoryId = "00000000000000000000000002",
+                            CreatedDate = new DateTimeOffset(new DateTime(2025, 5, 6, 10, 29, 43, 540, DateTimeKind.Unspecified).AddTicks(894), new TimeSpan(0, 0, 0, 0, 0)),
                             Description = "Extra smooth, extra chocolaty-sweet, and dare we say...extraterrestrial? A splash of ripe cherry juiciness makes this crowd-pleasing cup every bit as delicious hot as it is cold.",
                             Name = "Space Cadet",
-                            UpdatedDate = new DateTimeOffset(new DateTime(2025, 4, 27, 5, 5, 39, 571, DateTimeKind.Unspecified).AddTicks(1398), new TimeSpan(0, 0, 0, 0, 0))
+                            UpdatedDate = new DateTimeOffset(new DateTime(2025, 5, 6, 10, 29, 43, 540, DateTimeKind.Unspecified).AddTicks(895), new TimeSpan(0, 0, 0, 0, 0))
                         },
                         new
                         {
-                            ProductId = "1e38e0e9-e76b-462a-9141-13637859449c",
+                            ProductId = "30000000000000000000000000",
                             BasePrice = 25.99m,
-                            CategoryId = "3",
-                            CreatedDate = new DateTimeOffset(new DateTime(2025, 4, 27, 5, 5, 39, 571, DateTimeKind.Unspecified).AddTicks(1400), new TimeSpan(0, 0, 0, 0, 0)),
+                            CategoryId = "00000000000000000000000003",
+                            CreatedDate = new DateTimeOffset(new DateTime(2025, 5, 6, 10, 29, 43, 540, DateTimeKind.Unspecified).AddTicks(897), new TimeSpan(0, 0, 0, 0, 0)),
                             Description = "Blast off with this delightfully soft and fruity coffee sourced from Mrs. Tigest Wako's small farm in the famous Yirgacheffe region of Ethiopia.",
                             Name = "Space Cowboy",
-                            UpdatedDate = new DateTimeOffset(new DateTime(2025, 4, 27, 5, 5, 39, 571, DateTimeKind.Unspecified).AddTicks(1401), new TimeSpan(0, 0, 0, 0, 0))
+                            UpdatedDate = new DateTimeOffset(new DateTime(2025, 5, 6, 10, 29, 43, 540, DateTimeKind.Unspecified).AddTicks(897), new TimeSpan(0, 0, 0, 0, 0))
                         },
                         new
                         {
-                            ProductId = "ee38e0e9-e76b-462a-9141-13637859449c",
+                            ProductId = "40000000000000000000000000",
                             BasePrice = 25.99m,
-                            CategoryId = "4",
-                            CreatedDate = new DateTimeOffset(new DateTime(2025, 4, 27, 5, 5, 39, 571, DateTimeKind.Unspecified).AddTicks(1402), new TimeSpan(0, 0, 0, 0, 0)),
+                            CategoryId = "00000000000000000000000004",
+                            CreatedDate = new DateTimeOffset(new DateTime(2025, 5, 6, 10, 29, 43, 540, DateTimeKind.Unspecified).AddTicks(899), new TimeSpan(0, 0, 0, 0, 0)),
                             Description = "This decaf is heavy on chocolate flavor with a little fruity complexity in there as well; you won't feel like a fool drinking it.",
                             Name = "Decaf Fool's Gold",
-                            UpdatedDate = new DateTimeOffset(new DateTime(2025, 4, 27, 5, 5, 39, 571, DateTimeKind.Unspecified).AddTicks(1403), new TimeSpan(0, 0, 0, 0, 0))
+                            UpdatedDate = new DateTimeOffset(new DateTime(2025, 5, 6, 10, 29, 43, 540, DateTimeKind.Unspecified).AddTicks(899), new TimeSpan(0, 0, 0, 0, 0))
                         });
                 });
 
@@ -265,40 +265,79 @@ namespace Infrastructure.Migrations
                     b.HasData(
                         new
                         {
-                            ProductImageId = "42697d79-1b58-42a9-9294-9bb0df906f15",
-                            ImageUrl = "images/House Espresso1.jpg",
-                            ProductId = "780905a8-1505-4635-a3ed-2872625bd071"
+                            ProductImageId = "2c710fa9-135e-4487-a1aa-12684fe2d7fd",
+                            ImageUrl = "https://xloiupwymptihhsefzqw.supabase.co/storage/v1/object/public/product-images/1746521222472_TRD00133_HUC_Bom_Senso_V2.png",
+                            ProductId = "10000000000000000000000000"
                         },
                         new
                         {
-                            ProductImageId = "cfbcc452-03cf-4748-9b4c-c15ef55eecc2",
-                            ImageUrl = "images/House Espresso2.jpg",
-                            ProductId = "780905a8-1505-4635-a3ed-2872625bd071"
+                            ProductImageId = "6731fdf2-b8d4-48c5-a5b4-236f85aec475",
+                            ImageUrl = "https://xloiupwymptihhsefzqw.supabase.co/storage/v1/object/public/product-images/1746521209682_FamiliaPeixotoUpdated.png",
+                            ProductId = "20000000000000000000000000"
                         },
                         new
                         {
-                            ProductImageId = "c676a71a-cee1-4ddc-8876-550bcbc27515",
-                            ImageUrl = "images/Space Cadet_1.jpg",
-                            ProductId = "1ec624d5-25d0-4a5c-9d47-925be2439e70"
+                            ProductImageId = "63543f1f-c597-417e-890c-87c3d3a2cf88",
+                            ImageUrl = "https://xloiupwymptihhsefzqw.supabase.co/storage/v1/object/public/product-images/1746521226038_w73vhyjhu1y3odxqvnjt.png",
+                            ProductId = "30000000000000000000000000"
                         },
                         new
                         {
-                            ProductImageId = "c8b37d49-55d2-4532-8a61-621bbdc122a1",
-                            ImageUrl = "images/Space Cadet_2.jpg",
-                            ProductId = "1ec624d5-25d0-4a5c-9d47-925be2439e70"
+                            ProductImageId = "d095511a-dca9-496b-b1d6-fdb850ae1722",
+                            ImageUrl = "https://xloiupwymptihhsefzqw.supabase.co/storage/v1/object/public/product-images/1746521220065_TRD00132_SPA_High_Five_Blend_Main.png",
+                            ProductId = "40000000000000000000000000"
                         },
                         new
                         {
-                            ProductImageId = "1dc26aee-1906-493f-ac1d-bd17b9842f4c",
-                            ImageUrl = "images/Space Cowboy1.jpg",
-                            ProductId = "1e38e0e9-e76b-462a-9141-13637859449c"
+                            ProductImageId = "5e47dd8b-6345-4cea-99d4-58f3f0cc5f46",
+                            ImageUrl = "https://xloiupwymptihhsefzqw.supabase.co/storage/v1/object/public/product-images/1746521229043_WONdriftlessupdated_eda49ff4-e067-4393-9515-ef748e528bb6.png",
+                            ProductId = "10000000000000000000000000"
                         },
                         new
                         {
-                            ProductImageId = "db71938d-8681-47ca-9311-38fbe4a9b99d",
-                            ImageUrl = "images/Decaf Fool's Gold.jpg",
-                            ProductId = "ee38e0e9-e76b-462a-9141-13637859449c"
+                            ProductImageId = "3bc62d22-8038-4169-bbe1-5f076639d911",
+                            ImageUrl = "https://xloiupwymptihhsefzqw.supabase.co/storage/v1/object/public/product-images/1746521212425_sighjyhliefukn8dygvd.png",
+                            ProductId = "20000000000000000000000000"
+                        },
+                        new
+                        {
+                            ProductImageId = "dd62a928-036d-4768-b5ae-3b4981f4c549",
+                            ImageUrl = "https://xloiupwymptihhsefzqw.supabase.co/storage/v1/object/public/product-images/1746521212425_sighjyhliefukn8dygvd.png",
+                            ProductId = "30000000000000000000000000"
                         });
+                });
+
+            modelBuilder.Entity("Domain.ProductRating", b =>
+                {
+                    b.Property<string>("ProductRatingId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("Comment")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTimeOffset>("CreatedDate")
+                        .HasColumnType("datetimeoffset");
+
+                    b.Property<string>("ProductId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<int>("Rating")
+                        .HasColumnType("int");
+
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("ProductRatingId");
+
+                    b.HasIndex("ProductId");
+
+                    b.HasIndex("UserId", "ProductId")
+                        .IsUnique();
+
+                    b.ToTable("ProductRatings");
                 });
 
             modelBuilder.Entity("Domain.ProductVariant", b =>
@@ -335,9 +374,9 @@ namespace Infrastructure.Migrations
                     b.HasData(
                         new
                         {
-                            ProductVariantId = "6cc1d192-436f-4116-b6f5-809a8ce4e4ba",
+                            ProductVariantId = "00000000000000000000000001",
                             Price = 20.99m,
-                            ProductId = "780905a8-1505-4635-a3ed-2872625bd071",
+                            ProductId = "10000000000000000000000000",
                             Region = 0,
                             RoastType = 0,
                             Size = 1,
@@ -345,9 +384,9 @@ namespace Infrastructure.Migrations
                         },
                         new
                         {
-                            ProductVariantId = "5ace253a-2384-4813-bed4-edf1d0faea1f",
+                            ProductVariantId = "00000000000000000000000002",
                             Price = 25.99m,
-                            ProductId = "780905a8-1505-4635-a3ed-2872625bd071",
+                            ProductId = "20000000000000000000000000",
                             Region = 0,
                             RoastType = 0,
                             Size = 2,
@@ -355,9 +394,9 @@ namespace Infrastructure.Migrations
                         },
                         new
                         {
-                            ProductVariantId = "e82df5d8-43b9-4243-b1b2-abc9523f5427",
+                            ProductVariantId = "00000000000000000000000003",
                             Price = 15.99m,
-                            ProductId = "780905a8-1505-4635-a3ed-2872625bd071",
+                            ProductId = "30000000000000000000000000",
                             Region = 0,
                             RoastType = 0,
                             Size = 0,
@@ -365,9 +404,9 @@ namespace Infrastructure.Migrations
                         },
                         new
                         {
-                            ProductVariantId = "2327e2ca-04e4-42b6-9ab0-2b315c804f78",
+                            ProductVariantId = "00000000000000000000000004",
                             Price = 15.99m,
-                            ProductId = "1ec624d5-25d0-4a5c-9d47-925be2439e70",
+                            ProductId = "40000000000000000000000000",
                             Region = 4,
                             RoastType = 1,
                             Size = 0,
@@ -375,9 +414,9 @@ namespace Infrastructure.Migrations
                         },
                         new
                         {
-                            ProductVariantId = "c4791eac-cad6-47fd-a054-7ebbd0d0d289",
+                            ProductVariantId = "00000000000000000000000005",
                             Price = 20.99m,
-                            ProductId = "1ec624d5-25d0-4a5c-9d47-925be2439e70",
+                            ProductId = "10000000000000000000000000",
                             Region = 4,
                             RoastType = 1,
                             Size = 1,
@@ -385,9 +424,9 @@ namespace Infrastructure.Migrations
                         },
                         new
                         {
-                            ProductVariantId = "9afe29a9-4e66-42d2-a2bc-90e5b7f94cea",
+                            ProductVariantId = "00000000000000000000000006",
                             Price = 35.99m,
-                            ProductId = "1e38e0e9-e76b-462a-9141-13637859449c",
+                            ProductId = "20000000000000000000000000",
                             Region = 2,
                             RoastType = 2,
                             Size = 3,
@@ -395,9 +434,9 @@ namespace Infrastructure.Migrations
                         },
                         new
                         {
-                            ProductVariantId = "b6510274-c5cc-485f-9818-1b10ea05e84e",
+                            ProductVariantId = "00000000000000000000000007",
                             Price = 15.99m,
-                            ProductId = "ee38e0e9-e76b-462a-9141-13637859449c",
+                            ProductId = "30000000000000000000000000",
                             Region = 2,
                             RoastType = 2,
                             Size = 1,
@@ -434,13 +473,13 @@ namespace Infrastructure.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "a5f5f653-b99a-4386-89fe-df8a4f648ced",
+                            Id = "77d61071-d580-4c8b-a37f-08dfbe0b4f8d",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
-                            Id = "b12c236e-71ac-44b3-bd96-bc6b9f1c61de",
+                            Id = "6ef386c5-d1fd-4a48-b244-4c8b46036ca4",
                             Name = "User",
                             NormalizedName = "USER"
                         });
@@ -547,15 +586,15 @@ namespace Infrastructure.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "07cc4645-0e6e-4c54-bd73-7b29f0f43d91",
+                            Id = "28531d53-fea2-45c9-a75c-67190248884a",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "63763cac-100c-468c-9d54-61991c4e9c64",
+                            ConcurrencyStamp = "c9a09204-08ca-41ab-8469-ce6c4db8cea4",
                             Email = "admin@gmail.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                             NormalizedEmail = "ADMIN@GMAIL.COM",
                             NormalizedUserName = "ADMIN@GMAIL.COM",
-                            PasswordHash = "AQAAAAIAAYagAAAAEJUv/b40ndz1drC//RT9svvIcI7qw4vFWZKShXK80qfN/0zm6G0OI8sCyBFLmc8ifw==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEN74j8ws/9hrFGDgIvjusqYKCYIOU+psFTIN7i2nyrPOomOlh5zO9bL5UxIIPAPieQ==",
                             PhoneNumberConfirmed = false,
                             SecurityStamp = "",
                             TwoFactorEnabled = false,
@@ -563,15 +602,15 @@ namespace Infrastructure.Migrations
                         },
                         new
                         {
-                            Id = "812cb417-f054-45fb-853c-5521bf1dfffa",
+                            Id = "7f29f004-5e8c-4090-a755-c7ae1466474a",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "dd33f9da-61b0-422f-9bd2-443ff8d988e8",
+                            ConcurrencyStamp = "19746d74-7592-4fb7-8ede-b0f62458d8d6",
                             Email = "user@gmail.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                             NormalizedEmail = "USER@GMAIL.COM",
                             NormalizedUserName = "USER@GMAIL.COM",
-                            PasswordHash = "AQAAAAIAAYagAAAAEJTc+chSWPYtfsC5cu8yT3974harWVZdJQLuUugn0fN04LYqFNGJ82OmWnuDCNcmCA==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEGE+igPJdu3tTzD8Mdp0vdttigJasxsRAiIDZejrotCK1qE8VSwA8yr1X2kvd5EZ3g==",
                             PhoneNumberConfirmed = false,
                             SecurityStamp = "",
                             TwoFactorEnabled = false,
@@ -643,13 +682,13 @@ namespace Infrastructure.Migrations
                     b.HasData(
                         new
                         {
-                            UserId = "07cc4645-0e6e-4c54-bd73-7b29f0f43d91",
-                            RoleId = "a5f5f653-b99a-4386-89fe-df8a4f648ced"
+                            UserId = "28531d53-fea2-45c9-a75c-67190248884a",
+                            RoleId = "77d61071-d580-4c8b-a37f-08dfbe0b4f8d"
                         },
                         new
                         {
-                            UserId = "812cb417-f054-45fb-853c-5521bf1dfffa",
-                            RoleId = "b12c236e-71ac-44b3-bd96-bc6b9f1c61de"
+                            UserId = "7f29f004-5e8c-4090-a755-c7ae1466474a",
+                            RoleId = "6ef386c5-d1fd-4a48-b244-4c8b46036ca4"
                         });
                 });
 
@@ -761,6 +800,25 @@ namespace Infrastructure.Migrations
                     b.Navigation("Product");
                 });
 
+            modelBuilder.Entity("Domain.ProductRating", b =>
+                {
+                    b.HasOne("Domain.Product", "Product")
+                        .WithMany("ProductRatings")
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Domain.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Product");
+
+                    b.Navigation("User");
+                });
+
             modelBuilder.Entity("Domain.ProductVariant", b =>
                 {
                     b.HasOne("Domain.Product", "Product")
@@ -841,6 +899,8 @@ namespace Infrastructure.Migrations
             modelBuilder.Entity("Domain.Product", b =>
                 {
                     b.Navigation("ProductImages");
+
+                    b.Navigation("ProductRatings");
 
                     b.Navigation("ProductVariants");
                 });

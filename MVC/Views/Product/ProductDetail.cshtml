@@ -125,8 +125,8 @@
         </div>
     </form>
 
-      <partial name="Index" />
-
+    <partial name="_ProductRatingForm" model="new Shared.DTOs.ProductRatingDTO { ProductId = Model.ProductId }" />
+    <partial name="Index" />
 </div>
 
 @section Scripts {

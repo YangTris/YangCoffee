@@ -1,0 +1,60 @@
+@model Shared.DTOs.ProductRatingDTO
+
+@* <form asp-controller="Product" asp-action="RatingProduct" method="post" class="mt-4">
+    <input asp-for="ProductId" type="hidden" />
+    <input asp-for="ProductRatingId" type="hidden" value="null"/>
+
+    <div class="mb-3">
+        <label asp-for="Rating" class="form-label"></label>
+        <select asp-for="Rating" class="form-select" required>
+            <option value="">Select a rating</option>
+            @for (int i = 1; i <= 5; i++)
+            {
+                <option value="@i">@i Star@(i > 1 ? "s" : "")</option>
+            }
+        </select>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="Comment" class="form-label"></label>
+        <textarea asp-for="Comment" class="form-control" rows="3"></textarea>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Submit Rating</button>
+</form>
+
+@if (TempData["Error"] != null)
+{
+    <div class="alert alert-danger mt-3">@TempData["Error"]</div>
+} *@
+
+<div class="mt-5">
+    <h3 class="mb-3">Leave a Review</h3>
+    <form asp-controller="Product" asp-action="RatingProduct" method="post" class="border p-4 rounded shadow-sm">
+        <input asp-for="ProductId" type="hidden" />
+        <input asp-for="ProductRatingId" type="hidden" value="null" />
+
+        <div class="mb-3">
+            <label class="form-label">Your Rating</label>
+            <select asp-for="Rating" class="form-select" required>
+                <option value="">Select Rating</option>
+                @for (int i = 1; i <= 5; i++)
+                {
+                    <option value="@i">@i Star@(i > 1 ? "s" : "")</option>
+                }
+            </select>
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="Comment" class="form-label">Comment</label>
+            <textarea asp-for="Comment" class="form-control" rows="3"></textarea>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Submit Rating</button>
+    </form>
+
+    @if (TempData["Error"] != null)
+    {
+        <div class="alert alert-danger mt-3">@TempData["Error"]</div>
+    }
+</div>

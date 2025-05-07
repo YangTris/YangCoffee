@@ -22,6 +22,7 @@ namespace Infrastructure
         public DbSet<ProductImage> ProductImages { get; set; }
         public DbSet<ProductVariant> ProductVariants { get; set; }
         public DbSet<User> Users { get; set; }
+        public DbSet<ProductRating> ProductRatings { get; set; }
 
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
         {
@@ -96,25 +97,25 @@ namespace Infrastructure
             modelBuilder.Entity<Category>().HasData(
                 new Category
                 {
-                    CategoryId = "1",
+                    CategoryId = "00000000000000000000000001",
                     Name = "Espresso",
                     Description = "Various types of coffee beans."
                 },
                 new Category
                 {
-                    CategoryId = "2",
+                    CategoryId = "00000000000000000000000002",
                     Name = "Blends",
                     Description = "Mixing flavor of many type of coffee"
                 },
                 new Category
                 {
-                    CategoryId = "3",
+                    CategoryId = "00000000000000000000000003",
                     Name = "Single Origins",
                     Description = "Different varieties of tea."
                 },
                 new Category
                 {
-                    CategoryId = "4",
+                    CategoryId = "00000000000000000000000004",
                     Name = "Decaf",
                     Description = "Coffee and tea accessories."
                 }
@@ -124,47 +125,47 @@ namespace Infrastructure
             modelBuilder.Entity<Product>().HasData(
                 new Product
                 {
-                    ProductId = "780905a8-1505-4635-a3ed-2872625bd071",
+                    ProductId = "10000000000000000000000000",
                     Name = "House Espresso",
                     Description = "No competition here: This much-awarded espresso blend puts its " +
                     "game face on in the form of semi-sweet, zesty, full-body flavored. Plays well with milk.",
                     BasePrice = 15.99m,
                     CreatedDate = DateTimeOffset.UtcNow,
                     UpdatedDate = DateTimeOffset.UtcNow,
-                    CategoryId = "1"
+                    CategoryId = "00000000000000000000000001"
                 },
                 new Product
                 {
-                    ProductId = "1ec624d5-25d0-4a5c-9d47-925be2439e70",
+                    ProductId = "20000000000000000000000000",
                     Name = "Space Cadet",
                     Description = "Extra smooth, extra chocolaty-sweet, and dare we say...extraterrestrial? " +
                     "A splash of ripe cherry juiciness makes this crowd-pleasing cup every bit as delicious hot as it is cold.",
                     BasePrice = 9.99m,
                     CreatedDate = DateTimeOffset.UtcNow,
                     UpdatedDate = DateTimeOffset.UtcNow,
-                    CategoryId = "2"
+                    CategoryId = "00000000000000000000000002"
                 },
                 new Product
                 {
-                    ProductId = "1e38e0e9-e76b-462a-9141-13637859449c",
+                    ProductId = "30000000000000000000000000",
                     Name = "Space Cowboy",
                     Description = "Blast off with this delightfully soft and fruity coffee sourced from Mrs. " +
                     "Tigest Wako's small farm in the famous Yirgacheffe region of Ethiopia.",
                     BasePrice = 25.99m,
                     CreatedDate = DateTimeOffset.UtcNow,
                     UpdatedDate = DateTimeOffset.UtcNow,
-                    CategoryId = "3"
+                    CategoryId = "00000000000000000000000003"
                 },
                 new Product
                 {
-                    ProductId = "ee38e0e9-e76b-462a-9141-13637859449c",
+                    ProductId = "40000000000000000000000000",
                     Name = "Decaf Fool's Gold",
                     Description = "This decaf is heavy on chocolate flavor with a " +
                     "little fruity complexity in there as well; you won't feel like a fool drinking it.",
                     BasePrice = 25.99m,
                     CreatedDate = DateTimeOffset.UtcNow,
                     UpdatedDate = DateTimeOffset.UtcNow,
-                    CategoryId = "4"
+                    CategoryId = "00000000000000000000000004"
                 }
             );
 
@@ -172,8 +173,8 @@ namespace Infrastructure
             modelBuilder.Entity<ProductVariant>().HasData(
                 new ProductVariant
                 {
-                    ProductVariantId = Guid.NewGuid().ToString(),
-                    ProductId = "780905a8-1505-4635-a3ed-2872625bd071",
+                    ProductVariantId = "00000000000000000000000001",
+                    ProductId = "10000000000000000000000000",
                     Size = Size.Standard,
                     Region = Region.Africa,
                     RoastType = RoastType.Light,
@@ -182,8 +183,8 @@ namespace Infrastructure
                 },
                 new ProductVariant
                 {
-                    ProductVariantId = Guid.NewGuid().ToString(),
-                    ProductId = "780905a8-1505-4635-a3ed-2872625bd071",
+                    ProductVariantId = "00000000000000000000000002",
+                    ProductId = "20000000000000000000000000",
                     Size = Size.Big,
                     Region = Region.Africa,
                     RoastType = RoastType.Light,
@@ -192,8 +193,8 @@ namespace Infrastructure
                 },
                 new ProductVariant
                 {
-                    ProductVariantId = Guid.NewGuid().ToString(),
-                    ProductId = "780905a8-1505-4635-a3ed-2872625bd071",
+                    ProductVariantId = "00000000000000000000000003",
+                    ProductId = "30000000000000000000000000",
                     Size = Size.Small,
                     Region = Region.Africa,
                     RoastType = RoastType.Light,
@@ -202,8 +203,8 @@ namespace Infrastructure
                 },
                 new ProductVariant
                 {
-                    ProductVariantId = Guid.NewGuid().ToString(),
-                    ProductId = "1ec624d5-25d0-4a5c-9d47-925be2439e70",
+                    ProductVariantId = "00000000000000000000000004",
+                    ProductId = "40000000000000000000000000",
                     Size = Size.Small,
                     Region = Region.SouthAmerica,
                     RoastType = RoastType.Medium,
@@ -212,8 +213,8 @@ namespace Infrastructure
                 },
                 new ProductVariant
                 {
-                    ProductVariantId = Guid.NewGuid().ToString(),
-                    ProductId = "1ec624d5-25d0-4a5c-9d47-925be2439e70",
+                    ProductVariantId = "00000000000000000000000005",
+                    ProductId = "10000000000000000000000000",
                     Size = Size.Standard,
                     Region = Region.SouthAmerica,
                     RoastType = RoastType.Medium,
@@ -222,8 +223,8 @@ namespace Infrastructure
                 },
                 new ProductVariant
                 {
-                    ProductVariantId = Guid.NewGuid().ToString(),
-                    ProductId = "1e38e0e9-e76b-462a-9141-13637859449c",
+                    ProductVariantId = "00000000000000000000000006",
+                    ProductId = "20000000000000000000000000",
                     Size = Size.Bulk,
                     Region = Region.CentralAmerica,
                     RoastType = RoastType.Dark,
@@ -232,8 +233,8 @@ namespace Infrastructure
                 },
                 new ProductVariant
                 {
-                    ProductVariantId = Guid.NewGuid().ToString(),
-                    ProductId = "ee38e0e9-e76b-462a-9141-13637859449c",
+                    ProductVariantId = "00000000000000000000000007",
+                    ProductId = "30000000000000000000000000",
                     Size = Size.Standard,
                     Region = Region.CentralAmerica,
                     RoastType = RoastType.Dark,
@@ -247,40 +248,50 @@ namespace Infrastructure
                 new ProductImage
                 {
                     ProductImageId = Guid.NewGuid().ToString(),
-                    ProductId = "780905a8-1505-4635-a3ed-2872625bd071",
-                    ImageUrl = "images/House Espresso1.jpg"
+                    ProductId = "10000000000000000000000000",
+                    ImageUrl = "https://xloiupwymptihhsefzqw.supabase.co/storage/v1/object/public/product-images/1746521222472_TRD00133_HUC_Bom_Senso_V2.png"
                 },
                 new ProductImage
                 {
                     ProductImageId = Guid.NewGuid().ToString(),
-                    ProductId = "780905a8-1505-4635-a3ed-2872625bd071",
-                    ImageUrl = "images/House Espresso2.jpg"
+                    ProductId = "20000000000000000000000000",
+                    ImageUrl = "https://xloiupwymptihhsefzqw.supabase.co/storage/v1/object/public/product-images/1746521209682_FamiliaPeixotoUpdated.png"
                 },
                 new ProductImage
                 {
                     ProductImageId = Guid.NewGuid().ToString(),
-                    ProductId = "1ec624d5-25d0-4a5c-9d47-925be2439e70",
-                    ImageUrl = "images/Space Cadet_1.jpg"
+                    ProductId = "30000000000000000000000000",
+                    ImageUrl = "https://xloiupwymptihhsefzqw.supabase.co/storage/v1/object/public/product-images/1746521226038_w73vhyjhu1y3odxqvnjt.png"
                 },
                 new ProductImage
                 {
                     ProductImageId = Guid.NewGuid().ToString(),
-                    ProductId = "1ec624d5-25d0-4a5c-9d47-925be2439e70",
-                    ImageUrl = "images/Space Cadet_2.jpg"
+                    ProductId = "40000000000000000000000000",
+                    ImageUrl = "https://xloiupwymptihhsefzqw.supabase.co/storage/v1/object/public/product-images/1746521220065_TRD00132_SPA_High_Five_Blend_Main.png"
                 },
                 new ProductImage
                 {
                     ProductImageId = Guid.NewGuid().ToString(),
-                    ProductId = "1e38e0e9-e76b-462a-9141-13637859449c",
-                    ImageUrl = "images/Space Cowboy1.jpg"
+                    ProductId = "10000000000000000000000000",
+                    ImageUrl = "https://xloiupwymptihhsefzqw.supabase.co/storage/v1/object/public/product-images/1746521229043_WONdriftlessupdated_eda49ff4-e067-4393-9515-ef748e528bb6.png"
                 },
                 new ProductImage
                 {
                     ProductImageId = Guid.NewGuid().ToString(),
-                    ProductId = "ee38e0e9-e76b-462a-9141-13637859449c",
-                    ImageUrl = "images/Decaf Fool's Gold.jpg"
+                    ProductId = "20000000000000000000000000",
+                    ImageUrl = "https://xloiupwymptihhsefzqw.supabase.co/storage/v1/object/public/product-images/1746521212425_sighjyhliefukn8dygvd.png"
+                },
+                new ProductImage
+                {
+                    ProductImageId = Guid.NewGuid().ToString(),
+                    ProductId = "30000000000000000000000000",
+                    ImageUrl = "https://xloiupwymptihhsefzqw.supabase.co/storage/v1/object/public/product-images/1746521212425_sighjyhliefukn8dygvd.png"
                 }
             );
+
+            modelBuilder.Entity<ProductRating>()
+                .HasIndex(r => new { r.UserId, r.ProductId })
+                .IsUnique();
         }
     }
 }
