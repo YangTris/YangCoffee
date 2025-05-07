@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { searchProducts, deleteProduct, updateProduct, addProduct } from "../api/productApi";
-import { supabase } from "../api/supabaseClient";
+import { searchProducts, deleteProduct, updateProduct } from "../api/productApi";
 import { useNavigate } from "react-router-dom";
 
 function ProductTable() {
@@ -24,6 +23,7 @@ function ProductTable() {
         pageSize,
       });
       setProducts(result.items);
+      console.log("Products fetched:", result.items);
       setTotalPages(result.totalPages);
     } catch (error) {
       console.error("Error fetching products", error);
@@ -71,187 +71,14 @@ function ProductTable() {
 
   const navigate = useNavigate();
 
-  //Add new product state
-  const [selectedFiles, setSelectedFiles] = useState([]);
-  const [showAddModal, setShowAddModal] = useState(false);
-  const [newProduct, setNewProduct] = useState({
-    productId: "",
-    name: "",
-    description: "",
-    basePrice: 0,
-    createdDate: new Date().toISOString(),
-    updatedDate: new Date().toISOString(),
-    categoryId: "",
-    productVariantId: "",
-    quantity: 0,
-    productImages: [],
-    productVariants: [],
-  });
-
-  const handleAddProduct = async () => {
-    try {
-      const imageUrls = [];
-
-      for (const file of selectedFiles) {
-        const fileName = `${Date.now()}_${file.name}`;
-        const { error } = await supabase.storage
-          .from("product-images") // your storage bucket name
-          .upload(fileName, file);
-
-        if (error) {
-          throw error;
-        }
-
-        const { data: publicUrlData } = supabase
-          .storage
-          .from("product-images")
-          .getPublicUrl(fileName);
-
-        imageUrls.push(publicUrlData.publicUrl);
-      }
-
-      const productToSave = {
-        ...newProduct,
-        productImages: imageUrls.map((url) => ({
-          productImageId: crypto.randomUUID(),
-          productId: "",
-          imageUrl: url,
-        })),
-      };
-
-      await addProduct(productToSave);
-
-      setShowAddModal(false);
-      fetchProducts();
-
-      // Reset
-      setNewProduct({
-        productId: "",
-        name: "",
-        description: "",
-        basePrice: 0,
-        createdDate: new Date().toISOString(),
-        updatedDate: new Date().toISOString(),
-        categoryId: "",
-        productVariantId: "",
-        quantity: 0,
-        productImages: [],
-        productVariants: [],
-      });
-      setSelectedFiles([]);
-    } catch (error) {
-      console.error("Failed to add product", error);
-    }
-  };
-
   return (
     <div className="p-4">
       <div className="d-flex justify-content-between align-items-center mb-3">
         <h5>Products Management</h5>
-        {/* <button className="btn btn-dark" onClick={() => setShowAddModal(true)}>
-          + Add Product
-        </button> */}
         <button className="btn btn-dark" onClick={() => navigate("/dashboard/products/add")}>
           + Add Product
         </button>
       </div>
-      {showAddModal && (
-        <div
-          className="modal fade show d-block"
-          tabIndex="-1"
-          role="dialog"
-          onClick={() => setShowAddModal(false)}
-          style={{ backgroundColor: "rgba(0,0,0,0.5)" }}
-        >
-          <div
-            className="modal-dialog"
-            role="document"
-            onClick={(e) => e.stopPropagation()}
-          >
-            <div className="modal-content">
-              <div className="modal-header">
-                <h5 className="modal-title">Add New Product</h5>
-                <button
-                  type="button"
-                  className="btn-close"
-                  onClick={() => setShowAddModal(false)}
-                ></button>
-              </div>
-              <div className="modal-body">
-                <input type="hidden" value={newProduct.productId} />
-                <div className="mb-3">
-                  <label className="form-label">Name</label>
-                  <input
-                    type="text"
-                    className="form-control"
-                    value={newProduct.name}
-                    onChange={(e) =>
-                      setNewProduct({ ...newProduct, name: e.target.value })
-                    }
-                  />
-                </div>
-                <div className="mb-3">
-                  <label className="form-label">Description</label>
-                  <input
-                    type="text"
-                    className="form-control"
-                    value={newProduct.description}
-                    onChange={(e) =>
-                      setNewProduct({ ...newProduct, description: e.target.value })
-                    }
-                  />
-                </div>
-                <div className="mb-3">
-                  <label className="form-label">Base Price</label>
-                  <input
-                    type="number"
-                    className="form-control"
-                    value={newProduct.basePrice}
-                    onChange={(e) =>
-                      setNewProduct({
-                        ...newProduct,
-                        basePrice: parseFloat(e.target.value),
-                      })
-                    }
-                  />
-                </div>
-                <div className="mb-3">
-                  <label className="form-label">Category ID</label>
-                  <input
-                    type="text"
-                    className="form-control"
-                    value={newProduct.categoryId}
-                    onChange={(e) =>
-                      setNewProduct({ ...newProduct, categoryId: e.target.value })
-                    }
-                  />
-                </div>
-                <div class="mb-3">
-                  <label for="formFileMultiple" class="form-label">Images</label>
-                  <input
-                    className="form-control"
-                    type="file"
-                    id="formFileMultiple"
-                    multiple
-                    onChange={(e) => setSelectedFiles(Array.from(e.target.files))}
-                  />
-                </div>
-              </div>
-              <div className="modal-footer">
-                <button className="btn btn-primary" onClick={handleAddProduct}>
-                  Add Product
-                </button>
-                <button
-                  className="btn btn-secondary"
-                  onClick={() => setShowAddModal(false)}
-                >
-                  Cancel
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
-      )}
 
       <div className="input-group mb-3">
         <input

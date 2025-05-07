@@ -25,7 +25,7 @@ function Sidebar() {
   };
 
   return (
-    <div className="d-flex flex-column p-3 bg-light min-vh-100" style={{ width: "250px" }}>
+    <div className="d-flex flex-column p-3 bg-light min-vh-100" style={{ width: "210px" }}>
       <h4 className="mb-4">Yang Coffee</h4>
       <ul className="nav nav-pills flex-column mb-auto">
         {navItems.map(({ name, key }) => (
