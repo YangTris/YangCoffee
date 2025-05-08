@@ -92,13 +92,13 @@ namespace Application.Services
                 CreatedDate = DateTimeOffset.Now,
                 UpdatedDate = productDTO.UpdatedDate,
                 CategoryId = productDTO.CategoryId,
-                ProductImages = productDTO.ProductImages?.Select(pi => new ProductImage
+                ProductImages = productDTO.ProductImages.Select(pi => new ProductImage
                 {
                     ProductImageId = Guid.NewGuid().ToString(),
                     ImageUrl = pi.ImageUrl,
                     ProductId = productDTO.ProductId
                 }).ToList(),
-                ProductVariants = productDTO.ProductVariants?.Select(pv => new ProductVariant
+                ProductVariants = productDTO.ProductVariants.Select(pv => new ProductVariant
                 {
                     ProductVariantId = Guid.NewGuid().ToString(),
                     ProductId = productDTO.ProductId,
