@@ -33,7 +33,7 @@ namespace WebAPI.Controllers
             [FromQuery] string? sortBy,
             [FromQuery] bool isDescending = false,
             [FromQuery] int pageNumber = 1,
-            [FromQuery] int pageSize = 2,
+            [FromQuery] int pageSize = 6,
             [FromQuery] decimal? price = null,
             [FromQuery] string[]? size = null,
             [FromQuery] string[]? region = null)

@@ -35,7 +35,7 @@ namespace MVC.Controllers
             string? sortBy,
             bool isDescending = false,
             int pageNumber = 1,
-            int pageSize = 3,
+            int pageSize = 6,
             decimal? price = null,
             string[]? size = null,
             string[]? region = null)
