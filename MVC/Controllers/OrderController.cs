@@ -76,8 +76,17 @@ namespace MVC.Controllers
             }).ToList();
 
             var response = await _httpClient.PostAsJsonAsync("api/Orders", orderDTO);
+
             if (response.IsSuccessStatusCode)
             {
+                var amount = (int)orderDTO.OrderDetails.Sum(item => item.Price * item.Quantity);
+                Console.WriteLine($"Order created successfully. Order ID: {orderDTO.OrderId}, Amount: {amount}");
+                var paymentResponse = await _httpClient.GetAsync($"api/VnPay?amount={amount}");
+                if (paymentResponse.IsSuccessStatusCode)
+                {
+                    var paymentUrl = await paymentResponse.Content.ReadAsStringAsync();
+                    return Redirect(paymentUrl);
+                }
                 return RedirectToAction("ThankYou");
             }
             else
