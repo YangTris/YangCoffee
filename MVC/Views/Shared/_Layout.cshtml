@@ -165,7 +165,11 @@
         integrity="sha384-k6d4wzSIapyDyv1kpU366/PK5hCdSbCRGRCMv+eplOQJWyd1fbcAu9OCUj5zNLiq"
         crossorigin="anonymous"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
+    <script src="https://www.gstatic.com/dialogflow-console/fast/messenger/bootstrap.js?v=1"></script>
+    <df-messenger intent="WELCOME" chat-title="Chat bot assistant" agent-id="3d0b9fc1-8594-4d15-bbcf-a4cd886c6780"
+        language-code="en"></df-messenger>
     @await RenderSectionAsync("Scripts", required: false)
+    </iframe>
 </body>
 
 </html>
