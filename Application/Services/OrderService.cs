@@ -66,7 +66,7 @@ namespace Application.Services
                 UserId = userId,
                 TotalAmount = cart.CartItems.Sum(ci => ci.Quantity * ci.Price),
                 OrderDate = DateTimeOffset.Now,
-                OrderStatus = OrderStatus.Processing,
+                OrderStatus = OrderStatus.Success,
                 ShippingAddress = shippingAddress,
                 PhoneNumber = phoneNumber
             };
