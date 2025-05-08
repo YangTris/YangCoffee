@@ -5,7 +5,6 @@ using Infrastructure;
 using Infrastructure.Repositories;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-
 var builder = WebApplication.CreateBuilder(args);
 
 // Add CORS
@@ -25,6 +24,7 @@ builder.Services.AddScoped<IProductService, ProductService>();
 builder.Services.AddScoped<ICartService, CartService>();
 builder.Services.AddScoped<IOrderService, OrderService>();
 builder.Services.AddScoped<IProductRatingService, ProductRatingService>();
+builder.Services.AddScoped<IVnPayService, VnPayService>();
 
 // AddScoped repositories
 builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
