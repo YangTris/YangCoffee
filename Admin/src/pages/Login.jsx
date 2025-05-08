@@ -16,10 +16,10 @@ const Login = () => {
     try {
       const response = await login(newLogin);
       console.log('Login successful:', response.data);
-      //Store token in sessionStorage
+
       sessionStorage.setItem('token', response.data.accessToken);
 
-      navigate('/dashboard');
+      navigate('/dashboard/products');
     } catch (error) {
       console.error('Login failed:', error.response?.data || error.message);
       alert('Invalid email or password');

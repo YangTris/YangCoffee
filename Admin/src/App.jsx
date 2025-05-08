@@ -1,35 +1,47 @@
-// src/App.jsx
 import React from "react";
 import { Routes, Route, Navigate } from "react-router-dom";
 import Sidebar from "./components/Sidebar";
 import Dashboard from "./pages/Dashboard";
 import Login from "./pages/Login";
 import NotFoundPage from "./pages/NotFoundPage";
+import ProtectedRoute from "./components/ProtectedRoute";
 
 function App() {
   return (
     <Routes>
-      <Route path="*" element={<NotFoundPage />} />
-
       {/* Login Page */}
       <Route path="/login" element={<Login />} />
 
-      {/* Dashboard Layout */}
+      {/* Protected Dashboard Layout */}
       <Route
         path="/dashboard/*"
         element={
-          <div className="d-flex">
-            <Sidebar />
-            <Dashboard />
-          </div>
+          <ProtectedRoute>
+            <div className="d-flex">
+              <Sidebar />
+              <Dashboard />
+            </div>
+          </ProtectedRoute>
         }
       />
 
-      {/* Redirect unknown or root path to /dashboard */}
-      <Route path="/" element={<Navigate to="/dashboard" />} />
-      <Route path="*" element={<Navigate to="/dashboard" />} />
+      {/* Root redirect based on auth */}
+      <Route
+        path="/"
+        element={
+          sessionStorage.getItem("token") ? (
+            <Navigate to="/dashboard" />
+          ) : (
+            <Navigate to="/login" />
+          )
+        }
+      />
+
+      {/* 404 fallback */}
+      <Route path="*" element={<NotFoundPage />} />
     </Routes>
   );
 }
 
 export default App;
+
