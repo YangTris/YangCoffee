@@ -89,6 +89,9 @@ namespace MVC.Controllers
                     return NotFound();
                 }
 
+                var ratings = await _httpClient.GetFromJsonAsync<List<ProductRatingDTO>>($"api/ProductRatings?quantity=5&productId={id}");
+                product.ProductRatings = ratings ?? new List<ProductRatingDTO>();
+
                 return View(product);
             }
             catch (Exception ex)
