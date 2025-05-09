@@ -11,5 +11,6 @@ namespace Application.IRepositories
     {
         Task<ProductRating> GetUserRatingForProductAsync(string userId, string productId);
         Task AddAsync(ProductRating rating);
+        Task<IEnumerable<ProductRating>> GetRatingByQuantity(int quantity, string productId);
     }
 }

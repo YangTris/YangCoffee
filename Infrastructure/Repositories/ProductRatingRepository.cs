@@ -26,5 +26,15 @@ namespace Infrastructure.Repositories
             _context.ProductRatings.Add(rating);
             await _context.SaveChangesAsync();
         }
+
+        public async Task<IEnumerable<ProductRating>> GetRatingByQuantity(int quantity, string productId)
+        {
+            return await _context.ProductRatings
+                .Include(r => r.User)
+                .Where(r => r.ProductId == productId)
+                .OrderByDescending(r => r.CreatedDate)
+                .Take(quantity)
+                .ToListAsync();
+        }
     }
 }

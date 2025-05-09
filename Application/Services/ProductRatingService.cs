@@ -32,8 +32,16 @@ namespace Application.Services
                 ProductId = rating.ProductId,
                 Rating = rating.Rating,
                 Comment = rating.Comment,
+                UserName = rating.User?.UserName,
                 CreatedDate = rating.CreatedDate
             };
+        }
+
+        public async Task<IEnumerable<ProductRatingDTO>> GetRatingAsync(int quantity, string productId)
+        {
+            var ratings = await _productRatingRepository.GetRatingByQuantity(quantity, productId);
+
+            return ratings.Select(MapToDTO);
         }
 
         public async Task<ProductRatingDTO> RateProductAsync(string userId, string productId, int rating, string comment)
