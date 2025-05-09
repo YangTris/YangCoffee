@@ -10,5 +10,6 @@ namespace Application.IServices
     public interface IProductRatingService
     {
         Task<ProductRatingDTO> RateProductAsync(string userId, string productId, int rating, string comment);
+        Task<IEnumerable<ProductRatingDTO>> GetRatingAsync(int quantity, string productId);
     }
 }
