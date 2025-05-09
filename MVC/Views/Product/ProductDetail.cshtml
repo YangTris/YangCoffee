@@ -145,13 +145,49 @@
                                     do!
                                 </p>
                             </div>
-
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </form>
+
+    <div class="mt-5">
+        <h2 class="mb-4">Customer Reviews</h2>
+
+        @if (Model.ProductRatings != null && Model.ProductRatings.Any())
+        {
+            foreach (var rating in Model.ProductRatings)
+            {
+                <div class="card mb-3 shadow-sm">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <h5 class="card-title mb-1">@rating.UserName</h5>
+                            <div>
+                                @for (int i = 1; i <= 5; i++)
+                                {
+                                    if (i <= rating.Rating)
+                                    {
+                                        <i class="bi bi-star-fill text-warning"></i>
+                                    }
+                                    else
+                                    {
+                                        <i class="bi bi-star text-muted"></i>
+                                    }
+                                }
+                            </div>
+                        </div>
+                        <p class="card-text mt-2">@rating.Comment</p>
+                        <p class="text-muted small">Posted on @rating.CreatedDate.ToString("MMM dd, yyyy")</p>
+                    </div>
+                </div>
+            }
+        }
+        else
+        {
+            <p class="text-muted">No reviews yet. Be the first to leave one!</p>
+        }
+    </div>
 
     <partial name="_ProductRatingForm" model="new Shared.DTOs.ProductRatingDTO { ProductId = Model.ProductId }" />
     <partial name="Index" />
@@ -181,7 +217,6 @@
                 console.error('Variant not found for selectedId:', selectedId);
             }
         }
-
 
         $('input.input-qty').each(function () {
             var $this = $(this),
