@@ -5,6 +5,7 @@ using Infrastructure;
 using Infrastructure.Repositories;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Domain;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add CORS
@@ -48,7 +49,7 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
-builder.Services.AddIdentityApiEndpoints<IdentityUser>()
+builder.Services.AddIdentityApiEndpoints<User>()
     .AddRoles<IdentityRole>()
     .AddEntityFrameworkStores<ApplicationDbContext>()
     .AddDefaultTokenProviders();
@@ -67,7 +68,7 @@ app.UseCors("AllowReactApp");
 
 app.UseHttpsRedirection();
 
-app.MapIdentityApi<IdentityUser>();
+app.MapIdentityApi<User>();
 app.UseAuthorization();
 
 app.UseAuthentication();

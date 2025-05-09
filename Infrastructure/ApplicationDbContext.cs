@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure
 {
-    public class ApplicationDbContext : IdentityDbContext<IdentityUser>
+    public class ApplicationDbContext : IdentityDbContext<User>
     {
         public DbSet<Cart> Carts { get; set; }
         public DbSet<CartItem> CartItems { get; set; }
@@ -54,8 +54,8 @@ namespace Infrastructure
             var userId = Guid.NewGuid().ToString();
             var hasher = new PasswordHasher<IdentityUser>();
 
-            modelBuilder.Entity<IdentityUser>().HasData(
-                new IdentityUser
+            modelBuilder.Entity<User>().HasData(
+                new User
                 {
                     Id = adminId,
                     UserName = "admin@gmail.com",
@@ -64,9 +64,9 @@ namespace Infrastructure
                     NormalizedEmail = "ADMIN@GMAIL.COM",
                     EmailConfirmed = true,
                     PasswordHash = hasher.HashPassword(null, "P@ssw0rd"),
-                    SecurityStamp = string.Empty
+                    SecurityStamp = Guid.NewGuid().ToString()
                 },
-                new IdentityUser
+                new User
                 {
                     Id = userId,
                     UserName = "user@gmail.com",
@@ -75,9 +75,10 @@ namespace Infrastructure
                     NormalizedEmail = "USER@GMAIL.COM",
                     EmailConfirmed = true,
                     PasswordHash = hasher.HashPassword(null, "P@ssw0rd"),
-                    SecurityStamp = string.Empty
+                    SecurityStamp = Guid.NewGuid().ToString()
                 }
             );
+
 
             // Assign Admin role to Admin user
             modelBuilder.Entity<IdentityUserRole<string>>().HasData(
