@@ -16,6 +16,7 @@ namespace MVC.Controllers
     class User
     {
         public Guid id { get; set; }
+        public string userName { get; set; }
     }
     class Token
     {
@@ -67,6 +68,7 @@ namespace MVC.Controllers
                 {
                     var responseContent = await AuthResponse.Content.ReadFromJsonAsync<User>();
                     HttpContext.Session.SetString("UserId", responseContent.id.ToString());
+                    HttpContext.Session.SetString("UserName", responseContent.userName.ToString());
                 }
 
                 return RedirectToAction("Index", "Home");

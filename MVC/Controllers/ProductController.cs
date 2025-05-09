@@ -89,7 +89,7 @@ namespace MVC.Controllers
                     return NotFound();
                 }
 
-                var ratings = await _httpClient.GetFromJsonAsync<List<ProductRatingDTO>>($"api/ProductRatings?quantity=5&productId={id}");
+                var ratings = await _httpClient.GetFromJsonAsync<List<ProductRatingDTO>>($"api/ProductRatings?quantity=3&productId={id}");
                 product.ProductRatings = ratings ?? new List<ProductRatingDTO>();
 
                 return View(product);
@@ -103,12 +103,15 @@ namespace MVC.Controllers
         public async Task<IActionResult> RatingProduct(ProductRatingDTO ratingDto)
         {
             var userId = HttpContext.Session.GetString("UserId");
-            if (userId == null)
+            var userName = HttpContext.Session.GetString("UserName");
+            if (userId == null || userName == null)
             {
+                TempData["Error"] = "You must be logged in to rate a product.";
                 return RedirectToAction("Login", "Account");
             }
 
             ratingDto.UserId = userId;
+            ratingDto.UserName = userName;
 
             Console.WriteLine($"UserId: {ratingDto.UserId}");
             Console.WriteLine($"ProductId: {ratingDto.ProductId}");
