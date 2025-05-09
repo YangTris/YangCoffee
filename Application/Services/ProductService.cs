@@ -59,6 +59,7 @@ namespace Application.Services
                     Rating = r.Rating,
                     Comment = r.Comment,
                     UserId = r.UserId,
+                    UserName = r.User?.UserName,
                     ProductId = r.ProductId,
                     CreatedDate = r.CreatedDate
                 }).ToList(),
