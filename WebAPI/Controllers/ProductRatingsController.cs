@@ -39,5 +39,29 @@ namespace WebAPI.Controllers
 
             return CreatedAtAction(nameof(RateProduct), new { id = result.ProductRatingId }, result);
         }
+
+        [HttpGet]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<ActionResult<IEnumerable<ProductRatingDTO>>> GetLatestRatings(int quantity, string productId)
+        {
+            if (string.IsNullOrEmpty(productId))
+            {
+                return BadRequest("Product ID cannot be null or empty.");
+            }
+
+            if (quantity <= 0)
+            {
+                return BadRequest("Quantity must be greater than zero.");
+            }
+            
+            var ratings = await _productRatingService.GetRatingAsync(quantity, productId);
+ 
+            if (ratings == null || !ratings.Any())
+            {
+                return NotFound("No ratings found.");
+            }
+            return Ok(ratings);
+        }
     }
 }
