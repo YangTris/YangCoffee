@@ -88,7 +88,14 @@
                 </div>
                 <div class="d-grid">
                     <button class="btn btn-danger btn-lg mt-3" type="submit">Add to Cart</button>
+
                 </div>
+                @if (TempData["AddToCartMessage"] != null)
+                {
+                    <div id="addToCartMessage" class="alert alert-success mt-3">
+                        @TempData["AddToCartMessage"]
+                    </div>
+                }
 
                 <hr class="featurette-divider mt-5 mb-4">
 
@@ -236,5 +243,15 @@
                 $this.attr('value', d).val(d)
             })
         })
+
+        //TempData message fade out
+        window.addEventListener("DOMContentLoaded", function () {
+            const alertEl = document.getElementById("addToCartMessage");
+            if (alertEl) {
+                setTimeout(() => {
+                    alertEl.classList.add("fade-out-blur");
+                }, 2000); // Start fading after 2 seconds
+            }
+        });
     </script>
 }

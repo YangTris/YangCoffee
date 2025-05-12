@@ -49,7 +49,7 @@ namespace MVC.Controllers
 
             if (addItemResponse.IsSuccessStatusCode)
             {
-                Console.WriteLine("Item added to cart successfully.");
+                TempData["AddToCartMessage"] = "Item added to cart successfully.";
             }
             return RedirectToAction("ProductDetail", "Product", new { id = productId });
         }

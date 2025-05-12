@@ -69,9 +69,10 @@ app.UseCors("AllowReactApp");
 app.UseHttpsRedirection();
 
 app.MapIdentityApi<User>();
-app.UseAuthorization();
 
 app.UseAuthentication();
+app.UseAuthorization();
+
 
 app.MapControllers();
 
