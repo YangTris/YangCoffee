@@ -30,39 +30,40 @@ namespace MVC.Controllers
                 return View("Error", ex.Message);
             }
         }
-        public async Task<IActionResult> ProductList(
-            string? searchName,
-            string? sortBy,
-            bool isDescending = false,
-            int pageNumber = 1,
-            int pageSize = 6,
-            decimal? price = null,
-            string[]? size = null,
-            string[]? region = null)
+
+        public async Task<IActionResult> ProductList(ProductQuery productQuery)
         {
             try
             {
-                ViewData["sortBy"] = sortBy ?? "createddate"; // Default to createddate if null
-                ViewData["isDescending"] = isDescending.ToString().ToLower();
-                ViewData["searchName"] = searchName;
-                ViewData["price"] = price?.ToString();
-                ViewData["size"] = size?.ToString();
-                ViewData["region"] = region;
-                // Build the query string for the WebAPI
-                var query = new Dictionary<string, string>
+                var categories = await _httpClient.GetFromJsonAsync<List<CategoryDTO>>("api/categories");
+
+                ViewData["selectedCategoryIds"] = productQuery.CategoryId ?? Array.Empty<string>();
+                ViewData["allCategories"] = categories;
+                ViewData["sortBy"] = productQuery.SortBy ?? "";
+
+                var baseQuery = new Dictionary<string, string?>
                 {
-                    { "searchName", searchName },
-                    { "sortBy", sortBy },
-                    { "isDescending", isDescending.ToString() },
-                    { "pageNumber", pageNumber.ToString() },
-                    { "pageSize", pageSize.ToString() }
+                    ["SortBy"] = productQuery.SortBy,
+                    ["PageNumber"] = productQuery.PageNumber.ToString(),
+                    ["PageSize"] = productQuery.PageSize.ToString()
                 };
 
-                var queryString = string.Join("&", query
+                var queryParts = baseQuery
                     .Where(kvp => !string.IsNullOrEmpty(kvp.Value))
-                    .Select(kvp => $"{kvp.Key}={Uri.EscapeDataString(kvp.Value)}"));
+                    .Select(kvp => $"{kvp.Key}={Uri.EscapeDataString(kvp.Value!)}")
+                    .ToList();
 
-                var url = $"api/Products/search?{queryString}";
+                // Add each CategoryId separately
+                if (productQuery.CategoryId != null)
+                {
+                    foreach (var catId in productQuery.CategoryId)
+                    {
+                        queryParts.Add($"CategoryId={Uri.EscapeDataString(catId)}");
+                    }
+                }
+
+                var queryString = string.Join("&", queryParts);
+                var url = $"api/Products/query?{queryString}";
                 var response = await _httpClient.GetFromJsonAsync<PaginatedResult<ProductDTO>>(url);
 
                 if (response == null)
@@ -70,7 +71,6 @@ namespace MVC.Controllers
                     return View("Error", "No products found.");
                 }
 
-                // Pass the paginated result to the view
                 return View(response);
             }
             catch (Exception ex)

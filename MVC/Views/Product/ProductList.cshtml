@@ -3,175 +3,101 @@
 @{
     ViewData["Title"] = "AllProducts";
     Layout = "~/Views/Shared/_Layout.cshtml";
+
+    var selectedCategoryIds = ViewData["selectedCategoryIds"] as string[] ?? Array.Empty<string>();
+    var allCategories = ViewData["allCategories"] as List<Shared.DTOs.CategoryDTO>;
+    var currentSort = (ViewData["sortBy"] ?? "").ToString().ToLower();
 }
 
 <div class="container mt-5">
     <h1 style="font-size: 76px; font-weight: 700;">All Specialty Coffee</h1>
-    <p style="font-size: 20px; font-weight: 24px">
+    <p style="font-size: 20px;">
         Choose from a wide variety of coffee from the top roasters in the US.
         All our specialty coffee is roasted to order and shipped fresh to your door.
     </p>
 
     <form id="filterForm" asp-action="ProductList" method="get">
+        <!-- Hidden inputs for pagination -->
+        <input type="hidden" name="pageNumber" id="pageNumber" value="@Model.PageNumber" />
+        <input type="hidden" name="pageSize" value="@Model.PageSize" />
+
         <div class="row">
+            <!-- Filter Sidebar -->
             <div class="col-3">
                 <div class="accordion" id="accordionPanelsStayOpenExample">
                     <div class="d-flex justify-content-between align-items-center mb-3">
-                        <h2><i class="bi bi-filter"></i>Filters</h2>
+                        <h2><i class="bi bi-filter"></i> Filters</h2>
                         <input class="btn btn-primary" type="reset" value="Clear" id="resetButton"
-                               style="background-color: #F2F2F2; color: #000000; border: none; font-size: 14px; padding: 5px 10px;">
+                            style="background-color: #F2F2F2; color: #000000; border: none; font-size: 14px; padding: 5px 10px;">
                     </div>
 
-                    <!-- Price Filter -->
-                    <div class="accordion-item">
-                        <h2 class="accordion-header">
-                            <button class="accordion-button" type="button" data-bs-toggle="collapse"
-                                    data-bs-target="#panelsStayOpen-collapseOne" aria-expanded="true"
-                                    aria-controls="panelsStayOpen-collapseOne">
-                                Price
-                            </button>
-                        </h2>
-                        <div id="panelsStayOpen-collapseOne" class="accordion-collapse collapse show">
-                            <div class="accordion-body">
-                                <div class="form-check">
-                                    <input class="form-check-input" type="radio" name="price" id="priceAny" value=""
-                                           checked="@(string.IsNullOrEmpty(ViewData["price"]?.ToString()))">
-                                    <label class="form-check-label" for="priceAny">Any</label>
-                                </div>
-                                <div class="form-check">
-                                    <input class="form-check-input" type="radio" name="price" id="price15" value="15.75"
-                                           checked="@(ViewData["price"]?.ToString() == "15.75")">
-                                    <label class="form-check-label" for="price15">$15.75</label>
-                                </div>
-                                <div class="form-check">
-                                    <input class="form-check-input" type="radio" name="price" id="price19" value="19.95"
-                                           checked="@(ViewData["price"]?.ToString() == "19.95")">
-                                    <label class="form-check-label" for="price19">$19.95</label>
-                                </div>
-                                <div class="form-check">
-                                    <input class="form-check-input" type="radio" name="price" id="price20" value="20"
-                                           checked="@(ViewData["price"]?.ToString() == "20")">
-                                    <label class="form-check-label" for="price20">Over $20</label>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Bag Weight Filter -->
+                    <!-- Category Filter -->
                     <div class="accordion-item">
                         <h2 class="accordion-header">
                             <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                                    data-bs-target="#panelsStayOpen-collapseTwo" aria-expanded="false"
-                                    aria-controls="panelsStayOpen-collapseTwo">
-                                Bag Weight
+                                data-bs-target="#categoryFilter" aria-expanded="true" aria-controls="categoryFilter">
+                                Category
                             </button>
                         </h2>
-                        <div id="panelsStayOpen-collapseTwo" class="accordion-collapse collapse">
+                        <div id="categoryFilter" class="accordion-collapse collapse show">
                             <div class="accordion-body">
-                                @{
-                                    var selectedBagWeights = ViewData["size"] as string[] ?? Array.Empty<string>();
+                                @foreach (var category in allCategories)
+                                {
+                                    var isChecked = selectedCategoryIds.Contains(category.CategoryId);
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" name="CategoryId"
+                                            id="category_@category.CategoryId" value="@category.CategoryId" @(isChecked ? "checked" : "") />
+                                    <label class="form-check-label"
+                                        for="category_@category.CategoryId">@category.Name</label>
+                                </div>
                                 }
-                                <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" name="size" id="bag8oz" value="8oz"
-                                           checked="@(selectedBagWeights.Contains("8oz"))">
-                                    <label class="form-check-label" for="bag8oz">Small Bag (8 oz.)</label>
-                                </div>
-                                <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" name="size" id="bag10oz" value="10.93oz"
-                                           checked="@(selectedBagWeights.Contains("10.93oz"))">
-                                    <label class="form-check-label" for="bag10oz">Standard Bag (10.93 oz.)</label>
-                                </div>
-                                <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" name="size" id="bag2lb" value="2lb"
-                                           checked="@(selectedBagWeights.Contains("2lb"))">
-                                    <label class="form-check-label" for="bag2lb">Big Bag (2 lb.)</label>
-                                </div>
-                                <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" name="size" id="bag5lb" value="5lb"
-                                           checked="@(selectedBagWeights.Contains("5lb"))">
-                                    <label class="form-check-label" for="bag5lb">Bulk (5 lb.)</label>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Region Filter -->
-                    <div class="accordion-item">
-                        <h2 class="accordion-header">
-                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                                    data-bs-target="#panelsStayOpen-collapseThree" aria-expanded="false"
-                                    aria-controls="panelsStayOpen-collapseThree">
-                                Region
-                            </button>
-                        </h2>
-                        <div id="panelsStayOpen-collapseThree" class="accordion-collapse collapse">
-                            <div class="accordion-body">
-                                @{
-                                    var selectedRegions = ViewData["region"] as string[] ?? Array.Empty<string>();
-                                }
-                                <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" name="region" id="regionAfrica" value="Africa"
-                                           checked="@(selectedRegions.Contains("Africa"))">
-                                    <label class="form-check-label" for="regionAfrica">Africa</label>
-                                </div>
-                                <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" name="region" id="regionAsia" value="Asia"
-                                           checked="@(selectedRegions.Contains("Asia"))">
-                                    <label class="form-check-label" for="regionAsia">Asia</label>
-                                </div>
-                                <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" name="region" id="regionCentralAmerica" value="CentralAmerica"
-                                           checked="@(selectedRegions.Contains("CentralAmerica"))">
-                                    <label class="form-check-label" for="regionCentralAmerica">Central America</label>
-                                </div>
-                                <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" name="region" id="regionNorthAmerica" value="NorthAmerica"
-                                           checked="@(selectedRegions.Contains("NorthAmerica"))">
-                                    <label class="form-check-label" for="regionNorthAmerica">North America</label>
-                                </div>
-                                <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" name="region" id="regionSouthAmerica" value="SouthAmerica"
-                                           checked="@(selectedRegions.Contains("SouthAmerica"))">
-                                    <label class="form-check-label" for="regionSouthAmerica">South America</label>
-                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
 
+            <!-- Product List Section -->
             <div class="col-9">
                 <div class="d-flex justify-content-between align-items-center mb-3">
                     <h2>All Products (@Model.TotalItems items)</h2>
-                    <div class="dropdown">
-                        <select class="form-select" name="sortBy" id="sortBy">
-                            <option value="createddate" selected="@(ViewData["sortBy"]?.ToString() == "createddate" ? "selected" : "")">Newest</option>
+                    <div>
+                        @* <select class="form-select" name="sortBy" id="sortBy">
+                            <option value="createddate"
+                                selected="@(ViewData["sortBy"]?.ToString() == "createddate" ? "selected" : "")">Newest
+                            </option>
                             <option value="price"
-                                    selected="@(ViewData["sortBy"]?.ToString() == "price" ? "selected" : "")">Price: Low
-                                    to High</option>
-                                <option value="name"
-                                    selected="@(ViewData["sortBy"]?.ToString() == "name" ? "selected" : "")">Name: A to
-                                    Z</option>
+                                selected="@(ViewData["sortBy"]?.ToString() == "price" ? "selected" : "")">Price: Low
+                                to High</option>
+                            <option value="name"
+                                selected="@(ViewData["sortBy"]?.ToString() == "name" ? "selected" : "")">Name: A to
+                                Z</option>
+                        </select> *@
+                        <select class="form-select" name="sortBy" id="sortBy">
+                            <option value="createddate" selected="@(currentSort == "createddate")">Newest</option>
+                            <option value="price" selected="@(currentSort == "price")">Price: Low to High</option>
+                            <option value="name" selected="@(currentSort == "name")">Name: A to Z</option>
                         </select>
-                        <input type="hidden" name="isDescending" id="isDescending" value="@(ViewData["isDescending"]?.ToString()?.ToLower() ?? "false")" />
                     </div>
                 </div>
 
+                <!-- Product Grid -->
                 <div class="row row-cols-1 row-cols-md-3 g-4">
                     @foreach (var item in Model.Items)
                     {
                         <div class="col">
                             <a asp-action="ProductDetail" asp-controller="Product" asp-route-id="@item.ProductId"
-                               class="text-decoration-none text-dark">
+                                class="text-decoration-none text-dark">
                                 <div class="card border-0" style="width: 18rem;">
-                                    <img src="@item.ProductImages.FirstOrDefault()?.ImageUrl" style="background-color: rgb(246, 246, 246);"
-                                         class="card-img-top" alt="...">
+                                    <img src="@item.ProductImages.FirstOrDefault()?.ImageUrl"
+                                        style="background-color: rgb(246, 246, 246);" class="card-img-top" alt="...">
                                     <div class="card-body p-0 mt-3">
                                         <div class="d-flex align-items-center justify-content-between">
                                             <h5 class="card-title mb-1 fw-bold">@item.Name</h5>
                                             <h5 class="card-text fw-bold">@item.BasePrice</h5>
                                         </div>
-                                        <p class="card-text text-muted mb-2">@item.ProductVariants?.FirstOrDefault()?.Taste</p>
+                                        <p class="card-text text-muted mb-2">@item.ProductVariants?.FirstOrDefault()?.Taste
+                                        </p>
                                     </div>
                                 </div>
                             </a>
@@ -180,52 +106,22 @@
                 </div>
 
                 <!-- Pagination -->
-                <nav aria-label="Page navigation example" style="margin-top: 20px;">
-                    <ul class="pagination" style="justify-content: center;">
+                <nav aria-label="Page navigation" class="mt-4">
+                    <ul class="pagination justify-content-center">
                         <li class="page-item @(Model.PageNumber == 1 ? "disabled" : "")">
-                            <a class="page-link" 
-                               asp-action="ProductList" 
-                               asp-route-pageNumber="@(Model.PageNumber - 1)"
-                               asp-route-pageSize="@Model.PageSize"
-                               asp-route-sortBy="@ViewData["sortBy"]"
-                               asp-route-isDescending="@ViewData["isDescending"]"
-                               asp-route-searchName="@ViewData["searchName"]"
-                               asp-route-price="@ViewData["price"]"
-                               asp-route-size="@(ViewData["size"] as string[] ?? Array.Empty<string>())"
-                               asp-route-region="@(ViewData["region"] as string[] ?? Array.Empty<string>())"
-                               aria-label="Previous">
-                                <span aria-hidden="true">«</span>
-                            </a>
+                            <a href="#" class="page-link pagination-link"
+                                data-page="@(@Model.PageNumber - 1)">Previous</a>
                         </li>
-                        @for (var i = 1; i <= Model.TotalPages; i++)
+
+                        @for (int i = 1; i <= Model.TotalPages; i++)
                         {
                             <li class="page-item @(i == Model.PageNumber ? "active" : "")">
-                                <a class="page-link" 
-                                   asp-action="ProductList" 
-                                   asp-route-pageNumber="@i"
-                                   asp-route-pageSize="@Model.PageSize"
-                                   asp-route-sortBy="@ViewData["sortBy"]"
-                                   asp-route-isDescending="@ViewData["isDescending"]"
-                                   asp-route-searchName="@ViewData["searchName"]"
-                                   asp-route-price="@ViewData["price"]"
-                                   asp-route-size="@(ViewData["size"] as string[] ?? Array.Empty<string>())"
-                                   asp-route-region="@(ViewData["region"] as string[] ?? Array.Empty<string>())">@i</a>
+                                <a href="#" class="page-link pagination-link" data-page="@i">@i</a>
                             </li>
                         }
+
                         <li class="page-item @(Model.PageNumber == Model.TotalPages ? "disabled" : "")">
-                            <a class="page-link" 
-                               asp-action="ProductList" 
-                               asp-route-pageNumber="@(Model.PageNumber + 1)"
-                               asp-route-pageSize="@Model.PageSize"
-                               asp-route-sortBy="@ViewData["sortBy"]"
-                               asp-route-isDescending="@ViewData["isDescending"]"
-                               asp-route-searchName="@ViewData["searchName"]"
-                               asp-route-price="@ViewData["price"]"
-                               asp-route-size="@(ViewData["size"] as string[] ?? Array.Empty<string>())"
-                               asp-route-region="@(ViewData["region"] as string[] ?? Array.Empty<string>())"
-                               aria-label="Next">
-                                <span aria-hidden="true">»</span>
-                            </a>
+                            <a href="#" class="page-link pagination-link" data-page="@(@Model.PageNumber + 1)">Next</a>
                         </li>
                     </ul>
                 </nav>
@@ -236,23 +132,43 @@
 
 @section Scripts {
     <script>
-        // Handle form reset
-        document.getElementById('resetButton').addEventListener('click', function () {
-            document.getElementById('filterForm').reset();
-            document.getElementById('sortBy').value = 'createddate';
-            document.getElementById('isDescending').value = 'false';
+        // Handle Clear button
+        document.getElementById('resetButton').addEventListener('click', function (e) {
+            e.preventDefault(); // prevent native reset behavior
+
+            // Uncheck all category checkboxes
+            document.querySelectorAll('input[name="CategoryId"]').forEach(function (checkbox) {
+                checkbox.checked = false;
+            });
+
+            // Reset sort and pagination
+            document.getElementById('sortBy').value = "";
+            document.getElementById('pageNumber').value = 1;
+
+            // Submit form after clearing
             document.getElementById('filterForm').submit();
         });
 
-        // Handle sort change
+        // Auto-submit on sort change
         document.getElementById('sortBy').addEventListener('change', function () {
-            document.getElementById('isDescending').value = 'false';
+            document.getElementById('pageNumber').value = 1;
             document.getElementById('filterForm').submit();
         });
 
         // Auto-submit on filter change
-        document.querySelectorAll('input[name="price"], input[name="size"], input[name="region"]').forEach(function (input) {
-            input.addEventListener('change', function () {
+        document.querySelectorAll('input[name="CategoryId"]').forEach(function (checkbox) {
+            checkbox.addEventListener('change', function () {
+                document.getElementById('pageNumber').value = 1;
+                document.getElementById('filterForm').submit();
+            });
+        });
+
+        // Pagination handler
+        document.querySelectorAll('.pagination-link').forEach(function (link) {
+            link.addEventListener('click', function (e) {
+                e.preventDefault();
+                const page = this.getAttribute('data-page');
+                document.getElementById('pageNumber').value = page;
                 document.getElementById('filterForm').submit();
             });
         });
