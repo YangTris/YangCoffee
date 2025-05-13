@@ -46,11 +46,12 @@
                                     var isChecked = selectedCategoryIds.Contains(category.CategoryId);
                                     <div class="form-check">
                                         <input class="form-check-input" type="checkbox" name="CategoryId"
-                                            id="category_@category.CategoryId" value="@category.CategoryId" @(isChecked ? "checked" : "") />
+                                            id="category_@category.CategoryId" value="@category.CategoryId" @(isChecked ?
+                                                                                                                                                    "checked" : "") />
                                     <label class="form-check-label"
                                         for="category_@category.CategoryId">@category.Name</label>
                                 </div>
-                                }
+                                                                }
                             </div>
                         </div>
                     </div>
@@ -62,17 +63,6 @@
                 <div class="d-flex justify-content-between align-items-center mb-3">
                     <h2>All Products (@Model.TotalItems items)</h2>
                     <div>
-                        @* <select class="form-select" name="sortBy" id="sortBy">
-                            <option value="createddate"
-                                selected="@(ViewData["sortBy"]?.ToString() == "createddate" ? "selected" : "")">Newest
-                            </option>
-                            <option value="price"
-                                selected="@(ViewData["sortBy"]?.ToString() == "price" ? "selected" : "")">Price: Low
-                                to High</option>
-                            <option value="name"
-                                selected="@(ViewData["sortBy"]?.ToString() == "name" ? "selected" : "")">Name: A to
-                                Z</option>
-                        </select> *@
                         <select class="form-select" name="sortBy" id="sortBy">
                             <option value="createddate" selected="@(currentSort == "createddate")">Newest</option>
                             <option value="price" selected="@(currentSort == "price")">Price: Low to High</option>
