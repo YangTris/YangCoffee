@@ -43,9 +43,9 @@ namespace MVC.Controllers
 
                 var baseQuery = new Dictionary<string, string?>
                 {
-                    ["SortBy"] = productQuery.SortBy,
-                    ["PageNumber"] = productQuery.PageNumber.ToString(),
-                    ["PageSize"] = productQuery.PageSize.ToString()
+                    ["sortBy"] = productQuery.SortBy,
+                    ["pageNumber"] = productQuery.PageNumber.ToString(),
+                    ["pageSize"] = productQuery.PageSize.ToString()
                 };
 
                 var queryParts = baseQuery
