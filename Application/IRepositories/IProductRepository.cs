@@ -9,6 +9,7 @@ namespace Application.IRepositories
 {
     public interface IProductRepository
     {
+        Task<(IEnumerable<Product> Products, int TotalItems)> GetProductByQuery(string[]? categoryId, string? sortBy ,int page=1, int pageSize=6);
         Task<IEnumerable<Product>> GetAllProductsAsync();
         Task<Product> GetProductByIdAsync(string id);
         Task AddProductAsync(Product product);

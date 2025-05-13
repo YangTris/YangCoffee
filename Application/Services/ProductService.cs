@@ -190,6 +190,22 @@ namespace Application.Services
             return MapToVariantDTO(productVariant);
         }
 
+        public async Task<PaginatedResult<ProductDTO>> GetProductByQueryAsync(string[]? categoryId, string? sortBy, int page, int pageSize)
+        {
+            var (products, totalCount) = await _productRepository.GetProductByQuery(categoryId, sortBy, page, pageSize);
+
+            var productDTOs = products.Select(MapToDTO);
+
+            return new PaginatedResult<ProductDTO>
+            {
+                TotalItems = totalCount,
+                TotalPages = (int)Math.Ceiling(totalCount / (double)pageSize),
+                PageNumber = page,
+                PageSize = pageSize,
+                Items = productDTOs
+            };
+        }
+
         public async Task UpdateProductAsync(string id, UpdateProductDTO updateProductDTO)
         {
             var product = await _productRepository.GetProductByIdAsync(id);
@@ -220,5 +236,7 @@ namespace Application.Services
 
             await _productVariantRepository.UpdateProductVariantAsync(productVariant);
         }
+
+       
     }
 }

@@ -51,6 +51,40 @@ namespace Infrastructure.Repositories
                 .FirstOrDefaultAsync(p => p.ProductId == id);
         }
 
+        public async Task<(IEnumerable<Product> Products, int TotalItems)> GetProductByQuery(
+            string[]? categoryId,
+            string? sortBy,
+            int page = 1,
+            int pageSize = 6)
+        {
+            IQueryable<Product> query = _context.Products
+                .AsNoTracking()
+                .Include(p => p.ProductVariants)
+                .Include(p => p.ProductImages)
+                .AsQueryable();
+
+            if(categoryId != null && categoryId.Length > 0)
+            {
+                query = query.Where(p => categoryId.Contains(p.CategoryId));
+            }
+
+            query = sortBy.ToLower() switch
+            {
+                "price" => query.OrderBy(p => p.BasePrice),
+                "name" => query.OrderBy(p => p.Name),
+                "createddate" => query.OrderByDescending(p => p.CreatedDate),
+                _ => query.OrderByDescending(p => p.CreatedDate),
+            };
+
+            int totalItems = await query.CountAsync();
+            var products = await query
+                .Skip((page - 1) * pageSize)
+                .Take(pageSize)
+                .ToListAsync();
+
+            return (products, totalItems);
+        }
+
         public async Task UpdateProductAsync(Product product)
         {
             _context.Products.Update(product);
