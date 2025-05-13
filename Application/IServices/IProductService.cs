@@ -9,6 +9,7 @@ namespace Application.IServices
 {
     public interface IProductService
     {
+        public Task<PaginatedResult<ProductDTO>> GetProductByQueryAsync(string[]? categoryId, string? sortBy, int page, int pageSize);
         public Task<IEnumerable<ProductDTO>> GetAllProductsAsync();
         public Task<ProductDTO> GetProductByIdAsync(string id);
         public Task<ProductDTO> AddProductAsync(ProductDTO productDTO);

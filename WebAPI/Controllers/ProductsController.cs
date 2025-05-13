@@ -4,6 +4,8 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Linq;
+using Microsoft.AspNetCore.Authorization;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 namespace WebAPI.Controllers
 {
@@ -22,6 +24,27 @@ namespace WebAPI.Controllers
         public async Task<ActionResult<IEnumerable<ProductDTO>>> GetAll()
         {
             var products = await _productService.GetAllProductsAsync();
+            return Ok(products);
+        }
+
+        [HttpGet("query")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public async Task<ActionResult<IEnumerable<ProductDTO>>> GetByQuery([FromQuery] ProductQuery productQuery)
+        {
+            if (productQuery.PageNumber < 1 || productQuery.PageSize < 1)
+                return BadRequest("PageNumber and PageSize must be greater than 0.");
+
+            var allowedSorts = new[] { "createddate", "price", "name" };
+            if (!string.IsNullOrEmpty(productQuery.SortBy) &&
+                !allowedSorts.Contains(productQuery.SortBy.ToLower()))
+            {
+                return BadRequest("Invalid sort value.");
+            }
+
+            var products = await _productService.GetProductByQueryAsync(
+            productQuery.CategoryId, productQuery.SortBy, productQuery.PageNumber, productQuery.PageSize);
+            
             return Ok(products);
         }
 
