@@ -1,4 +1,5 @@
 ﻿using Application.IServices;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Shared.DTOs;
@@ -19,6 +20,7 @@ namespace WebAPI.Controllers
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status409Conflict)]
+        [Authorize(Roles = "User")]
         public async Task<ActionResult<ProductRatingDTO>> RateProduct([FromBody] ProductRatingDTO productRatingDto)
         {
             if (!ModelState.IsValid)

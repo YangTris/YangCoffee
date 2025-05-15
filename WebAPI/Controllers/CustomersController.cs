@@ -1,5 +1,5 @@
-﻿using Microsoft.AspNetCore.Authentication;
-using Microsoft.AspNetCore.Http;
+﻿using System.Text.Json;
+using Domain;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -8,9 +8,9 @@ namespace WebAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class CustomersController(UserManager<IdentityUser> userManager) : ControllerBase
+    public class CustomersController(UserManager<User> userManager) : ControllerBase
     {
-        private UserManager<IdentityUser> _userManager = userManager;
+        private UserManager<User> _userManager = userManager;
 
         [HttpGet]
         public async Task<IActionResult> GetAllUser()
