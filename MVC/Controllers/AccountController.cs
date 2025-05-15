@@ -86,7 +86,7 @@ namespace MVC.Controllers
                 return View(registerDTO);
             }
 
-            var response = await _httpClient.PostAsJsonAsync("/register", registerDTO);
+            var response = await _httpClient.PostAsJsonAsync("/api/Auth/register", registerDTO);
 
             if (response.IsSuccessStatusCode)
             {
