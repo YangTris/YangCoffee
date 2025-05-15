@@ -28,6 +28,41 @@ public class ProductServiceTest
     }
 
     [Fact]
+    public async Task GetProductByQueryAsync_ShouldReturnPaginatedResult_WhenProductsExist()
+    {
+        //Arrange
+        var categoryId = new[] { "Category1" };
+        var sortBy = "";
+        var page = 1;
+        var pageSize = 3;
+        var products = new List<Product>
+        {
+            new Product { ProductId = "1", Name = "Product 1", BasePrice = 50.0m, CategoryId= "Category1" },
+            new Product { ProductId = "2", Name = "Product 2", BasePrice = 75.0m, CategoryId= "Category2" },
+            new Product { ProductId = "3", Name = "Product 3", BasePrice = 100.0m , CategoryId = "Category1"},
+            new Product { ProductId = "4", Name = "Product 4", BasePrice = 100.0m , CategoryId = "Category1"},
+            new Product { ProductId = "5", Name = "Product 5", BasePrice = 100.0m },
+            new Product { ProductId = "6", Name = "Product 6", BasePrice = 100.0m },
+            new Product { ProductId = "7", Name = "Product 7", BasePrice = 100.0m },
+
+        };
+        var totalItems = products.Count;
+
+        _productRepositoryMock
+            .Setup(repo => repo.GetProductByQueryAsync(categoryId, sortBy, page, pageSize))
+            .ReturnsAsync((products, totalItems));
+
+        // Act
+        var result = await _productService.GetProductByQueryAsync(categoryId, sortBy, page, pageSize);
+
+        // Assert
+        Assert.NotNull(result);
+        Assert.Equal(totalItems, result.TotalItems);
+        Assert.Equal(result.TotalPages, (int)Math.Ceiling(totalItems / (double)pageSize));
+        //Assert.Equal(pageSize, result.Items.Count());
+    }
+
+    [Fact]
     public async Task AddProductAsync_ShouldAddProductAndReturnDTO()
     {
         // Arrange
