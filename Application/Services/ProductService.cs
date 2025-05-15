@@ -192,7 +192,7 @@ namespace Application.Services
 
         public async Task<PaginatedResult<ProductDTO>> GetProductByQueryAsync(string[]? categoryId, string? sortBy, int page, int pageSize)
         {
-            var (products, totalCount) = await _productRepository.GetProductByQuery(categoryId, sortBy, page, pageSize);
+            var (products, totalCount) = await _productRepository.GetProductByQueryAsync(categoryId, sortBy, page, pageSize);
 
             var productDTOs = products.Select(MapToDTO);
 

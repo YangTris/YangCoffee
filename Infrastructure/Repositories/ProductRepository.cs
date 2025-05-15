@@ -51,7 +51,7 @@ namespace Infrastructure.Repositories
                 .FirstOrDefaultAsync(p => p.ProductId == id);
         }
 
-        public async Task<(IEnumerable<Product> Products, int TotalItems)> GetProductByQuery(
+        public async Task<(IEnumerable<Product> Products, int TotalItems)> GetProductByQueryAsync(
             string[]? categoryId,
             string? sortBy,
             int page = 1,
