@@ -59,14 +59,17 @@ namespace MVC.Controllers
             if (response.IsSuccessStatusCode)
             {
                 var body = await response.Content.ReadFromJsonAsync<Token>();
-                HttpContext.Session.SetString("AuthToken", body.accessToken);
+                Console.WriteLine($"AccessToken: {body.accessToken}");
 
+                HttpContext.Session.SetString("AuthToken", body.accessToken);
                 _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", body.accessToken);
                 var AuthResponse = await _httpClient.GetAsync("/api/Profiles");
 
                 if (AuthResponse.IsSuccessStatusCode)
                 {
                     var responseContent = await AuthResponse.Content.ReadFromJsonAsync<User>();
+                    Console.WriteLine($"Customer Id: {responseContent.id}, Username: {responseContent.userName}");
+
                     HttpContext.Session.SetString("UserId", responseContent.id.ToString());
                     HttpContext.Session.SetString("UserName", responseContent.userName.ToString());
                 }
@@ -99,6 +102,12 @@ namespace MVC.Controllers
 
         public IActionResult Logout()
         {
+            HttpContext.Response.Cookies.Delete(".AspNetCore.Session", new CookieOptions
+            {
+                HttpOnly = true,
+                Secure = true,
+                SameSite = SameSiteMode.Strict
+            });
             HttpContext.Session.Remove("AuthToken");
             HttpContext.Session.Remove("UserId");
             HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);

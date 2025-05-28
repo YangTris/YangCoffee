@@ -1,6 +1,5 @@
 ﻿using Application.IServices;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Shared.DTOs;
 
@@ -56,13 +55,9 @@ namespace WebAPI.Controllers
             {
                 return BadRequest("Quantity must be greater than zero.");
             }
-            
+
             var ratings = await _productRatingService.GetRatingAsync(quantity, productId);
- 
-            if (ratings == null || !ratings.Any())
-            {
-                return NotFound("No ratings found.");
-            }
+
             return Ok(ratings);
         }
     }

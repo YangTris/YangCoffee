@@ -1,4 +1,5 @@
 ﻿using System.Net;
+using System.Net.Http.Headers;
 using System.Text;
 using System.Text.Json;
 using Domain;
@@ -90,6 +91,7 @@ namespace MVC.Controllers
                 }
 
                 var ratings = await _httpClient.GetFromJsonAsync<List<ProductRatingDTO>>($"api/ProductRatings?quantity=3&productId={id}");
+
                 product.ProductRatings = ratings ?? new List<ProductRatingDTO>();
 
                 return View(product);
@@ -104,7 +106,9 @@ namespace MVC.Controllers
         {
             var userId = HttpContext.Session.GetString("UserId");
             var userName = HttpContext.Session.GetString("UserName");
-            if (userId == null || userName == null)
+            var token = HttpContext.Session.GetString("AuthToken");
+
+            if (userId == null || userName == null || token == null)
             {
                 TempData["Error"] = "You must be logged in to rate a product.";
                 return RedirectToAction("Login", "Account");
@@ -113,15 +117,14 @@ namespace MVC.Controllers
             ratingDto.UserId = userId;
             ratingDto.UserName = userName;
 
-            Console.WriteLine($"UserId: {ratingDto.UserId}");
-            Console.WriteLine($"ProductId: {ratingDto.ProductId}");
-            Console.WriteLine($"Rating: {ratingDto.Rating}");
-            Console.WriteLine($"Comment: {ratingDto.Comment}");
-
             var json = JsonConvert.SerializeObject(ratingDto);
-            Console.WriteLine($"JSON: {json}");
-            var content = new StringContent(json, Encoding.UTF8, "application/json");
-            var response = await _httpClient.PostAsync("api/ProductRatings", content);
+            var request = new HttpRequestMessage(HttpMethod.Post, "api/ProductRatings")
+            {
+                Content = new StringContent(json, Encoding.UTF8, "application/json")
+            };
+            request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", token);
+
+            var response = await _httpClient.SendAsync(request);
 
             if (response.IsSuccessStatusCode)
             {
@@ -138,6 +141,7 @@ namespace MVC.Controllers
 
             return RedirectToAction("ProductDetail", "Product", new { id = ratingDto.ProductId });
         }
+
     }
 
     public class PaginatedResult<T>

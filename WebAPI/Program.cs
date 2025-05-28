@@ -1,11 +1,12 @@
+using Application.IRepositories;
 using Application.IServices;
 using Application.Services;
-using Application.IRepositories;
+using Domain;
 using Infrastructure;
 using Infrastructure.Repositories;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using Domain;
+using Microsoft.OpenApi.Models;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add CORS
@@ -43,8 +44,35 @@ builder.Services.AddScoped<IProductRatingRepository, ProductRatingRepository>();
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+builder.Services.AddSwaggerGen(c =>
+{
+    c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+    {
+        In = ParameterLocation.Header,
+        Description = "Enter JWT Bearer token",
+        Name = "Authorization",
+        Type = SecuritySchemeType.ApiKey,
+        Scheme = "Bearer"
+    });
+    c.AddSecurityRequirement(new OpenApiSecurityRequirement
+    {
+        {
+            new OpenApiSecurityScheme
+            {
+                Reference = new OpenApiReference
+                {
+                    Type = ReferenceType.SecurityScheme,
+                    Id = "Bearer"
+                }
+            },
+            Array.Empty<string>()
+        }
+    });
+});
 
+
+builder.Services.AddAuthentication();
+builder.Services.AddAuthorization();
 
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
@@ -63,16 +91,15 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-// Use CORS
-app.UseCors("AllowReactApp");
-
 app.UseHttpsRedirection();
 
-app.MapIdentityApi<User>();
+// Use CORS
+app.UseCors("AllowReactApp");
 
 app.UseAuthentication();
 app.UseAuthorization();
 
+app.MapIdentityApi<User>();
 
 app.MapControllers();
 
