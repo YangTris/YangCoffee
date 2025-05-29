@@ -1,5 +1,5 @@
 ﻿using Application.IServices;
-using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Shared.DTOs;
 
@@ -16,6 +16,7 @@ namespace WebAPI.Controllers
         }
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
+        [Authorize(Roles = "Admin")]
         public async Task<ActionResult<IEnumerable<OrderDTO>>> GetAllOrders()
         {
             var orders = await _orderService.GetAllOrdersAsync();

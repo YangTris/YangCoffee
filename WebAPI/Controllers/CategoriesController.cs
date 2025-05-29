@@ -1,8 +1,7 @@
-﻿using Shared.DTOs;
-using Application.IServices;
-using Domain;
-using Microsoft.AspNetCore.Http;
+﻿using Application.IServices;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Shared.DTOs;
 
 namespace WebAPI.Controllers
 {
@@ -45,6 +44,7 @@ namespace WebAPI.Controllers
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Add([FromBody] CategoryDTO categoryDTO)
         {
             if (!ModelState.IsValid)
@@ -59,6 +59,7 @@ namespace WebAPI.Controllers
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Update(string id, [FromBody] CategoryDTO categoryDTO)
         {
             if (!ModelState.IsValid)
@@ -77,6 +78,7 @@ namespace WebAPI.Controllers
         [HttpDelete("{id}")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Delete(string id)
         {
             var category = await _categoryService.GetCategoryByIdAsync(id);

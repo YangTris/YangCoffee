@@ -2,6 +2,14 @@ import axios from 'axios';
 
 const API_BASE_URL = 'https://localhost:7192';
 
+axios.interceptors.request.use((config) => {
+  const token = sessionStorage.getItem('token');
+  if (token) {
+    config.headers.Authorization = `Bearer ${token}`;
+  }
+  return config;
+});
+
 export const getAllCustomer = async () => {
   const response = await axios.get(`${API_BASE_URL}/api/Customers`);
   return response.data;

@@ -145,6 +145,7 @@ namespace WebAPI.Controllers
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Add([FromBody] ProductDTO productDTO)
         {
             if (productDTO == null)
@@ -159,6 +160,7 @@ namespace WebAPI.Controllers
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Update(string id, [FromBody] UpdateProductDTO updateProductDTO)
         {
             if (!ModelState.IsValid)
@@ -177,6 +179,7 @@ namespace WebAPI.Controllers
         [HttpDelete("{id}")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Delete(string id)
         {
             if (!ModelState.IsValid)
@@ -213,6 +216,7 @@ namespace WebAPI.Controllers
         [HttpPost("variant/{productId}")]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> AddProductVariant(string productId, [FromBody] ProductVariantDTO productVariantDTO)
         {
             if(!ModelState.IsValid)
@@ -232,6 +236,7 @@ namespace WebAPI.Controllers
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> UpdateProductVariant(string id, [FromBody] ProductVariantDTO productVariantDTO)
         {
             if (!ModelState.IsValid)
@@ -250,6 +255,7 @@ namespace WebAPI.Controllers
         [HttpDelete("variant/{id}")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> DeleteProductVariant(string id)
         {
             if (!ModelState.IsValid)

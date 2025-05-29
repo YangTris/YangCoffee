@@ -1,5 +1,5 @@
-﻿using System.Text.Json;
-using Domain;
+﻿using Domain;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -13,6 +13,7 @@ namespace WebAPI.Controllers
         private UserManager<User> _userManager = userManager;
 
         [HttpGet]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> GetAllUser()
         {
             var users = await _userManager.Users.ToListAsync();
