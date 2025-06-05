@@ -54,7 +54,7 @@ namespace MVC.Controllers
                 return View(loginDTO);
             }
 
-            var response = await _httpClient.PostAsJsonAsync("/login", loginDTO);
+            var response = await _httpClient.PostAsJsonAsync("/api/Auth/login", loginDTO);
 
             if (response.IsSuccessStatusCode)
             {

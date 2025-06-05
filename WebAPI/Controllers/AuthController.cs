@@ -1,5 +1,5 @@
-﻿using Domain;
-using Microsoft.AspNetCore.Http;
+﻿using Application.IServices;
+using Domain;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Shared.DTOs;
@@ -12,11 +12,18 @@ namespace WebAPI.Controllers
     {
         private readonly UserManager<User> _userManager;
         private readonly RoleManager<IdentityRole> _roleManager;
+        private readonly SignInManager<User> _signInManager;
+        private readonly ITokenService _tokenService;
 
-        public AuthController(UserManager<User> userManager, RoleManager<IdentityRole> roleManager)
+        public AuthController(UserManager<User> userManager,
+            RoleManager<IdentityRole> roleManager,
+            SignInManager<User> signInManager,
+            ITokenService tokenService)
         {
             _userManager = userManager;
             _roleManager = roleManager;
+            _signInManager = signInManager;
+            _tokenService = tokenService;
         }
 
         [HttpPost("register")]
@@ -50,5 +57,50 @@ namespace WebAPI.Controllers
             return Ok("User registered successfully!");
         }
 
+        [HttpPost("adminLogin")]
+        public async Task<IActionResult> Login([FromBody] LoginDTO loginDto)
+        {
+            var user = await _userManager.FindByEmailAsync(loginDto.Email);
+            if (user == null)
+                return Unauthorized("Invalid email or password.");
+
+            var result = await _signInManager.CheckPasswordSignInAsync(user, loginDto.Password, false);
+            if (!result.Succeeded) return Unauthorized("Invalid credentials");
+
+            var roles = await _userManager.GetRolesAsync(user);
+            if (!roles.Contains("Admin"))
+            {
+                return StatusCode(StatusCodes.Status403Forbidden, "Access denied. Admin role required.");
+            }
+
+            var accessToken = await _tokenService.CreateToken(user);
+
+            return Ok(new
+            {
+                tokenType = "Bearer",
+                accessToken,
+                expiresIn = 3600
+            });
+        }
+
+        [HttpPost("login")]
+        public async Task<IActionResult> UserLogin([FromBody] LoginDTO loginDto)
+        {
+            var user = await _userManager.FindByEmailAsync(loginDto.Email);
+            if (user == null)
+                return Unauthorized("Invalid email or password.");
+
+            var result = await _signInManager.CheckPasswordSignInAsync(user, loginDto.Password, false);
+            if (!result.Succeeded) return Unauthorized("Invalid credentials");
+
+            var accessToken = await _tokenService.CreateToken(user);
+
+            return Ok(new
+            {
+                tokenType = "Bearer",
+                accessToken,
+                expiresIn = 3600
+            });
+        }
     }
 }

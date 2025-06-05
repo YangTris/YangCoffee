@@ -16,10 +16,11 @@ export const getAllCustomer = async () => {
 };
 
 export const login = async (credentials) => {
-  const response = await axios.post(`${API_BASE_URL}/login`, credentials, {
+  const response = await axios.post(`${API_BASE_URL}/api/Auth/adminLogin`, credentials, {
     headers: {
       'Content-Type': 'application/json',
     },
   });
-  return response;
-};
+
+  return response.data;
+}
