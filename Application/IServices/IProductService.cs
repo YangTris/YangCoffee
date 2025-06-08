@@ -1,15 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Shared.DTOs;
+﻿using Shared.DTOs;
 
 namespace Application.IServices
 {
     public interface IProductService
     {
-        public Task<PaginatedResult<ProductDTO>> GetProductByQueryAsync(string[]? categoryId, string? sortBy, int page, int pageSize);
+        public Task<PaginatedResult<ProductDTO>> GetProductByQueryAsync(string? searchString, string[]? categoryId, string? sortBy, int page, int pageSize);
         public Task<IEnumerable<ProductDTO>> GetAllProductsAsync();
         public Task<ProductDTO> GetProductByIdAsync(string id);
         public Task<ProductDTO> AddProductAsync(ProductDTO productDTO);

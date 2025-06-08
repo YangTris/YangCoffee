@@ -41,12 +41,14 @@ namespace MVC.Controllers
                 ViewData["selectedCategoryIds"] = productQuery.CategoryId ?? Array.Empty<string>();
                 ViewData["allCategories"] = categories;
                 ViewData["sortBy"] = productQuery.SortBy ?? "";
+                ViewData["searchString"] = productQuery.SearchString ?? "";
 
                 var baseQuery = new Dictionary<string, string?>
                 {
                     ["sortBy"] = productQuery.SortBy,
                     ["pageNumber"] = productQuery.PageNumber.ToString(),
-                    ["pageSize"] = productQuery.PageSize.ToString()
+                    ["pageSize"] = productQuery.PageSize.ToString(),
+                    ["searchString"] = productQuery.SearchString
                 };
 
                 var queryParts = baseQuery

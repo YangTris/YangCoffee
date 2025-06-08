@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Security.Principal;
-using System.Text;
-using System.Threading.Tasks;
-using Application.IRepositories;
+﻿using Application.IRepositories;
 using Domain;
 using Microsoft.EntityFrameworkCore;
 
@@ -52,6 +46,7 @@ namespace Infrastructure.Repositories
         }
 
         public async Task<(IEnumerable<Product> Products, int TotalItems)> GetProductByQueryAsync(
+            string? searchString,
             string[]? categoryId,
             string? sortBy,
             int page = 1,
@@ -63,7 +58,12 @@ namespace Infrastructure.Repositories
                 .Include(p => p.ProductImages)
                 .AsQueryable();
 
-            if(categoryId != null && categoryId.Length > 0)
+            if (!string.IsNullOrEmpty(searchString))
+            {
+                query = query.Where(p => p.Name.Contains(searchString));
+            }
+
+            if (categoryId != null && categoryId.Length > 0)
             {
                 query = query.Where(p => categoryId.Contains(p.CategoryId));
             }

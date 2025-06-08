@@ -1,13 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Shared.DTOs;
-using Application.IRepositories;
+﻿using Application.IRepositories;
 using Application.IServices;
 using Domain;
-using Domain.Enum;
+using Shared.DTOs;
 
 namespace Application.Services
 {
@@ -16,8 +10,8 @@ namespace Application.Services
         private readonly IProductRepository _productRepository;
         private readonly IProductVariantRepository _productVariantRepository;
         private readonly IProductImageRepository _productImageRepository;
-        public ProductService(IProductRepository productRepository, 
-            IProductVariantRepository productVariantRepository, 
+        public ProductService(IProductRepository productRepository,
+            IProductVariantRepository productVariantRepository,
             IProductImageRepository productImageRepository)
         {
             _productRepository = productRepository;
@@ -32,7 +26,7 @@ namespace Application.Services
             {
                 ProductId = product.ProductId,
                 Name = product.Name,
-                Description = product.Description,            
+                Description = product.Description,
                 BasePrice = product.BasePrice,
                 CreatedDate = product.CreatedDate,
                 UpdatedDate = product.UpdatedDate,
@@ -145,15 +139,15 @@ namespace Application.Services
             }
             if (product.ProductImages != null)
             {
-                for(int i=0; i < product.ProductImages.Count; i++)
+                for (int i = 0; i < product.ProductImages.Count; i++)
                 {
                     var productImage = product.ProductImages[i];
                     await _productImageRepository.DeleteProductImageAsync(productImage.ProductImageId);
                 }
             }
-            if(product.ProductVariants != null)
+            if (product.ProductVariants != null)
             {
-                for(int i = 0; i < product.ProductVariants.Count; i++)
+                for (int i = 0; i < product.ProductVariants.Count; i++)
                 {
                     var productVariant = product.ProductVariants[i];
                     await _productVariantRepository.DeleteProductVariantAsync(productVariant.ProductVariantId);
@@ -190,9 +184,9 @@ namespace Application.Services
             return MapToVariantDTO(productVariant);
         }
 
-        public async Task<PaginatedResult<ProductDTO>> GetProductByQueryAsync(string[]? categoryId, string? sortBy, int page, int pageSize)
+        public async Task<PaginatedResult<ProductDTO>> GetProductByQueryAsync(string? searchString, string[]? categoryId, string? sortBy, int page, int pageSize)
         {
-            var (products, totalCount) = await _productRepository.GetProductByQueryAsync(categoryId, sortBy, page, pageSize);
+            var (products, totalCount) = await _productRepository.GetProductByQueryAsync(searchString, categoryId, sortBy, page, pageSize);
 
             var productDTOs = products.Select(MapToDTO);
 
@@ -236,7 +230,5 @@ namespace Application.Services
 
             await _productVariantRepository.UpdateProductVariantAsync(productVariant);
         }
-
-       
     }
 }

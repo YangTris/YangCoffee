@@ -37,9 +37,9 @@
                 </ul>
 
                 <form class="d-flex" role="search">
-                    <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" />
-                    <button class="btn btn-outline-success" asp-route-sortOrder="@ViewData["CurrentSort"]"
-                        asp-route-currentFilter="@ViewData["CurrentFilter"]" type="submit">
+                    <input class="form-control me-2" name="searchString" type="search" placeholder="Search"
+                        aria-label="Search" />
+                    <button class="btn btn-outline-success" type="submit" value="searchString">
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                             class="bi bi-search" viewBox="0 0 16 16">
                             <path

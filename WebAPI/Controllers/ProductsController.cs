@@ -1,11 +1,7 @@
-﻿using Shared.DTOs;
-using Application.IServices;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Linq;
+﻿using Application.IServices;
 using Microsoft.AspNetCore.Authorization;
-using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
+using Microsoft.AspNetCore.Mvc;
+using Shared.DTOs;
 
 namespace WebAPI.Controllers
 {
@@ -19,6 +15,7 @@ namespace WebAPI.Controllers
             _productService = productService;
         }
 
+        // No Longer support
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<ActionResult<IEnumerable<ProductDTO>>> GetAll()
@@ -42,12 +39,13 @@ namespace WebAPI.Controllers
                 return BadRequest("Invalid sort value.");
             }
 
-            var products = await _productService.GetProductByQueryAsync(
-            productQuery.CategoryId, productQuery.SortBy, productQuery.PageNumber, productQuery.PageSize);
-            
+            var products = await _productService
+                .GetProductByQueryAsync(productQuery.SearchString, productQuery.CategoryId, productQuery.SortBy, productQuery.PageNumber, productQuery.PageSize);
+
             return Ok(products);
         }
 
+        // No Longer support
         [HttpGet("search")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -76,7 +74,7 @@ namespace WebAPI.Controllers
             {
                 products = price switch
                 {
-                    <= 15m => products.Where(p => p.BasePrice <= 15m ),
+                    <= 15m => products.Where(p => p.BasePrice <= 15m),
                     <= 20m => products.Where(p => p.BasePrice > 15m && p.BasePrice <= 20m),
                     > 20m => products.Where(p => p.BasePrice > 20m),
                     _ => products
@@ -130,7 +128,7 @@ namespace WebAPI.Controllers
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<ActionResult<ProductDTO>> GetById(string id)
         {
-            if(!ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
@@ -219,7 +217,7 @@ namespace WebAPI.Controllers
         [Authorize(Roles = "Admin")]
         public async Task<IActionResult> AddProductVariant(string productId, [FromBody] ProductVariantDTO productVariantDTO)
         {
-            if(!ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
                 return BadRequest();
             }
