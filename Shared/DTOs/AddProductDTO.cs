@@ -1,6 +1,6 @@
 ﻿namespace Shared.DTOs
 {
-    public class ProductDTO
+    public class AddProductDTO
     {
         public string ProductId { get; set; }
         public string Name { get; set; }
@@ -15,6 +15,5 @@
         public List<ProductVariantDTO>? ProductVariants { get; set; }
         public List<ProductRatingDTO>? ProductRatings { get; set; }
         public double? AverageRating { get; set; }
-        public string? CategoryName { get; set; } = string.Empty;
     }
 }

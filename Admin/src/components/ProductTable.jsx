@@ -1,14 +1,19 @@
 import React, { useEffect, useState } from "react";
-import { searchProducts, deleteProduct, updateProduct } from "../api/productApi";
+import {
+  searchProducts,
+  deleteProduct,
+  updateProduct,
+  getProductById,
+} from "../api/productApi";
 import { useNavigate } from "react-router-dom";
+import { supabase } from "../api/supabaseClient";
 
 function ProductTable() {
   const [products, setProducts] = useState([]);
-  const [searchName, setSearchName] = useState("");
+  const [searchString, setSearchString] = useState("");
   const [sortBy, setSortBy] = useState("createdDate");
-  const [isDescending, setIsDescending] = useState(true);
   const [pageNumber, setPageNumber] = useState(1);
-  const [pageSize] = useState(3);
+  const [pageSize] = useState(6);
   const [totalPages, setTotalPages] = useState(1);
   const [loading, setLoading] = useState(false);
 
@@ -16,9 +21,8 @@ function ProductTable() {
     try {
       setLoading(true);
       const result = await searchProducts({
-        searchName,
+        searchString,
         sortBy,
-        isDescending,
         pageNumber,
         pageSize,
       });
@@ -34,12 +38,27 @@ function ProductTable() {
 
   useEffect(() => {
     fetchProducts();
-  }, [searchName, sortBy, isDescending, pageNumber]);
+  }, [searchString, sortBy, pageNumber]);
 
   // Handle delete product
   const handleDelete = async (id, name) => {
     if (window.confirm(`Delete product "${name}"?`)) {
       try {
+        var product = await getProductById(id);
+
+        var listImages = product.productImages;
+        console.log("Images to delete:", listImages);
+
+        const extractStoragePath = (url) => {
+          const parts = url.split("/object/public/yangcoffee/");
+          return parts[1] || "";
+        };
+
+        const imagePaths = listImages.map((img) =>
+          extractStoragePath(img.imageUrl)
+        );
+        await supabase.storage.from("yangcoffee").remove(imagePaths);
+
         await deleteProduct(id);
         fetchProducts();
       } catch (error) {
@@ -75,7 +94,10 @@ function ProductTable() {
     <div className="p-4">
       <div className="d-flex justify-content-between align-items-center mb-3">
         <h5>Products Management</h5>
-        <button className="btn btn-dark" onClick={() => navigate("/dashboard/products/add")}>
+        <button
+          className="btn btn-dark"
+          onClick={() => navigate("/dashboard/products/add")}
+        >
           + Add Product
         </button>
       </div>
@@ -84,10 +106,13 @@ function ProductTable() {
         <input
           className="form-control"
           placeholder="Search products..."
-          value={searchName}
-          onChange={(e) => setSearchName(e.target.value)}
+          value={searchString}
+          onChange={(e) => setSearchString(e.target.value)}
         />
-        <button className="btn btn-outline-secondary" onClick={() => fetchProducts()}>
+        <button
+          className="btn btn-outline-secondary"
+          onClick={() => fetchProducts()}
+        >
           Search
         </button>
       </div>
@@ -103,13 +128,6 @@ function ProductTable() {
           <option value="name">Name</option>
           <option value="price">Base Price</option>
         </select>
-
-        <button
-          className="btn btn-sm btn-outline-secondary ms-2"
-          onClick={() => setIsDescending(!isDescending)}
-        >
-          {isDescending ? "Descending ↓" : "Ascending ↑"}
-        </button>
       </div>
 
       {loading ? (
@@ -119,9 +137,8 @@ function ProductTable() {
           <table className="table table-hover">
             <thead className="table-light">
               <tr>
-                <th>Product ID</th>
                 <th>Name</th>
-                <th>Category ID</th>
+                <th>Category Name</th>
                 <th>Base Price</th>
                 <th>Created Date</th>
                 <th>Updated Date</th>
@@ -131,9 +148,8 @@ function ProductTable() {
             <tbody>
               {products.map((p) => (
                 <tr key={p.productId}>
-                  <td>{p.productId}</td>
                   <td>{p.name}</td>
-                  <td>{p.categoryId}</td>
+                  <td>{p.categoryName}</td>
                   <td>${p.basePrice?.toFixed(2)}</td>
                   <td>{new Date(p.createdDate).toLocaleDateString()}</td>
                   <td>{new Date(p.updatedDate).toLocaleDateString()}</td>
@@ -148,7 +164,10 @@ function ProductTable() {
                           setShowEditModal(false);
                           setEditProduct(null);
                         }}
-                        style={{ backgroundColor: "rgba(0,0,0,0.5)" }}
+                        style={{
+                          backgroundColor: "rgba(0,0,0,0.5)",
+                          opacity: 0.5,
+                        }}
                       >
                         <div
                           className="modal-dialog"
@@ -165,7 +184,10 @@ function ProductTable() {
                               ></button>
                             </div>
                             <div className="modal-body">
-                              <input type="hidden" value={editProduct.productId} />
+                              <input
+                                type="hidden"
+                                value={editProduct.productId}
+                              />
                               <div className="mb-3">
                                 <label className="form-label">Name</label>
                                 <input
@@ -173,7 +195,10 @@ function ProductTable() {
                                   className="form-control"
                                   value={editProduct.name}
                                   onChange={(e) =>
-                                    setEditProduct({ ...editProduct, name: e.target.value })
+                                    setEditProduct({
+                                      ...editProduct,
+                                      name: e.target.value,
+                                    })
                                   }
                                 />
                               </div>
@@ -192,19 +217,27 @@ function ProductTable() {
                                 />
                               </div>
                               <div className="mb-3">
-                                <label className="form-label">Description</label>
+                                <label className="form-label">
+                                  Description
+                                </label>
                                 <input
                                   type="text"
                                   className="form-control"
                                   value={editProduct.description || ""}
                                   onChange={(e) =>
-                                    setEditProduct({ ...editProduct, description: e.target.value })
+                                    setEditProduct({
+                                      ...editProduct,
+                                      description: e.target.value,
+                                    })
                                   }
                                 />
                               </div>
                             </div>
                             <div className="modal-footer">
-                              <button className="btn btn-primary" onClick={handleUpdateProduct}>
+                              <button
+                                className="btn btn-primary"
+                                onClick={handleUpdateProduct}
+                              >
                                 Update
                               </button>
                               <button

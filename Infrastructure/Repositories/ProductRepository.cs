@@ -32,12 +32,14 @@ namespace Infrastructure.Repositories
             return await _context.Products
                 .Include(p => p.ProductVariants)
                 .Include(p => p.ProductImages)
+                .Include(p => p.Category)
                 .ToListAsync();
         }
 
         public async Task<Product> GetProductByIdAsync(string id)
         {
             return await _context.Products
+                .Include(p => p.Category)
                 .Include(p => p.ProductImages)
                 .Include(p => p.ProductVariants)
                 .Include(p => p.ProductRatings)
@@ -54,6 +56,7 @@ namespace Infrastructure.Repositories
         {
             IQueryable<Product> query = _context.Products
                 .AsNoTracking()
+                .Include(p => p.Category)
                 .Include(p => p.ProductVariants)
                 .Include(p => p.ProductImages)
                 .AsQueryable();

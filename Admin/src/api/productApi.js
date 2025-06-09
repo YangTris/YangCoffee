@@ -2,10 +2,10 @@ import axios from 'axios';
 
 const API_BASE_URL = 'https://localhost:7192/api';
 
-// export const getProductById = async (id) => {
-//     const response = await axios.get(`${API_BASE_URL}/Products/${id}`);
-//     return response.data;
-// };
+export const getProductById = async (id) => {
+    const response = await axios.get(`${API_BASE_URL}/Products/${id}`);
+    return response.data;
+};
 
 export const addProduct = async (product) => {
     const response = await axios.post(`${API_BASE_URL}/Products`, product);
@@ -17,16 +17,14 @@ export const updateProduct = async (id, product) => {
 };
 
 export const searchProducts = async ({
-    searchName,
+    searchString,
     sortBy,
-    isDescending,
     pageNumber,
     pageSize,
 }) => {
     const params = {
-        searchName,
+        searchString,
         sortBy,
-        isDescending,
         pageNumber,
         pageSize,
     };
@@ -36,7 +34,7 @@ export const searchProducts = async ({
         (key) => params[key] == null && delete params[key]
     );
 
-    const response = await axios.get(`${API_BASE_URL}/Products/search`, { params });
+    const response = await axios.get(`${API_BASE_URL}/Products/query`, { params });
     return response.data;
 };
 

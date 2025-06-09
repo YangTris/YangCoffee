@@ -221,7 +221,6 @@ function CategoryTable() {
         <table className="table table-hover">
           <thead className="table-light">
             <tr>
-              <th>ID</th>
               <th>Name</th>
               <th>Description</th>
               <th>Actions</th>
@@ -230,7 +229,6 @@ function CategoryTable() {
           <tbody>
             {categories.map((c) => (
               <tr key={c.categoryId}>
-                <td>{c.categoryId}</td>
                 <td>{c.name}</td>
                 <td>{c.description}</td>
                 <td>

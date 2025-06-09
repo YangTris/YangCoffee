@@ -64,11 +64,13 @@ function AddProductPage() {
       for (const file of selectedFiles) {
         const fileName = `${Date.now()}_${file.name}`;
         const { error } = await supabase.storage
-          .from("product-images")
+          // .from("product-images")
+          .from("yangcoffee")
           .upload(fileName, file);
         if (error) throw error;
 
-        const { data } = supabase.storage.from("product-images").getPublicUrl(fileName);
+        // const { data } = supabase.storage.from("product-images").getPublicUrl(fileName);
+        const { data } = supabase.storage.from("yangcoffee").getPublicUrl(fileName);
         imageUrls.push(data.publicUrl);
       }
 
