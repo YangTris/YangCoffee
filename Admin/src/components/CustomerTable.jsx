@@ -30,18 +30,19 @@ function CustomerTable() {
         <table className="table table-hover">
           <thead className="table-light">
             <tr>
-              <th>ID</th>
               <th>Name</th>
               <th>Email</th>
+              <th>Phone Number</th>
+
               <th>Actions</th>
             </tr>
           </thead>
           <tbody>
             {customers.map((c) => (
               <tr key={c.id}>
-                <td>{c.id}</td>
                 <td>{c.userName}</td>
                 <td>{c.email}</td>
+                <td>{c.phoneNumber}</td>
                 <td>⋯</td>
               </tr>
             ))}

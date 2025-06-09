@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Application.IRepositories;
+﻿using Application.IRepositories;
 using Application.IServices;
 using Domain;
 using Domain.Enum;
@@ -33,6 +28,7 @@ namespace Application.Services
             {
                 OrderId = order.OrderId,
                 UserId = order.UserId,
+                UserName = order.User?.UserName ?? "Unknown User",
                 PhoneNumber = order.PhoneNumber,
                 ShippingAddress = order.ShippingAddress,
                 TotalAmount = order.TotalAmount,
@@ -72,7 +68,7 @@ namespace Application.Services
             };
 
             await _orderRepository.CreateOrderAsync(order);
-            
+
             foreach (var item in cart.CartItems)
             {
                 var orderDetail = new OrderDetail

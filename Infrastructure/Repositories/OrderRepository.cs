@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Application.IRepositories;
+﻿using Application.IRepositories;
 using Domain;
 using Microsoft.EntityFrameworkCore;
 
@@ -36,6 +31,7 @@ namespace Infrastructure.Repositories
         public async Task<IEnumerable<Order>> GetAllOrdersAsync()
         {
             return await _context.Orders
+                .Include(o => o.User)
                 .Include(o => o.OrderDetails)
                     .ThenInclude(od => od.ProductVariant)
                     .ThenInclude(pv => pv.Product)
@@ -46,6 +42,7 @@ namespace Infrastructure.Repositories
         public async Task<Order> GetOrderByIdAsync(string id)
         {
             return await _context.Orders
+                .Include(o => o.User)
                 .Include(o => o.OrderDetails)
                     .ThenInclude(od => od.ProductVariant)
                     .ThenInclude(pv => pv.Product)

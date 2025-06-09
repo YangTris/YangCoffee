@@ -35,7 +35,6 @@ function OrderTable() {
         <table className="table table-hover">
           <thead className="table-light">
             <tr>
-              <th>ID</th>
               <th>Customer</th>
               <th>Date</th>
               <th>Total</th>
@@ -46,8 +45,7 @@ function OrderTable() {
           <tbody>
             {orders.map((order) => (
               <tr key={order.orderId}>
-                <td>{order.orderId}</td>
-                <td>{order.userId}</td>
+                <td>{order.userName}</td>
                 <td>{order.orderDate}</td>
                 <td>${order.totalAmount}</td>
                 <td>{order.orderStatus}</td>
